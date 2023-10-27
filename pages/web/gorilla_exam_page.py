@@ -2,6 +2,8 @@ import re
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
+from core.utils.regexp_utils import RegExpUtils
+
 
 class GorillaExamPage():
 
@@ -25,13 +27,7 @@ class GorillaExamPage():
         colour = self.browser.find_element(*self.ANSWERED_ITEM).value_of_css_property("background-color")
 
         pattern = r'rgba\((\d+), (\d+), (\d+), \d+\.\d+\)'
-        matches = re.search(pattern, colour)
-
-        color_values = ""
-
-        if matches:
-            color_values = matches.groups()[:3]
-            print(", ".join(color_values))
+        color_values = RegExpUtils.match_and_return_group(colour, pattern, 3)
 
         return color_values
 
