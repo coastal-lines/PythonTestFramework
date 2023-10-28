@@ -4,13 +4,28 @@ Module for fixtures for Web tests.
 
 import pytest
 import selenium.webdriver
+from selenium.webdriver import firefox
+from selenium.webdriver.firefox.service import Service
+
+from core.utils.read_config import ConfigUtils
+
 
 @pytest.fixture
-def chrome_browser():
-    chrome_browser_driver = selenium.webdriver.Chrome()
+def browser():
 
-    chrome_browser_driver.implicitly_wait(10)
+    match ConfigUtils.get_config().default_browser:
+        case 'Chrome':
+            browser_driver = selenium.webdriver.Chrome()
+        case 'Firefox':
+            firefox_service = firefox.service.Service()
+            firefox_service.path = './resources/drivers/win/geckodriver.exe'
 
-    yield chrome_browser_driver
+            browser_driver = selenium.webdriver.Firefox(service=firefox_service)
+        case _:
+            raise Exception(f'Browser {ConfigUtils.get_config().default_browser:} not supported.')
 
-    chrome_browser_driver.quit()
+    browser_driver.implicitly_wait(10)
+
+    yield browser_driver
+
+    browser_driver.quit()
