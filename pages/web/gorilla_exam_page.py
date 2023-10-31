@@ -1,7 +1,11 @@
-import re
+from time import sleep
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+from core.utils.read_config import ConfigUtils
 from core.utils.regexp_utils import RegExpUtils
 
 
@@ -20,10 +24,17 @@ class GorillaExamPage():
         self.browser.get(self.PAGE_URL)
 
     def get_question_text(self) -> str:
+        WebDriverWait(self.browser, ConfigUtils.get_config().wait_timeout).until(
+            EC.element_to_be_clickable(self.browser.find_element(*self.ANSWERS)))
+
         question_element = self.browser.find_element(*self.ANSWERS)
         return question_element.text
 
     def get_answer_rgb_colour(self) -> tuple:
+        WebDriverWait(self.browser, ConfigUtils.get_config().wait_timeout).until(
+            lambda driver: "rgba" in self.browser.find_element(*self.ANSWERED_ITEM).value_of_css_property("background-color")
+        )
+
         colour = self.browser.find_element(*self.ANSWERED_ITEM).value_of_css_property("background-color")
 
         pattern = r'rgba\((\d+), (\d+), (\d+), \d+\.\d+\)'
