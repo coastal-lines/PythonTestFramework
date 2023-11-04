@@ -6,7 +6,7 @@ import pytest
 from core.conftest import browser
 from pages.web.gorilla_exam_page import GorillaExamPage
 
-@pytest.mark.parametrize('answer_number', [-1])
+@pytest.mark.parametrize('answer_number', [-1, 1])
 def test_exam_title(browser, answer_number):
 
     EXPECTED_QUESTION_TEXT = 'What type of dependency should you set between these two tasks?'
