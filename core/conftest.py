@@ -2,10 +2,9 @@
 Module for fixtures for Web tests.
 """
 import os
-from pathlib import Path
-
 import pytest
 import selenium.webdriver
+from pathlib import Path
 from selenium.webdriver import firefox
 from selenium.webdriver.firefox.service import Service
 
@@ -13,7 +12,7 @@ from core.utils.read_config import ConfigUtils
 
 
 @pytest.fixture
-def browser():
+def web_driver():
 
     match ConfigUtils.get_config().default_browser:
         case 'Chrome':
@@ -28,3 +27,7 @@ def browser():
     yield browser_driver
 
     browser_driver.quit()
+
+@pytest.fixture
+def desktop_driver():
+    pass

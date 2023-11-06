@@ -3,16 +3,16 @@ Tests for 'TestGorilla' service.
 '''
 import pytest
 
-from core.conftest import browser
+from core.conftest import web_driver
 from pages.web.gorilla_exam_page import GorillaExamPage
 
 @pytest.mark.parametrize('answer_number', [-1, 1])
-def test_exam_title(browser, answer_number):
+def test_exam_title(web_driver, answer_number):
 
     EXPECTED_QUESTION_TEXT = 'What type of dependency should you set between these two tasks?'
     EXPECTED_ANSWER_COLOUR = ('70', '169', '151')
 
-    gorilla_exam_page = GorillaExamPage(browser)
+    gorilla_exam_page = GorillaExamPage(web_driver)
 
     #step 1 - navigate into Exam Gorrila page
     gorilla_exam_page.load()
