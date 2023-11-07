@@ -1,6 +1,7 @@
+import json
+import os
 from typing import Any
 from attr import dataclass
-
 
 @dataclass
 class Desktop:
@@ -11,7 +12,6 @@ class Desktop:
         _default_os = str(obj.get("default_os"))
         return Desktop(_default_os)
 
-'''
 @dataclass
 class Web:
     default_browser: str
@@ -22,25 +22,17 @@ class Web:
         _default_browser = str(obj.get("default_browser"))
         _wait_timeout = int(obj.get("wait_timeout"))
         return Web(_default_browser, _wait_timeout)
-'''
 
 @dataclass
-class Root:
+class Configuration:
+    web: Web
+    desktop: Desktop
 
     @staticmethod
     def from_dict(obj: Any) -> 'Root':
-        _web = Web(from_dict(obj.get("web")))
+        _web = Web.from_dict(obj.get("web"))
         _desktop = Desktop.from_dict(obj.get("desktop"))
-        return Root(_web, _desktop)
-
-    class Web:
-        default_browser: str
-        wait_timeout: int
-
-        def __init__(self, obj: Any) -> 'Web':
-            _default_browser = str(obj.get("default_browser"))
-            _wait_timeout = int(obj.get("wait_timeout"))
-            return Web(_default_browser, _wait_timeout)
+        return Configuration(_web, _desktop)
 
 '''
 class Configuration:
@@ -48,7 +40,7 @@ class Configuration:
     def __init__(self, web_config, desktop_config):
         self.web_config = default_browser
         self.desktop_config = wait_timeout
-
+'''
 
 class ConfigUtils:
 
@@ -57,7 +49,9 @@ class ConfigUtils:
 
         config_path = os.path.join(os.path.dirname(__file__), '../../config.json')
         with open(config_path) as config_file:
-            config = json.load(config_file)
+            config_json = json.load(config_file)
 
-        return Configuration(config['default_browser'], config['wait_timeout'])
-'''
+        #return Configuration(config['default_browser'], config['wait_timeout'])
+        return Configuration.from_dict(config_json)
+
+

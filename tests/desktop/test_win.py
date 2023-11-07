@@ -1,23 +1,17 @@
+import appium
 from appium import webdriver
-from appium.options.windows import WindowsOptions
 from appium.webdriver.common.appiumby import AppiumBy
-import time
+
+from core.conftest import desktop_driver
 
 
-options = WindowsOptions()
-options.app = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"
-options.platform_name = "Windows"
+def test_desktop(desktop_driver: appium.webdriver.Remote):
 
-driver = webdriver.Remote(
-    command_executor='http://127.0.0.1:4723',
-    options=options
-)
+    desktop_driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'num1Button').click()
+    desktop_driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'plusButton').click()
+    desktop_driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'num2Button').click()
+    desktop_driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'equalButton').click()
 
-time.sleep(3)
+    result = desktop_driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'CalculatorResults').text
 
-driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'num1Button').click()
-driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'plusButton').click()
-driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'num2Button').click()
-driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'equalButton').click()
-
-result = driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'CalculatorResults').text
+    assert 'Display is 3' == result

@@ -4,6 +4,6 @@
     "wait_timeout": 30
   },
   "desktop": {
-    "default_os": "windows"
+    "default_os": "Windows"
   }
 }
