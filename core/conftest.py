@@ -38,7 +38,10 @@ def desktop_driver():
             options.platform_name = "Windows"
 
             driver = appium.webdriver.Remote(
-                command_executor='http://127.0.0.1:4723',
+                #command_executor='http://127.0.0.1:4723',
+                command_executor= f'{ConfigUtils().get_config().desktop.winappdriver_url}'
+                                  f':'
+                                  f'{ConfigUtils().get_config().desktop.winappdriver_port}',
                 options=options
             )
 

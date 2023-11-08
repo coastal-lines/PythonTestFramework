@@ -4,6 +4,8 @@
     "wait_timeout": 30
   },
   "desktop": {
-    "default_os": "Windows"
+    "default_os": "Windows",
+    "winappdriver_url": "http://127.0.0.1",
+    "winappdriver_port": "4723"
   }
 }

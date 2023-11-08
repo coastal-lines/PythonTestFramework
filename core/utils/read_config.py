@@ -6,17 +6,25 @@ from attr import dataclass
 @dataclass
 class Desktop:
     default_os: str
+    winappdriver_url: str
+    winappdriver_port: str
 
     @staticmethod
     def from_dict(obj: Any) -> 'Desktop':
         _default_os = str(obj.get("default_os"))
-        return Desktop(_default_os)
+        _winappdriver_url = str(obj.get("winappdriver_url"))
+        _winappdriver_port = str(obj.get("winappdriver_port"))
+        return Desktop(_default_os, _winappdriver_url, _winappdriver_port)
 
 @dataclass
 class Web:
     default_browser: str
     wait_timeout: int
 
+    '''
+    'Web' - IDE reads string 'Web' as link to class. 
+     Web  - IDE reads object 'Web' as link to initialized object.
+    '''
     @staticmethod
     def from_dict(obj: Any) -> 'Web':
         _default_browser = str(obj.get("default_browser"))
@@ -29,18 +37,11 @@ class Configuration:
     desktop: Desktop
 
     @staticmethod
-    def from_dict(obj: Any) -> 'Root':
+    def from_dict(obj: Any) -> 'Configuration':
         _web = Web.from_dict(obj.get("web"))
         _desktop = Desktop.from_dict(obj.get("desktop"))
         return Configuration(_web, _desktop)
 
-'''
-class Configuration:
-
-    def __init__(self, web_config, desktop_config):
-        self.web_config = default_browser
-        self.desktop_config = wait_timeout
-'''
 
 class ConfigUtils:
 
@@ -53,5 +54,4 @@ class ConfigUtils:
 
         #return Configuration(config['default_browser'], config['wait_timeout'])
         return Configuration.from_dict(config_json)
-
 
