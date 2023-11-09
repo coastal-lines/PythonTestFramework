@@ -26,15 +26,18 @@ def web_driver():
 
     browser_driver.quit()
 
+"""
+"request" - reserved name for pytest.
+"""
 @pytest.fixture
-def desktop_driver():
+def desktop_driver(request):
 
     driver = None
 
     match ConfigUtils().get_config().desktop.default_os:
         case 'Windows':
             options = WindowsOptions()
-            options.app = "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"
+            options.app = param_value = request.param
             options.platform_name = "Windows"
 
             driver = appium.webdriver.Remote(

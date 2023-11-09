@@ -1,10 +1,11 @@
 import appium
+import pytest
 from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
 
 from core.conftest import desktop_driver
 
-
+@pytest.mark.parametrize("desktop_driver", ["Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"], indirect=True)
 def test_desktop(desktop_driver: appium.webdriver.Remote):
 
     desktop_driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'num1Button').click()
