@@ -8,6 +8,7 @@ import selenium.webdriver
 from appium import webdriver
 from appium.options.windows import WindowsOptions
 
+from core.utils.logging_manager import LoggingManager
 from core.utils.read_config import ConfigUtils
 
 
@@ -33,6 +34,8 @@ def web_driver():
 def desktop_driver(request):
 
     driver = None
+
+    LoggingManager().log_information("-")
 
     match ConfigUtils().get_config().desktop.default_os:
         case 'Windows':
