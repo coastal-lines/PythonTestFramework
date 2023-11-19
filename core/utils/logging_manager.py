@@ -1,51 +1,55 @@
 import inspect
 import sys
 from loguru import logger
+import logging
 
 
-class LoggingManager():
+def __prepare_callstack():
+    current_callstack_list = []
 
-    def __init__(self):
-        logger.add("app.log")
+    for frame_info in reversed(inspect.stack()):
+        current_callstack_list.append(
+            "Method '{}' was called from '{}'".format(frame_info.function, frame_info.filename.split("\\")[-1]))
 
-    def __prepare_callstack(self):
+    return current_callstack_list
 
-        current_callstack_list = []
+def __prepare_callstack_message():
+    current_callstack_list = __prepare_callstack()
+    callstack_message = "Callstack: " + "\n".join(current_callstack_list)
 
-        for frame_info in reversed(inspect.stack()):
-            current_callstack_list.append("Method '{}' was called from '{}'".format(frame_info.function, frame_info.filename.split("\\")[-1]))
+    return callstack_message
 
-        return current_callstack_list
+def log_error(orig_error_message):
+    callstack_message = __prepare_callstack_message()
+    logger.error(orig_error_message + "\n" + callstack_message)
 
-    def __prepare_callstack_message(self):
+def make_filter(name):
+    def filter_record(record):
+        return record["extra"].get("name") == name
+    return filter_record
 
-        current_callstack_list = LoggingManager().__prepare_callstack()
-        callstack_message = "Callstack: " + "\n".join(current_callstack_list)
+#Logs for web
+web_logger = logger.bind(type="web", name="web")
+logger.add("web_tests.log", rotation="50 MB", level="DEBUG", filter=make_filter("web"))
 
-        return callstack_message
+#Logs for desktop
+desktop_logger = logger.bind(type="desktop", name="desktop")
+logger.add("desktop_tests.log", rotation="50 MB", level="DEBUG", filter=make_filter("desktop"))
 
-    @staticmethod
-    def log_number_arguments_error(excpected_value, actual_value):
+'''
+#Logs for the standart output
+#Setup logger for messages from the console
+app_logger = logger.bind(type="app")
+app_logger.add("system_output.log", rotation="50 MB")
+logging.basicConfig(handlers=[logging.StreamHandler(sys.stdout)], level=logging.INFO)
+logging.getLogger().setLevel(logging.ERROR)
 
-        current_callstack_list = LoggingManager().__prepare_callstack()
-        callstack_message = LoggingManager().__prepare_callstack_message()
+#Redirect messages from console into logger
+@logger.catch
+def redirect_logs(record):
+    logging.getLogger().handle(record)
 
-        error_message = f"Method {current_callstack_list[-1]} expects {excpected_value} arguments but was {actual_value}"
-        logger.error(error_message + "\n" + callstack_message)
+#Set handler for redirecting
+#logger.configure(handlers=[{"sink": redirect_logs, "enqueue": True}])
+'''
 
-        return error_message
-
-    @staticmethod
-    def log_error(orig_error_message):
-
-        callstack_message = LoggingManager().__prepare_callstack_message()
-        logger.error(orig_error_message  + "\n" + callstack_message)
-
-    @staticmethod
-    def log_information(message):
-        logger.info(message)
-
-    @staticmethod
-    def handle_unhandled_exception(exc_type, exc_value, exc_traceback):
-        sys.__excepthook__(exc_type, exc_value, exc_traceback)
-        logger.critical("Unhandled exception", exc_info=(exc_type, exc_value, exc_traceback))

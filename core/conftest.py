@@ -8,8 +8,8 @@ import selenium.webdriver
 from appium import webdriver
 from appium.options.windows import WindowsOptions
 
-from core.utils.logging_manager import LoggingManager
 from core.utils.read_config import ConfigUtils
+from core.utils.logging_manager import desktop_logger
 
 
 @pytest.fixture
@@ -30,12 +30,13 @@ def web_driver():
 """
 "request" - reserved name for pytest.
 """
+
 @pytest.fixture
 def desktop_driver(request):
 
     driver = None
 
-    LoggingManager().log_information("-")
+    desktop_logger.info(f"Current test is: {request.node.name}.")
 
     match ConfigUtils().get_config().desktop.default_os:
         case 'Windows':
@@ -53,7 +54,7 @@ def desktop_driver(request):
             #wait few seconds for starting winappdriver
             time.sleep(3)
         case _:
-            raise Exception(f'Desktop {ConfigUtils().get_config().desktop.default_os} driver was not started.')
+            desktop_logger.exception(f'Desktop "{ConfigUtils().get_config().desktop.default_os}" driver was not started.')
 
     yield driver
 
