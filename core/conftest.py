@@ -12,6 +12,11 @@ from core.utils.read_config import ConfigUtils
 from core.utils.logging_manager import desktop_logger
 
 
+@pytest.fixture(scope="session", autouse=True)
+def global_teardown():
+
+    print("\nGlobal teardown - this runs after all tests")
+
 @pytest.fixture
 def web_driver():
 

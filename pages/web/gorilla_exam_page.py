@@ -1,5 +1,7 @@
+import time
 from time import sleep
 
+from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
@@ -24,20 +26,25 @@ class GorillaExamPage():
         self.browser.get(self.PAGE_URL)
 
     def get_question_text(self) -> str:
-        WebDriverWait(self.browser, ConfigUtils.get_config().web.wait_timeout).until(
-            EC.element_to_be_clickable(self.browser.find_element(*self.ANSWERS)))
 
-        question_element = self.browser.find_element(*self.ANSWERS)
+        self.force_wait()
+
+        WebDriverWait(self.browser, ConfigUtils.get_config().web.wait_timeout).until(
+            EC.element_to_be_clickable(self.browser.find_element(*self.QUESTION)))
+
+        question_element = self.browser.find_element(*self.QUESTION)
         return question_element.text
 
     def get_answer_rgb_colour(self) -> tuple:
+
         WebDriverWait(self.browser, ConfigUtils.get_config().web.wait_timeout).until(
             lambda driver: "rgba" in self.browser.find_element(*self.ANSWERED_ITEM).value_of_css_property("background-color")
         )
 
         colour = self.browser.find_element(*self.ANSWERED_ITEM).value_of_css_property("background-color")
+        print(colour)
 
-        pattern = r'rgba\((\d+), (\d+), (\d+), \d+\.\d+\)'
+        pattern = r'rgba\((\d+),\s*(\d+),\s*(\d+),\s*([0-9.]+)\)'
         color_values = RegExpUtils.match_and_return_group(colour, pattern, 3)
 
         return color_values
@@ -45,3 +52,27 @@ class GorillaExamPage():
     def select_answer(self, answer_index: int):
         answer_element = self.browser.find_elements(*self.ANSWERS)[answer_index]
         answer_element.click()
+
+    def force_wait(self):
+
+        wait_time = 60
+        start_time = time.time()
+
+        el = None
+
+        while True:
+            current_time = time.time()
+
+            if current_time - start_time >= wait_time:
+                break
+
+            try:
+                el = WebDriverWait(self.browser, ConfigUtils.get_config().web.wait_timeout).until(EC.element_to_be_clickable(self.browser.find_element(*self.QUESTION)))
+                if (el != None):
+                    break
+            except (Exception) as ex:
+                print("Waiting element.")
+                time.sleep(3)
+
+        if (el == None):
+            raise NoSuchElementException("Element was not found.")
