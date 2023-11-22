@@ -2,9 +2,8 @@ import appium
 import pytest
 from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
-from loguru import logger
 
-from core.conftest import desktop_driver
+from core.fixtures.conftest import desktop_driver
 
 
 @pytest.mark.nonparallel

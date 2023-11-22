@@ -3,7 +3,7 @@ Tests for 'TestGorilla' service.
 '''
 import pytest
 
-from core.conftest import web_driver
+from core.fixtures.conftest import web_driver
 from pages.web.gorilla_exam_page import GorillaExamPage
 
 @pytest.mark.parametrize('answer_number', [-1])
