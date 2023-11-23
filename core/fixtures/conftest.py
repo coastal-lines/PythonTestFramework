@@ -1,6 +1,7 @@
 """
 Module for tests fixtures
 """
+
 import psutil
 import platform
 import time
@@ -11,14 +12,10 @@ from appium import webdriver
 from appium.options.windows import WindowsOptions
 from appium.webdriver.appium_service import AppiumService
 
+from core.utils import process_manager
 from core.utils.read_config import ConfigUtils
 from core.utils.logging_manager import desktop_logger
 
-
-@pytest.fixture(scope="session", autouse=True)
-def global_teardown():
-
-    print("\nGlobal teardown - this runs after all tests")
 
 @pytest.fixture
 def web_driver():
@@ -38,39 +35,16 @@ def web_driver():
 """
 "request" - reserved name for pytest.
 """
-
-def check_process(process_name):
-    for process in psutil.process_iter():
-        if process.name() == process_name:
-            return True
-    return False
-
-@pytest.fixture
+@pytest.fixture()
 def desktop_driver(request):
 
     service = None
 
-    if platform.system() == 'Windows':
-        process_name = 'node.exe'
-    elif platform.system() == 'Linux':
-        process_name = 'node'
-    else:
-        process_name = None
-
-    if process_name:
-        if not check_process(process_name):
-            service = AppiumService()
-            service.start(args=['--address', '127.0.0.1', '-p', str(4723)])
-            assert service.is_running
-            assert service.is_listening
-
-    '''
-    service = AppiumService()
-    service.start(args=['--address', '127.0.0.1', '-p', str(4723)])
-    time.sleep(20)
-    assert service.is_running
-    assert service.is_listening
-    '''
+    if not process_manager.check_process_existed("node"):
+        service = AppiumService()
+        service.start(args=['--address', '127.0.0.1', '-p', str(4723)])
+        assert service.is_running
+        assert service.is_listening
 
     driver = None
 
@@ -101,6 +75,4 @@ def desktop_driver(request):
     try:
         service.stop()
     except AttributeError:
-        for proc in psutil.process_iter():
-            if proc.name() == "node.exe":
-                proc.terminate()
+        process_manager.stop_process("node")
