@@ -3,8 +3,7 @@ import pytest
 from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
 
-from core.fixtures.conftest import desktop_driver
-
+from conftest import desktop_driver
 
 @pytest.mark.nonparallel
 @pytest.mark.parametrize("desktop_driver", ["Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"], indirect=True)

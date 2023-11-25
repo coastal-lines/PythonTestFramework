@@ -72,7 +72,14 @@ def desktop_driver(request):
 
     driver.quit()
 
+    '''
     try:
         service.stop()
     except AttributeError:
         process_manager.stop_process("node")
+    '''
+
+@pytest.fixture(scope="class", autouse=True)
+def tear_down():
+    yield
+    print("tear_down after all tests")
