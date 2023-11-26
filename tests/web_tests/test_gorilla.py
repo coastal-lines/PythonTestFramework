@@ -3,8 +3,8 @@ Tests for 'TestGorilla' service.
 '''
 import pytest
 
-from core.fixtures.conftest____ import web_driver
 from pages.web.gorilla_exam_page import GorillaExamPage
+
 
 @pytest.mark.parametrize('answer_number', [-1])
 def test_exam_title(web_driver, answer_number):

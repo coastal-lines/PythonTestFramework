@@ -41,11 +41,10 @@ class GorillaExamPage():
             lambda driver: "rgba" in self.browser.find_element(*self.ANSWERED_ITEM).value_of_css_property("background-color")
         )
 
-        colour = self.browser.find_element(*self.ANSWERED_ITEM).value_of_css_property("background-color")
-        print(colour)
+        background_colour = self.browser.find_element(*self.ANSWERED_ITEM).value_of_css_property("background-color")
 
         pattern = r'rgba\((\d+),\s*(\d+),\s*(\d+),\s*([0-9.]+)\)'
-        color_values = RegExpUtils.match_and_return_group(colour, pattern, 3)
+        color_values = RegExpUtils.match_and_return_group(background_colour, pattern, 3)
 
         return color_values
 

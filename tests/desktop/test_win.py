@@ -5,6 +5,8 @@ from appium.webdriver.common.appiumby import AppiumBy
 
 from conftest import desktop_driver
 
+
+@pytest.mark.desktop
 @pytest.mark.nonparallel
 @pytest.mark.parametrize("desktop_driver", ["Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"], indirect=True)
 def test_desktop(desktop_driver: appium.webdriver.Remote):
@@ -18,6 +20,7 @@ def test_desktop(desktop_driver: appium.webdriver.Remote):
 
     assert 'Display is 3' == result
 
+@pytest.mark.desktop
 @pytest.mark.nonparallel
 @pytest.mark.parametrize("desktop_driver", ["Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"], indirect=True)
 def test_desktop2(desktop_driver: appium.webdriver.Remote):

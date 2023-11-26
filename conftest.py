@@ -2,8 +2,6 @@
 Module for tests fixtures
 """
 
-import psutil
-import platform
 import time
 import appium
 import pytest
@@ -16,6 +14,8 @@ from core.utils import process_manager
 from core.utils.read_config import ConfigUtils
 from core.utils.logging_manager import desktop_logger
 
+#Module variables:
+appium_service = None
 
 @pytest.fixture
 def web_driver():
@@ -38,13 +38,11 @@ def web_driver():
 @pytest.fixture()
 def desktop_driver(request):
 
-    service = None
-
     if not process_manager.check_process_existed("node"):
-        service = AppiumService()
-        service.start(args=['--address', '127.0.0.1', '-p', str(4723)])
-        assert service.is_running
-        assert service.is_listening
+        appium_service = AppiumService()
+        appium_service.start(args=['--address', '127.0.0.1', '-p', str(4723)])
+        assert appium_service.is_running
+        assert appium_service.is_listening
 
     driver = None
 
@@ -72,14 +70,14 @@ def desktop_driver(request):
 
     driver.quit()
 
-    '''
-    try:
-        service.stop()
-    except AttributeError:
-        process_manager.stop_process("node")
-    '''
+@pytest.fixture(scope='session', autouse=True)
+def tear_down(request):
 
-@pytest.fixture(scope="class", autouse=True)
-def tear_down():
+    global appium_service
+
     yield
-    print("tear_down after all tests")
+    if (request.node.path.name == 'desktop'):
+        try:
+            appium_service.stop()
+        except AttributeError:
+            process_manager.stop_process("node")
