@@ -1,8 +1,12 @@
 import inspect
-import sys
+import os
 from loguru import logger
-import logging
 
+
+#Module variables:
+log_files_path = os.path.join(os.path.dirname(__file__), "../../resources/logs")
+web_logs_path = os.path.join(log_files_path, "web_tests.json")
+desktop_logs_path = os.path.join(log_files_path, "desktop_tests.json")
 
 def __prepare_callstack():
     current_callstack_list = []
@@ -30,26 +34,11 @@ def make_filter(name):
 
 #Logs for web
 web_logger = logger.bind(type="web", name="web")
-logger.add("web_tests.log", rotation="50 MB", level="DEBUG", filter=make_filter("web"))
+logger.add(web_logs_path, rotation="50 MB", level="DEBUG", filter=make_filter("web"))
+#logger.add(web_logs_path, rotation="50 MB", level="DEBUG", filter=make_filter("web"), format="{\"time\":\"{time:YYYY-MM-DD HH:mm:ss.SSS}\", \"level\":\"{level}\", \"message\":\"{message}\"}")
 
 #Logs for desktop
 desktop_logger = logger.bind(type="desktop", name="desktop")
-logger.add("desktop_tests.log", rotation="50 MB", level="DEBUG", filter=make_filter("desktop"))
-
-'''
-#Logs for the standart output
-#Setup logger for messages from the console
-app_logger = logger.bind(type="app")
-app_logger.add("system_output.log", rotation="50 MB")
-logging.basicConfig(handlers=[logging.StreamHandler(sys.stdout)], level=logging.INFO)
-logging.getLogger().setLevel(logging.ERROR)
-
-#Redirect messages from console into logger
-@logger.catch
-def redirect_logs(record):
-    logging.getLogger().handle(record)
-
-#Set handler for redirecting
-#logger.configure(handlers=[{"sink": redirect_logs, "enqueue": True}])
-'''
+logger.add(desktop_logs_path, rotation="50 MB", level="DEBUG", filter=make_filter("desktop"))
+#logger.add(desktop_logs_path, rotation="50 MB", level="DEBUG", filter=make_filter("desktop"), format="{\"time\":\"{time:YYYY-MM-DD HH:mm:ss.SSS}\", \"level\":\"{level}\", \"message\":\"{message}\"}")
 
