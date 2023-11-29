@@ -1,0 +1,40 @@
+{
+  "text": "March 7, 2024 > 09:00:47 | INFO | Current test is: test_exam_title[-1].\n",
+  "record": {
+    "elapsed": {
+      "repr": "0:00:00.148997",
+      "seconds": 0.148997
+    },
+    "exception": null,
+    "extra": {
+      "type": "web",
+      "name": "web"
+    },
+    "file": {
+      "name": "conftest.py",
+      "path": "C:\\Repos\\MyGit\\PythonTestFramework\\conftest.py"
+    },
+    "function": "web_driver",
+    "level": {
+      "icon": "ℹ️",
+      "name": "INFO",
+      "no": 20
+    },
+    "line": 24,
+    "message": "Current test is: test_exam_title[-1].",
+    "module": "conftest",
+    "name": "conftest",
+    "process": {
+      "id": 19364,
+      "name": "MainProcess"
+    },
+    "thread": {
+      "id": 22000,
+      "name": "MainThread"
+    },
+    "time": {
+      "repr": "2024-03-07 10:00:47.067230+01:00",
+      "timestamp": 1709802047.06723
+    }
+  }
+}
