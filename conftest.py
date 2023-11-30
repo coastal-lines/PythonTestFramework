@@ -13,7 +13,7 @@ from appium.webdriver.appium_service import AppiumService
 from core.utils import process_manager
 from core.utils.read_config import ConfigUtils
 from core.utils.logging_manager import desktop_logger, web_logger
-
+from pages.web.gorilla_exam_page import BaseWebPage
 
 #Module variables:
 appium_service = None
