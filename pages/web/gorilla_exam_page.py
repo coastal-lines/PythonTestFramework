@@ -12,28 +12,21 @@ from core.utils.read_config import ConfigUtils
 from core.utils.regexp_utils import RegExpUtils
 
 
-'''
 class Element:
 
-    def __init__(self, browser: WebDriver, locator: tuple):
-        self._driver = browser
+    def __init__(self, locator: tuple):
         self._locator = locator
 
-    @property
-    def init(self):
-
-        return WebDriverWait(self._driver, 10).until(EC.presence_of_element_located(self._locator))
-'''
+    def init(self, driver: selenium.webdriver):
+        return WebDriverWait(driver, 10).until(EC.presence_of_element_located(self._locator))
 
 class BaseWebPage:
 
     def __init__(self, driver: selenium.webdriver):
-
         self._driver = driver
 
     @property
     def driver(self):
-
         return self._driver
 
 class GorillaExamPage(BaseWebPage):
@@ -42,14 +35,16 @@ class GorillaExamPage(BaseWebPage):
 
     QUESTION = (By.CSS_SELECTOR, 'p strong')
     ANSWERS = (By.CSS_SELECTOR, 'app-tgo-choice tgo-quill-view')
-    ANSWERED_ITEM = (By.XPATH, '//div[@class="tgo-choice tgo-choice--selected"]')
+    #ANSWERED_ITEM = (By.XPATH, '//div[@class="tgo-choice tgo-choice--selected"]')
 
-    #TEST_ELEMENT =
+    ANSWERED_ITEM_OBJ = Element((By.XPATH, '//div[@class="tgo-choice tgo-choice--selected"]'))
 
     def __init__(self, browser: WebDriver):
 
         super().__init__(browser)
         #self.browser = browser
+
+
 
     def load(self):
 
@@ -79,12 +74,18 @@ class GorillaExamPage(BaseWebPage):
         )
         '''
         driver = super().driver
+        '''
         WebDriverWait(driver, ConfigUtils.get_config().web.wait_timeout).until(
             lambda drv: "rgba" in driver.find_element(*self.ANSWERED_ITEM).value_of_css_property("background-color")
         )
+        '''
+        WebDriverWait(driver, ConfigUtils.get_config().web.wait_timeout).until(
+            lambda drv: "rgba" in self.ANSWERED_ITEM_OBJ.init(driver).value_of_css_property("background-color")
+        )
 
         #background_colour = self.browser.find_element(*self.ANSWERED_ITEM).value_of_css_property("background-color")
-        background_colour = super().driver.find_element(*self.ANSWERED_ITEM).value_of_css_property("background-color")
+        #background_colour = super().driver.find_element(*self.ANSWERED_ITEM).value_of_css_property("background-color")
+        background_colour = self.ANSWERED_ITEM_OBJ.init(super().driver).value_of_css_property("background-color")
 
         pattern = r'rgba\((\d+),\s*(\d+),\s*(\d+),\s*([0-9.]+)\)'
         color_values = RegExpUtils.match_and_return_group(background_colour, pattern, 3)
