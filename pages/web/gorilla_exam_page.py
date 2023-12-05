@@ -35,57 +35,33 @@ class GorillaExamPage(BaseWebPage):
 
     QUESTION = (By.CSS_SELECTOR, 'p strong')
     ANSWERS = (By.CSS_SELECTOR, 'app-tgo-choice tgo-quill-view')
-    #ANSWERED_ITEM = (By.XPATH, '//div[@class="tgo-choice tgo-choice--selected"]')
-
-    ANSWERED_ITEM_OBJ = Element((By.XPATH, '//div[@class="tgo-choice tgo-choice--selected"]'))
+    ANSWERED_ITEM = Element((By.XPATH, '//div[@class="tgo-choice tgo-choice--selected"]'))
 
     def __init__(self, browser: WebDriver):
-
         super().__init__(browser)
-        #self.browser = browser
-
-
 
     def load(self):
-
-        #self.browser.get(self.PAGE_URL)
         super().driver.get(self.PAGE_URL)
 
     def get_question_text(self) -> str:
 
         self.force_wait()
 
-        #WebDriverWait(self.browser, ConfigUtils.get_config().web.wait_timeout).until(
-        #    EC.element_to_be_clickable(self.browser.find_element(*self.QUESTION)))
-
         WebDriverWait(super().driver, ConfigUtils.get_config().web.wait_timeout).until(
             EC.element_to_be_clickable(super().driver.find_element(*self.QUESTION)))
 
-        #question_element = self.browser.find_element(*self.QUESTION)
         question_element = super().driver.find_element(*self.QUESTION)
 
         return question_element.text
 
     def get_answer_rgb_colour(self) -> tuple:
 
-        '''
-        WebDriverWait(self.browser, ConfigUtils.get_config().web.wait_timeout).until(
-            lambda driver: "rgba" in self.browser.find_element(*self.ANSWERED_ITEM).value_of_css_property("background-color")
-        )
-        '''
         driver = super().driver
-        '''
         WebDriverWait(driver, ConfigUtils.get_config().web.wait_timeout).until(
-            lambda drv: "rgba" in driver.find_element(*self.ANSWERED_ITEM).value_of_css_property("background-color")
-        )
-        '''
-        WebDriverWait(driver, ConfigUtils.get_config().web.wait_timeout).until(
-            lambda drv: "rgba" in self.ANSWERED_ITEM_OBJ.init(driver).value_of_css_property("background-color")
+            lambda drv: "rgba" in self.ANSWERED_ITEM.init(driver).value_of_css_property("background-color")
         )
 
-        #background_colour = self.browser.find_element(*self.ANSWERED_ITEM).value_of_css_property("background-color")
-        #background_colour = super().driver.find_element(*self.ANSWERED_ITEM).value_of_css_property("background-color")
-        background_colour = self.ANSWERED_ITEM_OBJ.init(super().driver).value_of_css_property("background-color")
+        background_colour = self.ANSWERED_ITEM.init(super().driver).value_of_css_property("background-color")
 
         pattern = r'rgba\((\d+),\s*(\d+),\s*(\d+),\s*([0-9.]+)\)'
         color_values = RegExpUtils.match_and_return_group(background_colour, pattern, 3)
@@ -93,7 +69,7 @@ class GorillaExamPage(BaseWebPage):
         return color_values
 
     def select_answer(self, answer_index: int):
-        #answer_element = self.browser.find_elements(*self.ANSWERS)[answer_index]
+
         answer_element = super().driver.find_elements(*self.ANSWERS)[answer_index]
         answer_element.click()
 
@@ -111,7 +87,6 @@ class GorillaExamPage(BaseWebPage):
                 break
 
             try:
-                #el = WebDriverWait(self.browser, ConfigUtils.get_config().web.wait_timeout).until(EC.element_to_be_clickable(self.browser.find_element(*self.QUESTION)))
                 el = WebDriverWait(super().driver, ConfigUtils.get_config().web.wait_timeout).until(EC.element_to_be_clickable(super().driver.find_element(*self.QUESTION)))
                 if (el != None):
                     break
