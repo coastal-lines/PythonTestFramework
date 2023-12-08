@@ -35,7 +35,7 @@ def make_filter(name):
 #Logs for web
 web_logger = logger.bind(type="web", name="web")
 logger.add(web_logs_path,
-           rotation="50 MB",
+           rotation="1 MB",
            level="DEBUG",
            filter=make_filter("web"),
            serialize=True,
@@ -44,7 +44,7 @@ logger.add(web_logs_path,
 #Logs for desktop
 desktop_logger = logger.bind(type="desktop", name="desktop")
 logger.add(desktop_logs_path,
-            rotation = "50 MB",
+            rotation = "1 MB",
             level = "DEBUG",
             filter = make_filter("desktop"),
             serialize = True,

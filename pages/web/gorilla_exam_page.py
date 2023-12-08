@@ -18,7 +18,17 @@ class Element:
         self._locator = locator
 
     def init(self, driver: selenium.webdriver):
-        return WebDriverWait(driver, 10).until(EC.presence_of_element_located(self._locator))
+        return WebDriverWait(driver, ConfigUtils.get_config().web.wait_timeout).until(EC.presence_of_element_located(self._locator))
+
+    def value_of_css_property(self, driver: selenium.webdriver, property: str, value: str):
+
+        element = self.init(driver)
+
+        WebDriverWait(driver, ConfigUtils.get_config().web.wait_timeout).until(
+            lambda drv: value in element.value_of_css_property(property)
+        )
+
+        return element.value_of_css_property(property)
 
 class BaseWebPage:
 
@@ -56,12 +66,12 @@ class GorillaExamPage(BaseWebPage):
 
     def get_answer_rgb_colour(self) -> tuple:
 
-        driver = super().driver
-        WebDriverWait(driver, ConfigUtils.get_config().web.wait_timeout).until(
-            lambda drv: "rgba" in self.ANSWERED_ITEM.init(driver).value_of_css_property("background-color")
-        )
+        #driver = super().driver
+        #WebDriverWait(driver, ConfigUtils.get_config().web.wait_timeout).until(
+        #    lambda drv: "rgba" in self.ANSWERED_ITEM.init(driver).value_of_css_property("background-color")
+        #)
 
-        background_colour = self.ANSWERED_ITEM.init(super().driver).value_of_css_property("background-color")
+        background_colour = self.ANSWERED_ITEM.value_of_css_property(super().driver, "background-color", "rgba")
 
         pattern = r'rgba\((\d+),\s*(\d+),\s*(\d+),\s*([0-9.]+)\)'
         color_values = RegExpUtils.match_and_return_group(background_colour, pattern, 3)
