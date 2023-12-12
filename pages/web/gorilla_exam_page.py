@@ -8,7 +8,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from core.utils.read_config import ConfigUtils
+from core.utils.config_manager import ConfigUtils
 from core.utils.regexp_utils import RegExpUtils
 
 

@@ -11,9 +11,8 @@ from appium.options.windows import WindowsOptions
 from appium.webdriver.appium_service import AppiumService
 
 from core.utils import process_manager
-from core.utils.read_config import ConfigUtils
+from core.utils.config_manager import ConfigUtils
 from core.utils.logging_manager import desktop_logger, web_logger
-from pages.web.gorilla_exam_page import BaseWebPage
 
 #Module variables:
 appium_service = None
@@ -43,7 +42,8 @@ def desktop_driver(request):
 
     if not process_manager.check_process_existed("node"):
         appium_service = AppiumService()
-        appium_service.start(args=["--address", "127.0.0.1", "-p", str(4723)])
+        appium_service.start(args=["--address", ConfigUtils().get_config().desktop.appium_url,
+                                   "-p", ConfigUtils().get_config().desktop.appium_port])
         assert appium_service.is_running
         assert appium_service.is_listening
 

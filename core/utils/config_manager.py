@@ -9,14 +9,18 @@ class Desktop:
     default_os: str
     winappdriver_url: str
     winappdriver_port: str
+    appium_url: str
+    appium_port: str
 
     @staticmethod
     def from_dict(obj: Any) -> 'Desktop':
         _default_os = str(obj.get("default_os"))
         _winappdriver_url = str(obj.get("winappdriver_url"))
         _winappdriver_port = str(obj.get("winappdriver_port"))
+        _appium_url = str(obj.get("appium_url"))
+        _appium_port = str(obj.get("appium_port"))
 
-        return Desktop(_default_os, _winappdriver_url, _winappdriver_port)
+        return Desktop(_default_os, _winappdriver_url, _winappdriver_port, _appium_url, _appium_port)
 
 @dataclass
 class Web:
