@@ -1,5 +1,6 @@
 import json
 import os
+import threading
 from typing import Any
 from attr import dataclass
 
@@ -52,12 +53,21 @@ class Configuration:
 
 class ConfigUtils:
 
-    @staticmethod
-    def get_config() -> Configuration:
+    _instance = None
+    _lock = threading.Lock()
 
+    @staticmethod
+    def get_config():
+        if not ConfigUtils._instance:
+            with ConfigUtils._lock:
+                if not ConfigUtils._instance:
+                    ConfigUtils._instance = ConfigUtils._load_config()
+
+        return ConfigUtils._instance
+
+    @staticmethod
+    def _load_config() -> Configuration:
         config_path = os.path.join(os.path.dirname(__file__), '../../config.json')
         with open(config_path) as config_file:
             config_json = json.load(config_file)
-
         return Configuration.from_dict(config_json)
-
