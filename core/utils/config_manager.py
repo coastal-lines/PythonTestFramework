@@ -51,7 +51,10 @@ class Configuration:
 
         return Configuration(_web, _desktop)
 
-class ConfigUtils:
+'''
+
+'''
+class ConfigUtilsThreads:
 
     _instance = None
     _lock = threading.Lock()
@@ -70,4 +73,37 @@ class ConfigUtils:
         config_path = os.path.join(os.path.dirname(__file__), '../../config.json')
         with open(config_path) as config_file:
             config_json = json.load(config_file)
+
         return Configuration.from_dict(config_json)
+
+
+class ConfigUtils:
+
+    _instance = None
+
+    _conf = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance._initialized = False
+
+        return cls._instance
+
+    def _load_config(self):
+        config_path = os.path.join(os.path.dirname(__file__), '../../config.json')
+        with open(config_path) as config_file:
+            config_json = json.load(config_file)
+
+        self._conf = Configuration.from_dict(config_json)
+
+        self._initialized = True
+
+        #return Configuration.from_dict(config_json)
+
+    @staticmethod
+    def get_config(self):
+        if not self._initialized:
+            self._load_config()
+
+        return self._conf
