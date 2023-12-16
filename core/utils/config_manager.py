@@ -79,31 +79,32 @@ class ConfigUtilsThreads:
 
 class ConfigUtils:
 
+    _initialized = False
     _instance = None
-
-    _conf = None
+    _config_data = None
 
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
-            cls._instance._initialized = False
 
         return cls._instance
 
-    def _load_config(self):
-        config_path = os.path.join(os.path.dirname(__file__), '../../config.json')
-        with open(config_path) as config_file:
-            config_json = json.load(config_file)
+    @staticmethod
+    def _load_config():
+        if not ConfigUtils._initialized:
+            config_path = os.path.join(os.path.dirname(__file__), '../../config.json')
+            with open(config_path) as config_file:
+                #config_json = json.load(config_file)
+                ConfigUtils._config_data = Configuration.from_dict(json.load(config_file))
 
-        self._conf = Configuration.from_dict(config_json)
-
-        self._initialized = True
+            #ConfigUtils._config_data = Configuration.from_dict(config_json)
+            ConfigUtils._initialized = True
 
         #return Configuration.from_dict(config_json)
 
     @staticmethod
-    def get_config(self):
-        if not self._initialized:
-            self._load_config()
+    def get_config():
+        if not ConfigUtils._initialized:
+            ConfigUtils._load_config()
 
-        return self._conf
+        return ConfigUtils._config_data
