@@ -51,22 +51,19 @@ class Configuration:
 
         return Configuration(_web, _desktop)
 
-'''
-
-'''
-class ConfigUtilsThreads:
+class ConfigUtilsThreadSafe:
 
     _instance = None
     _lock = threading.Lock()
 
     @staticmethod
     def get_config():
-        if not ConfigUtils._instance:
-            with ConfigUtils._lock:
-                if not ConfigUtils._instance:
-                    ConfigUtils._instance = ConfigUtils._load_config()
+        if not ConfigUtilsThreadSafe._instance:
+            with ConfigUtilsThreadSafe._lock:
+                if not ConfigUtilsThreadSafe._instance:
+                    ConfigUtilsThreadSafe._instance = ConfigUtilsThreadSafe._load_config()
 
-        return ConfigUtils._instance
+        return ConfigUtilsThreadSafe._instance
 
     @staticmethod
     def _load_config() -> Configuration:
@@ -75,7 +72,6 @@ class ConfigUtilsThreads:
             config_json = json.load(config_file)
 
         return Configuration.from_dict(config_json)
-
 
 class ConfigUtils:
 
@@ -94,13 +90,8 @@ class ConfigUtils:
         if not ConfigUtils._initialized:
             config_path = os.path.join(os.path.dirname(__file__), '../../config.json')
             with open(config_path) as config_file:
-                #config_json = json.load(config_file)
                 ConfigUtils._config_data = Configuration.from_dict(json.load(config_file))
-
-            #ConfigUtils._config_data = Configuration.from_dict(config_json)
             ConfigUtils._initialized = True
-
-        #return Configuration.from_dict(config_json)
 
     @staticmethod
     def get_config():
