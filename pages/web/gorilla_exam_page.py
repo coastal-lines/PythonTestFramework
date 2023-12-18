@@ -22,16 +22,7 @@ class Element:
 
     def value_of_css_property(self, driver: selenium.webdriver, property: str, value: str):
         element = self.init(driver)
-        '''
-        
-        pr = element.value_of_css_property(property)
-        b = value in element.value_of_css_property(property)
 
-
-        b2 = WebDriverWait(driver, 10).until(
-            lambda drv: "rgba" in element.value_of_css_property("background-color")
-        )
-        '''
         WebDriverWait(driver, ConfigUtils.get_config().web.wait_timeout).until(
             lambda drv: value in element.value_of_css_property(property)
         )

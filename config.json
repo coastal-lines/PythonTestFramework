@@ -1,6 +1,6 @@
 {
   "web": {
-    "default_browser": "Chrome",
+    "default_browser": "Firefox",
     "wait_timeout": 30
   },
   "desktop": {
