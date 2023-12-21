@@ -36,7 +36,9 @@ class GorillaExamPage(BaseWebPage):
         super().driver.get(self.PAGE_URL)
 
     def get_question_text(self) -> str:
-        self.force_wait()
+        #self.force_wait()
+
+        time.sleep(6)
 
         WebDriverWait(super().driver, ConfigUtils.get_config().web.wait_timeout).until(
             EC.element_to_be_clickable(super().driver.find_element(*self.QUESTION)))
@@ -57,6 +59,7 @@ class GorillaExamPage(BaseWebPage):
         answer_element = super().driver.find_elements(*self.ANSWERS)[answer_index]
         answer_element.click()
 
+    '''
     def force_wait(self):
         wait_time = 60
         start_time = time.time()
@@ -79,3 +82,4 @@ class GorillaExamPage(BaseWebPage):
 
         if (el == None):
             raise NoSuchElementException("Element was not found.")
+    '''
