@@ -17,8 +17,11 @@ class Element:
         return self._locator
 
     def init(self, driver: selenium.webdriver):
-        return WaitingManager.wait_element_displayed(driver, self)
+        return WaitingManager.wait_element_displayed(driver, self._locator)
         #return WebDriverWait(driver, ConfigUtils.get_config().web.wait_timeout).until(EC.presence_of_element_located(self._locator))
+
+    def init_force(self, driver: selenium.webdriver):
+        return WaitingManager.force_wait_element(driver, self._locator)
 
     def value_of_css_property(self, driver: selenium.webdriver, property: str, value: str):
         element = self.init(driver)
