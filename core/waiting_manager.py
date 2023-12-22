@@ -37,7 +37,6 @@ class WaitingManager:
                 el = WebDriverWait(driver, wait_time).until(EC.element_to_be_clickable(driver.find_element(*locator)))
                 if (el != None):
                     return el
-                    #break
             except (Exception) as ex:
                 print("Waiting element.")
                 time.sleep(3)
