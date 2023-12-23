@@ -20,8 +20,8 @@ class GorillaExamPage(BaseWebPage):
     PAGE_URL = "https://app.testgorilla.com/preview/7aee275a-8df7-469f-98b2-68ea44c994e4?language=en"
 
     QUESTION_ELEMENT = Element((By.CSS_SELECTOR, 'p strong'))
-    ANSWERS = (By.CSS_SELECTOR, 'app-tgo-choice tgo-quill-view')
-    ANSWERED_ITEM = Element((By.XPATH, '//div[@class="tgo-choice tgo-choice--selected"]'))
+    ANSWERS_ELEMENT = Element((By.CSS_SELECTOR, 'app-tgo-choice tgo-quill-view'))
+    ANSWERED_ITEM_ELEMENT = Element((By.XPATH, '//div[@class="tgo-choice tgo-choice--selected"]'))
 
     def __init__(self, browser: WebDriver):
         super().__init__(browser)
@@ -33,7 +33,9 @@ class GorillaExamPage(BaseWebPage):
         return self.QUESTION_ELEMENT.init_force(super().driver).text
 
     def get_answer_rgb_colour(self) -> tuple:
-        background_colour = self.ANSWERED_ITEM.value_of_css_property(super().driver, "background-color", "rgba")
+        #background_colour = self.ANSWERED_ITEM_ELEMENT.value_of_css_property(super().driver, "background-color", "rgba")
+
+        
 
         pattern = r'rgba\((\d+),\s*(\d+),\s*(\d+),\s*([0-9.]+)\)'
         color_values = RegExpUtils.match_and_return_group(background_colour, pattern, 3)
@@ -41,5 +43,7 @@ class GorillaExamPage(BaseWebPage):
         return color_values
 
     def select_answer(self, answer_index: int):
-        answer_element = super().driver.find_elements(*self.ANSWERS)[answer_index]
-        answer_element.click()
+        answers_list_element = self.ANSWERS_ELEMENT.init(super().driver, True)
+        #answer_element = super().driver.find_elements(*self.ANSWERS)[answer_index]
+        #answer_element.click()
+        answers_list_element[answer_index].click()

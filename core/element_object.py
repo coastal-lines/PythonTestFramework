@@ -13,8 +13,12 @@ class Element:
     def locator(self) -> tuple:
         return self._locator
 
-    def init(self, driver: selenium.webdriver):
-        return WaitingManager.wait_element_displayed(driver, self._locator)
+    def init(self, driver: selenium.webdriver, isList = False):
+        if (isList):
+            WaitingManager.wait_element_displayed(driver, self._locator)
+            return driver.find_elements(*self._locator)
+        else:
+            return WaitingManager.wait_element_displayed(driver, self._locator)
 
     def init_force(self, driver: selenium.webdriver):
         return WaitingManager.force_wait_element(driver, self._locator)
