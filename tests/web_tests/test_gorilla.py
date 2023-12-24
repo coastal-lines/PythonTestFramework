@@ -15,6 +15,7 @@ def test_exam_title(web_driver, answer_number):
     gorilla_exam_page = GorillaExamPage(web_driver)
 
     #step 1 - navigate into Exam Gorrila page
+    web_driver.maximize_window()
     gorilla_exam_page.load()
 
     #step 2 - check question text

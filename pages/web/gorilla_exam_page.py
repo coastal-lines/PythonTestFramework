@@ -1,8 +1,10 @@
 import selenium
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
+from selenium.webdriver.support.wait import WebDriverWait
 
 from core.element_object import Element
+from core.utils.config_manager import ConfigUtils
 from core.utils.regexp_utils import RegExpUtils
 
 
@@ -35,7 +37,13 @@ class GorillaExamPage(BaseWebPage):
     def get_answer_rgb_colour(self) -> tuple:
         #background_colour = self.ANSWERED_ITEM_ELEMENT.value_of_css_property(super().driver, "background-color", "rgba")
 
-        
+        driver = super().driver
+        WebDriverWait(driver, ConfigUtils.get_config().web.wait_timeout).until(
+            lambda drv: "rgba" in driver.find_element(By.XPATH, '//div[@class="tgo-choice tgo-choice--selected"]').value_of_css_property("background-color")
+        )
+
+        background_colour = super().driver.find_element(By.XPATH, '//div[@class="tgo-choice tgo-choice--selected"]').value_of_css_property("background-color")
+        print(background_colour)
 
         pattern = r'rgba\((\d+),\s*(\d+),\s*(\d+),\s*([0-9.]+)\)'
         color_values = RegExpUtils.match_and_return_group(background_colour, pattern, 3)
