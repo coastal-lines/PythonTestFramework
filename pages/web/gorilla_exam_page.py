@@ -1,19 +1,11 @@
-import selenium
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from core.element_object import Element
 from core.utils.regexp_utils import RegExpUtils
+from pages.base_web_page import BaseWebPage
 
-
-class BaseWebPage:
-
-    def __init__(self, driver: selenium.webdriver):
-        self._driver = driver
-
-    @property
-    def driver(self):
-        return self._driver
 
 class GorillaExamPage(BaseWebPage):
 

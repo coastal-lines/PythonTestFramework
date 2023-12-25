@@ -5,8 +5,8 @@ from loguru import logger
 
 #Module variables:
 log_files_path = os.path.join(os.path.dirname(__file__), "../../resources/logs")
-web_logs_path = os.path.join(log_files_path, "web_tests.json")
-desktop_logs_path = os.path.join(log_files_path, "desktop_tests.json")
+web_logs_path = os.path.join(log_files_path, "web\\web_tests.json")
+desktop_logs_path = os.path.join(log_files_path, "desktop\\desktop_tests.json")
 
 def __prepare_callstack():
     current_callstack_list = []

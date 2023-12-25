@@ -1,7 +1,7 @@
 """
 Module for tests fixtures
 """
-
+import os
 import time
 import appium
 import pytest
@@ -16,9 +16,12 @@ from core.utils.logging_manager import desktop_logger, web_logger
 
 #Module variables:
 appium_service = None
+#browser_driver = None
 
 @pytest.fixture
 def web_driver(request):
+
+    global browser_driver
 
     web_logger.info(f"Current test is: {request.node.name}.")
 
@@ -77,6 +80,7 @@ def desktop_driver(request):
 def tear_down(request):
 
     global appium_service
+    global browser_driver
 
     yield
     if (request.node.path.name == "desktop"):
@@ -84,3 +88,16 @@ def tear_down(request):
             appium_service.stop()
         except AttributeError:
             process_manager.stop_process("node")
+
+#Debugging and Interaction hooks
+def pytest_exception_interact(node, call, report):
+    if report.failed:
+        try:
+            browser_driver = node.funcargs['web_driver']
+
+            log_files_path = os.path.join(os.path.dirname(__file__), "resources\\logs\\web\\screenshots")
+            screenshot_path = f"{log_files_path}\\{node.name}.png"
+
+            browser_driver.save_screenshot(screenshot_path)
+        except Exception as e:
+            web_logger.exception(f"Screenshot was not saved for '{node.name}' test. \n Error: {e}")
