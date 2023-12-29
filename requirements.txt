@@ -1,0 +1,11 @@
+pytest==8.0.0
+assertpy==1.1
+Appium-Python-Client==3.2.1
+selenium==4.18.1
+loguru==0.7.2
+attrs==23.2.0
+chromedriver-py==121.0.6167.85
+geckodriver==0.0.1
+psutil==5.9.8
+allure-pytest==2.13.2
+requests==2.31.0

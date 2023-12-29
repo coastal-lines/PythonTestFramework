@@ -21,7 +21,7 @@ appium_service = None
 @pytest.fixture
 def web_driver(request):
 
-    global browser_driver
+    #global browser_driver
 
     web_logger.info(f"Current test is: {request.node.name}.")
 
@@ -52,7 +52,7 @@ def desktop_driver(request):
 
     driver = None
 
-    desktop_logger.info(f"Current test is: {request.node.name}.")
+    #desktop_logger.info(f"Current test is: {request.node.name}.")
 
     match ConfigUtils().get_config().desktop.default_os:
         case "Windows":
@@ -93,11 +93,15 @@ def tear_down(request):
 def pytest_exception_interact(node, call, report):
     if report.failed:
         try:
-            browser_driver = node.funcargs['web_driver']
+            if (node.path.name == "desktop"):
+                pass
+            elif (node.path.name == "web_tests"):
+                browser_driver = node.funcargs['web_driver']
 
-            log_files_path = os.path.join(os.path.dirname(__file__), "resources\\logs\\web\\screenshots")
-            screenshot_path = f"{log_files_path}\\{node.name}.png"
+                log_files_path = os.path.join(os.path.dirname(__file__), "resources\\logs\\web\\screenshots")
+                screenshot_path = f"{log_files_path}\\{node.name}.png"
 
-            browser_driver.save_screenshot(screenshot_path)
+                browser_driver.save_screenshot(screenshot_path)
+                web_logger.exception(f"\n Error: \n {report.longreprtext}")
         except Exception as e:
             web_logger.exception(f"Screenshot was not saved for '{node.name}' test. \n Error: {e}")
