@@ -1,10 +1,28 @@
+import json
 import requests
-from json import dumps
-from assertpy.assertpy import assert_that
+from assertpy.assertpy import assert_that, soft_assertions
 
-
-KARABURMA_BASE_URL = "http://127.0.0.1:8900/api/v1/"
+KARABURMA_BASE_URL = "http://127.0.0.1:8900/api/v1"
 
 def test_karaburma_server_available():
-    response = requests.get(KARABURMA_BASE_URL)
+    response = requests.get(url=KARABURMA_BASE_URL)
     assert_that(response.status_code).is_equal_to(requests.codes.ok)
+
+def test_image_file_contains_any_button():
+
+    payload = json.dumps({
+        "image_file_path": "C:/Repos/MyGit/Karaburma/tests/test_images/all_elements.png",
+        "type_element": "button",
+        "is_read_text": False
+    })
+
+    headers = {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+    }
+
+    response = requests.post(url=f"{KARABURMA_BASE_URL}/file", headers=headers, data=payload)
+    result = json.loads(response.text)
+
+    with soft_assertions():
+        assert_that(result["elements"]).is_not_empty().extracting("label").contains("button")
