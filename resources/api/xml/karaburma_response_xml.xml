@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+   <h>1079</h>
+   <w>1857</w>
+   <listbox_elements />
+   <table_elements />
+   <elements>
+      <element>
+         <h>26</h>
+         <id>0</id>
+         <label>button</label>
+         <prediction>0.90</prediction>
+         <text />
+         <w>109</w>
+         <x>1224</x>
+         <y>727</y>
+      </element>
+   </elements>
+</root>
