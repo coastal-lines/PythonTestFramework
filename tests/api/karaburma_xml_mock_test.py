@@ -3,8 +3,8 @@ import requests
 from assertpy import soft_assertions, assert_that
 from pytest_mock import mocker
 
-from core.utils import files_helper
-from resources.api.api_resources_data_class import ApiResourcesData
+from core.utils import path_helper
+from resources.api.api_image_resources_data_class import ApiImageResourcesData
 
 KARABURMA_BASE_URL = "http://127.0.0.1:8900/api/v1"
 
@@ -13,7 +13,7 @@ def test_image_file_contains_any_button():
     mocker.patch.object(requests, 'post', return_value=MockResponse())
 
     payload = json.dumps({
-        "image_file_path": f"{files_helper.read_resource(ApiResourcesData.karaburma_main_image)}"
+        "image_file_path": f"{path_helper.get_resource_path(ApiImageResourcesData.karaburma_main_image)}"
     })
 
     headers = {

@@ -2,21 +2,24 @@ import json
 import requests
 from assertpy.assertpy import assert_that, soft_assertions
 
-from core.utils import files_helper
-from resources.api.api_resources_data_class import ApiResourcesData
-
+from core.utils import path_helper
+from resources.api.api_image_resources_data_class import ApiImageResourcesData
+from resources.api.api_xml_resources_data_class import ApiXmlResourceData
 
 KARABURMA_BASE_URL = "http://127.0.0.1:8900/api/v1"
 
-def test_karaburma_server_available():
-    x = ApiResourcesData.get_karaburma_xml_response()
 
+def test_xml():
+    xml = ApiXmlResourceData.karaburma_xml_response
+    assert_that(xml.xpath("//root/h")[0].text).is_equal_to("1079")
+
+def test_karaburma_server_available():
     response = requests.get(url=KARABURMA_BASE_URL)
     assert_that(response.status_code).is_equal_to(requests.codes.ok)
 
 def test_image_file_contains_any_button():
     payload = json.dumps({
-        "image_file_path": f"{files_helper.read_resource(ApiResourcesData.karaburma_main_image)}",
+        "image_file_path": f"{path_helper.get_resource_path(ApiImageResourcesData.karaburma_main_image)}",
         "type_element": "button",
         "is_read_text": False
     })
