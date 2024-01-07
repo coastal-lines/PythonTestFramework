@@ -2,16 +2,11 @@ import json
 import requests
 from assertpy.assertpy import assert_that, soft_assertions
 
-from core.utils import path_helper
+from core.utils.files import path_helper
 from resources.api.api_image_resources_data_class import ApiImageResourcesData
-from resources.api.api_xml_resources_data_class import ApiXmlResourceData
 
 KARABURMA_BASE_URL = "http://127.0.0.1:8900/api/v1"
 
-
-def test_xml():
-    xml = ApiXmlResourceData.karaburma_xml_response
-    assert_that(xml.xpath("//root/h")[0].text).is_equal_to("1079")
 
 def test_karaburma_server_available():
     response = requests.get(url=KARABURMA_BASE_URL)

@@ -10,7 +10,7 @@ from appium import webdriver
 from appium.options.windows import WindowsOptions
 from appium.webdriver.appium_service import AppiumService
 
-from core.utils import process_manager
+from core.utils.os import process_manager
 from core.utils.config_manager import ConfigUtils
 from core.utils.logging_manager import desktop_logger, web_logger
 
