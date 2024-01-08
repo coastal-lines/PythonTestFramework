@@ -2,6 +2,14 @@ import json
 from jsonpath_ng import jsonpath, parse
 
 
+"""
+json.load()  - load from file
+json.loads() - load from string
+"""
+
+def convert_text_into_json(text):
+    return json.loads(text)
+
 def read_json_from_file(file_path):
     """
     Access mode:
