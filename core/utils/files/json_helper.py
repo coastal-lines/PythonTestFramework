@@ -7,7 +7,7 @@ json.load()  - load from file
 json.loads() - load from string
 """
 
-def convert_text_into_json(text):
+def convert_text_into_json(text) -> str:
     return json.loads(text)
 
 def read_json_from_file(file_path):
@@ -20,7 +20,7 @@ def read_json_from_file(file_path):
     with open(file_path, mode="r") as file:
         return json.load(file)
 
-def parse_json_and_get_result(json_object, expression):
+def parse_json_and_get_result(json_object, expression) -> list:
     """
     $.[*] - full document
     $._key_[*] - get all objects by key from the root

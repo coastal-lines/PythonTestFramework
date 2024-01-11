@@ -1,6 +1,7 @@
 import json
 import pytest
 import requests
+from requests import Response
 
 from core.utils.files import path_helper
 from resources.api.api_image_resources_data_class import ApiImageResourcesData
@@ -9,7 +10,7 @@ from resources.api.api_image_resources_data_class import ApiImageResourcesData
 KARABURMA_BASE_URL = "http://127.0.0.1:8900/api/v1"
 
 @pytest.fixture
-def karaburma_file_mode_buttons_only_response():
+def karaburma_file_mode_buttons_only_response() -> Response:
     payload = json.dumps({
         "image_file_path": f"{path_helper.get_resource_path(ApiImageResourcesData.karaburma_main_image)}",
         "type_element": "button",
@@ -22,5 +23,4 @@ def karaburma_file_mode_buttons_only_response():
     }
 
     response = requests.post(url=f"{KARABURMA_BASE_URL}/file", headers=headers, data=payload)
-
     yield response
