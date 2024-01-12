@@ -6,6 +6,14 @@ from attr import dataclass
 
 
 @dataclass
+class Api:
+    karaburma_base_url: str
+
+    def from_dict(obj: Any) -> "Api":
+        _karaburma_base_url = str(obj.get("karaburma_base_url"))
+        return Api(_karaburma_base_url)
+
+@dataclass
 class Desktop:
     default_os: str
     winappdriver_url: str
@@ -14,7 +22,7 @@ class Desktop:
     appium_port: str
 
     @staticmethod
-    def from_dict(obj: Any) -> 'Desktop':
+    def from_dict(obj: Any) -> "Desktop":
         _default_os = str(obj.get("default_os"))
         _winappdriver_url = str(obj.get("winappdriver_url"))
         _winappdriver_port = str(obj.get("winappdriver_port"))

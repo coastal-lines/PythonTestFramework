@@ -1,4 +1,7 @@
 {
+  "api": {
+    "karaburma_base_url": "http://127.0.0.1:8900/api/v1"
+  },
   "web": {
     "default_browser": "Chrome",
     "wait_timeout": 30
