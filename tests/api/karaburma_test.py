@@ -7,12 +7,9 @@ from core.utils.files import json_helper
 from resources.api.json.schema_karaburma_data_class import SchemaKaraburmaResponseDataClass
 
 
-KARABURMA_BASE_URL = "http://127.0.0.1:8900/api/v1"
-
-def test_karaburma_server_available():
-    response = requests.get(url=KARABURMA_BASE_URL)
+def test_karaburma_server_available(karaburma_client):
+    response = karaburma_client.request.get()
     assert response.status_code == requests.codes.ok
-
 
 def test_image_file_contains_any_button(karaburma_file_mode_buttons_only_response):
     result = json.loads(karaburma_file_mode_buttons_only_response.text)

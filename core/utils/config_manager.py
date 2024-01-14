@@ -41,7 +41,7 @@ class Web:
      Web  - IDE reads object 'Web' as link to initialized object.
     '''
     @staticmethod
-    def from_dict(obj: Any) -> 'Web':
+    def from_dict(obj: Any) -> "Web":
         _default_browser = str(obj.get("default_browser"))
         _wait_timeout = int(obj.get("wait_timeout"))
 
@@ -49,15 +49,17 @@ class Web:
 
 @dataclass
 class Configuration:
+    api: Api
     web: Web
     desktop: Desktop
 
     @staticmethod
-    def from_dict(obj: Any) -> 'Configuration':
+    def from_dict(obj: Any) -> "Configuration":
+        _api = Api.from_dict(obj.get("api"))
         _web = Web.from_dict(obj.get("web"))
         _desktop = Desktop.from_dict(obj.get("desktop"))
 
-        return Configuration(_web, _desktop)
+        return Configuration(_api, _web, _desktop)
 
 class ConfigUtilsThreadSafe:
 
@@ -75,7 +77,7 @@ class ConfigUtilsThreadSafe:
 
     @staticmethod
     def _load_config() -> Configuration:
-        config_path = os.path.join(os.path.dirname(__file__), '../../config.json')
+        config_path = os.path.join(os.path.dirname(__file__), "../../config.json")
         with open(config_path) as config_file:
             config_json = json.load(config_file)
 
@@ -96,7 +98,7 @@ class ConfigUtils:
     @staticmethod
     def _load_config():
         if not ConfigUtils._initialized:
-            config_path = os.path.join(os.path.dirname(__file__), '../../config.json')
+            config_path = os.path.join(os.path.dirname(__file__), "../../config.json")
             with open(config_path) as config_file:
                 ConfigUtils._config_data = Configuration.from_dict(json.load(config_file))
             ConfigUtils._initialized = True

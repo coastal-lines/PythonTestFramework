@@ -4,12 +4,15 @@ from core.api.api_response_wrapper import ApiResponseWrapper
 
 
 class ApiRequestsWrapper:
-    def get(self, url):
-        response = requests.get(url=url)
+    def __init__(self, base_url):
+        self.base_url = base_url
+
+    def get(self, url="/"):
+        response = requests.get(url=self.base_url + url)
         return self.__prepare_response(response)
 
-    def post(self, url, headers, payload):
-        response = requests.post(url=url, headers=headers, data=payload)
+    def post(self, url, payload, headers):
+        response = requests.post(url=self.base_url + url, data=payload, headers=headers)
         return self.__prepare_response(response)
 
     def __prepare_response(self, response):
