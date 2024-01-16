@@ -3,7 +3,7 @@ Tests for 'TestGorilla' service.
 '''
 import pytest
 
-from conftest import web_driver
+from tests.ui.conftest import web_driver
 from pages.web.gorilla_exam_page import GorillaExamPage
 
 

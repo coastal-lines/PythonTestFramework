@@ -1,9 +1,10 @@
 import platform
+import subprocess
+
 import psutil
 
 
 def check_platform_for_process(func):
-
     def wrapper(process_name):
         if (platform.system() == 'Windows'):
             process_name += ".exe"
@@ -13,7 +14,6 @@ def check_platform_for_process(func):
 
 @check_platform_for_process
 def check_process_existed(process_name):
-
     for process in psutil.process_iter():
         if process.name() == process_name:
             return True
@@ -22,7 +22,12 @@ def check_process_existed(process_name):
 
 @check_platform_for_process
 def stop_process(process_name):
-
     for proc in psutil.process_iter():
         if proc.name() == process_name:
             proc.terminate()
+
+def start_process(command: str):
+    """
+    'shell=True' - support shell features like '&', '|', redirect streaming, etc.
+    """
+    subprocess.run(command, shell=True)

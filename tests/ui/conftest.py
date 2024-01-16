@@ -20,9 +20,6 @@ appium_service = None
 
 @pytest.fixture
 def web_driver(request):
-
-    #global browser_driver
-
     web_logger.info(f"Current test is: {request.node.name}.")
 
     match ConfigUtils.get_config().web.default_browser:
@@ -42,7 +39,6 @@ def web_driver(request):
 """
 @pytest.fixture()
 def desktop_driver(request):
-
     if not process_manager.check_process_existed("node"):
         appium_service = AppiumService()
         appium_service.start(args=["--address", ConfigUtils().get_config().desktop.appium_url,

@@ -1,13 +1,15 @@
 import json
+
+import pytest
 import requests
 from assertpy import soft_assertions, assert_that
 
-from core.api.clients.karaburma_client import KaraburmaClient
 from core.utils.files import path_helper
 from resources.api.api_image_resources_data_class import ApiImageResourcesData
 from resources.api.api_xml_resources_data_class import ApiXmlResourceData
 
 
+@pytest.mark.api
 def test_image_file_height_is_correct(mocker, karaburma_client):
     """
     :mocker - fixture from pytest_mock.
