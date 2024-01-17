@@ -1,6 +1,8 @@
 '''
 Tests for 'TestGorilla' service.
 '''
+import time
+
 import pytest
 
 from tests.ui.conftest import web_driver
@@ -11,7 +13,7 @@ from pages.web.gorilla_exam_page import GorillaExamPage
 def test_exam_title(web_driver, answer_number):
 
     EXPECTED_QUESTION_TEXT = 'What type of dependency should you set between these two tasks?'
-    EXPECTED_ANSWER_COLOUR = ('70', '169', '151')
+    EXPECTED_ANSWER_COLOUR = ('212', '16', '170')
 
     gorilla_exam_page = GorillaExamPage(web_driver)
 
