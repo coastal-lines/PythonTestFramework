@@ -48,10 +48,10 @@ def test_m():
     #appium_service = AppiumService()
     #appium_service.start(args=["--address", ConfigUtils().get_config().desktop.appium_url, "-p", ConfigUtils().get_config().desktop.appium_port])
 
-@pytest.mark.desktop
-@pytest.mark.nonparallel
+#@pytest.mark.desktop
+#@pytest.mark.nonparallel
 @pytest.mark.parametrize("desktop_driver", ["Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"], indirect=True)
-def test_desktop(desktop_driver: appium.webdriver.Remote):
+def test_desktop(desktop_driver):
 
     desktop_driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'num1Button').click()
     desktop_driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'plusButton').click()
@@ -60,4 +60,4 @@ def test_desktop(desktop_driver: appium.webdriver.Remote):
 
     result = desktop_driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'CalculatorResults').text
 
-    assert 'Display is 3' == result
+    assert 'Display is 3---' == result
