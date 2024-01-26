@@ -4,7 +4,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from core.waiting_manager import WaitingManager
 
 
-class Element:
+class WebElementObject:
 
     def __init__(self, locator: tuple):
         self._locator = locator
