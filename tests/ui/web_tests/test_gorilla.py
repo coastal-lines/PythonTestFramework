@@ -1,6 +1,6 @@
 import pytest
 
-from pages.web.gorilla_exam_page import GorillaExamPage
+from pages.web.test_gorilla.gorilla_exam_page import GorillaExamPage
 
 
 @pytest.mark.ui
