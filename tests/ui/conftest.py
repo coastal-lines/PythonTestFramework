@@ -10,7 +10,7 @@ from appium import webdriver
 from appium.options.windows import WindowsOptions
 from appium.webdriver.appium_service import AppiumService
 
-from core.driver.driver_factory import init_web_driver
+from core.driver.web_driver_factory import init_web_driver
 from core.hooks import debuging_ui_hooks
 from core.utils.files import path_helper
 from core.utils.os import process_manager
