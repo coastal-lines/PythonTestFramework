@@ -1,8 +1,8 @@
 import time
 import appium
 from appium import webdriver
-from appium.options.windows import WindowsOptions
 
+from core.driver import windows_driver_manager
 from core.utils.config_manager import ConfigUtils
 from core.utils.logging_manager import desktop_logger
 
@@ -12,17 +12,16 @@ def init_desktop_driver(request) -> appium.webdriver:
     :request - reserved name for pytest.
     """
 
+    desktop_driver = None
+
     match ConfigUtils().get_config().desktop.default_os:
         case "Windows":
-            options = WindowsOptions()
-            options.app = request.param
-            options.platform_name = "Windows"
+            if request.param.get("application_path"):
+                desktop_driver = windows_driver_manager.get_windows_driver(application_path=request.param.get("application_path"))
+            if request.param.get("application_name"):
+                desktop_driver = windows_driver_manager.get_windows_driver(application_name=request.param.get("application_name"))
 
-            desktop_driver = appium.webdriver.Remote(
-                command_executor= f"{ConfigUtils().get_config().desktop.winappdriver_url}"
-                                  f":"
-                                  f"{ConfigUtils().get_config().desktop.winappdriver_port}",
-                options=options)
+            #desktop_driver = windows_driver_manager.get_windows_driver(application_path=request.param)
 
             #wait few seconds for starting winappdriver
             time.sleep(3)

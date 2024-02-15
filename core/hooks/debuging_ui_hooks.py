@@ -4,7 +4,7 @@ from core.utils.logging_manager import web_logger
 
 def save_screenshot_if_test_falls(node, call, report):
     """
-    There ae objects from 'pytest_exception_interact' hook:
+    There are objects from 'pytest_exception_interact' hook:
         node - represent test that is being run
         call - contains information about raised exception
         report - contains test report for the current test
@@ -19,3 +19,4 @@ def save_screenshot_if_test_falls(node, call, report):
         web_logger.exception(f"\n Error: \n {report.longreprtext}")
     except Exception as e:
         web_logger.exception(f"Screenshot was not saved for '{node.name}' test. \n Error: {e}")
+

@@ -14,14 +14,16 @@ def check_appium_server():
 
     if (appium_manager.check_appium_server() == False):
         appium_service = appium_manager.start_appium_service()
-        yield appium_service
+
+    yield appium_service
 
 @pytest.fixture(scope="session", autouse=True)
 def tear_down(request):
     global appium_service
 
     yield
-    appium_service.stop()
+    if (appium_service is not None):
+        appium_service.stop()
     process_manager.stop_process("node")
 
     desktop_logger.info(f"Appium server stops.")

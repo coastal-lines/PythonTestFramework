@@ -3,7 +3,7 @@ from appium.webdriver.common.appiumby import AppiumBy
 
 
 #@pytest.mark.desktop
-@pytest.mark.parametrize("desktop_driver", ["Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"], indirect=True)
+@pytest.mark.parametrize("desktop_driver", [{"application_name": "Calculator"}], indirect=True)
 def test_desktop(desktop_driver):
 
     desktop_driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'num1Button').click()
@@ -15,7 +15,7 @@ def test_desktop(desktop_driver):
 
     assert 'Display is 3' == result
 
-@pytest.mark.parametrize("desktop_driver", ["Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"], indirect=True)
+@pytest.mark.parametrize("desktop_driver", [{"application_path": "Microsoft.WindowsCalculator_8wekyb3d8bbwe!App"}], indirect=True)
 def test_desktop2(desktop_driver):
 
     desktop_driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'num1Button').click()
@@ -26,7 +26,6 @@ def test_desktop2(desktop_driver):
     result = desktop_driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'CalculatorResults').text
 
     assert 'Display is 3' == result
-
 
 @pytest.mark.parametrize("desktop_driver", ["C:\\Program Files (x86)\\Media Freeware\\Free Quiz Maker\\run.bat"], indirect=True)
 def test_free_quiz(desktop_driver):

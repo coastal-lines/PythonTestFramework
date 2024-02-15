@@ -1,6 +1,5 @@
 
 
-
 def test_tc1_question_details_ui_correct():
     pass
 
