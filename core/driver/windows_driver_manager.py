@@ -17,6 +17,8 @@ def __get_application_handle_hex_by_name(app_name):
     win32gui.EnumWindows(callback, hwnds)
     if hwnds:
         handle = hwnds[0]
+    else:
+        raise Exception(f"Handle for {app_name} application was not found.")
 
     return hex(handle)
 
