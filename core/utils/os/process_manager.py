@@ -31,3 +31,17 @@ def start_process(command: str):
     'shell=True' - support shell features like '&', '|', redirect streaming, etc.
     """
     subprocess.run(command, shell=True)
+
+def start_process_and_wait(command: str, process_name:str, wait_time=10):
+    start_process(command)
+
+    start_time = time.time()
+    while True:
+        check_process_existed(process_name)
+
+        if time.time() - start_time >= wait_time:
+            print(f"Application '{process_name}' was not started after {timeout} seconds.")
+            break
+
+        time.sleep(1)
+

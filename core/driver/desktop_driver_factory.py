@@ -7,7 +7,7 @@ from core.utils.config_manager import ConfigUtils
 from core.utils.logging_manager import desktop_logger
 
 
-def init_desktop_driver(request) -> appium.webdriver:
+def init_desktop_driver(request):
     """
     :request - reserved name for pytest.
     """

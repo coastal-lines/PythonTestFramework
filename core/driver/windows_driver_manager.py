@@ -18,7 +18,7 @@ def __get_application_handle_hex_by_name(app_name):
     if hwnds:
         handle = hwnds[0]
     else:
-        raise Exception(f"Handle for {app_name} application was not found.")
+        raise Exception(f"Handle for '{app_name}' application was not found.")
 
     return hex(handle)
 
