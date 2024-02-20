@@ -11,6 +11,7 @@
     "winappdriver_url": "http://127.0.0.1",
     "winappdriver_port": "4723",
     "appium_url": "127.0.0.1",
-    "appium_port": "4723"
+    "appium_port": "4723",
+    "application_exe_path": "c:\\Temp\\Free Quiz Maker\\run.bat"
   }
 }

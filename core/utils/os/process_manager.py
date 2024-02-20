@@ -1,5 +1,6 @@
 import platform
 import subprocess
+import time
 
 import psutil
 
@@ -37,11 +38,12 @@ def start_process_and_wait(command: str, process_name:str, wait_time=10):
 
     start_time = time.time()
     while True:
-        check_process_existed(process_name)
-
-        if time.time() - start_time >= wait_time:
-            print(f"Application '{process_name}' was not started after {timeout} seconds.")
+        if (check_process_existed(process_name)):
             break
+        else:
+            if time.time() - start_time >= wait_time:
+                print(f"Application '{process_name}' was not started after {timeout} seconds.")
+                break
 
         time.sleep(1)
 
