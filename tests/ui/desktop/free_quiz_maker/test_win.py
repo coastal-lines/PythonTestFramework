@@ -26,8 +26,3 @@ def test_desktop2(desktop_driver):
     result = desktop_driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'CalculatorResults').text
 
     assert 'Display is 3' == result
-
-@pytest.mark.parametrize("desktop_driver", ["C:\\Program Files (x86)\\Media Freeware\\Free Quiz Maker\\run.bat"], indirect=True)
-def test_free_quiz(desktop_driver):
-    pass
-    #text = desktop_driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'txtQuestion').text()
