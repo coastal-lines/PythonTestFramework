@@ -4,6 +4,7 @@ from appium.webdriver.common.appiumby import AppiumBy
 
 from core.desktop_element_page import DesktopElementPage
 from pages.base_desktop_page import BaseDesktopPage
+from pages.desktop.free_quiz_maker.question_details_page import QuestionDetailsPage
 
 
 class ToolbarPage(BaseDesktopPage):
@@ -36,4 +37,6 @@ class ToolbarPage(BaseDesktopPage):
         self.PUBLISH_QUIZ_BUTTON.init_force().is_displayed())
 
     def create_new_question(self):
-        self.NEW_QUESTION_BUTTON.init_force().is_displayed()
+        new_question_button_element = self.NEW_QUESTION_BUTTON.element()
+        new_question_button_element.click()
+        return QuestionDetailsPage(super().driver)

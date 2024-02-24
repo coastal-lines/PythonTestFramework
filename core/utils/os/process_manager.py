@@ -33,7 +33,7 @@ def start_process(command: str):
     """
     subprocess.run(command, shell=True)
 
-def start_process_and_wait(command: str, process_name:str, wait_time=10):
+def start_process_and_wait(command: str, process_name:str, wait_time=20):
     start_process(command)
 
     start_time = time.time()

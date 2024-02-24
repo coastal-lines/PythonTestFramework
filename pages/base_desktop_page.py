@@ -7,5 +7,5 @@ class BaseDesktopPage:
         self._driver = driver
 
     @property
-    def driver(self):
+    def driver(self) -> appium.webdriver:
         return self._driver
