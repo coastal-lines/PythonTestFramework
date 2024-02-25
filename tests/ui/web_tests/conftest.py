@@ -1,6 +1,6 @@
 import pytest
 
-from core.driver.web_driver_factory import init_web_driver
+from core.driver.web.web_driver_factory import init_web_driver
 from core.utils.config_manager import ConfigUtils
 from core.utils.logging_manager import web_logger
 

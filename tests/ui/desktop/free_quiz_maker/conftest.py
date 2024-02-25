@@ -1,7 +1,6 @@
-import time
 import pytest
 
-from core.driver import desktop_driver_factory
+from core.driver.desktop import desktop_driver_factory
 from core.utils.config_manager import ConfigUtils
 from core.utils.logging_manager import desktop_logger
 from core.utils.os import process_manager

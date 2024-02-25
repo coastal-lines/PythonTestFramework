@@ -1,8 +1,6 @@
 import time
-import appium
-from appium import webdriver
 
-from core.driver import windows_driver_manager
+from core.driver.desktop.windows import windows_driver_manager
 from core.utils.config_manager import ConfigUtils
 from core.utils.logging_manager import desktop_logger
 
