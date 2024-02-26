@@ -1,10 +1,17 @@
+import time
+
 import win32gui
 import appium
 from appium import webdriver
 from appium.options.windows import WindowsOptions
+from appium.webdriver import WebElement
+from appium.webdriver.common.appiumby import AppiumBy
+from selenium.common import WebDriverException
 
 from core.utils.config_manager import ConfigUtils
+from core.utils.logging_manager import desktop_logger
 
+desktop_driver: appium.webdriver = None
 
 def __get_application_handle_hex_by_name(app_name):
     handle = None
@@ -22,7 +29,9 @@ def __get_application_handle_hex_by_name(app_name):
 
     return hex(handle)
 
-def get_windows_driver(**kwargs):
+def get_windows_driver(**kwargs) -> appium.webdriver:
+    global desktop_driver
+
     application_path = kwargs.get("application_path")
     application_name = kwargs.get("application_name")
 
@@ -35,10 +44,40 @@ def get_windows_driver(**kwargs):
 
     options.platform_name = "Windows"
 
+    try:
+        desktop_driver = appium.webdriver.Remote(
+            command_executor=f"{ConfigUtils().get_config().desktop.winappdriver_url}"
+                             f":"
+                             f"{ConfigUtils().get_config().desktop.winappdriver_port}",
+            options=options)
+    except WebDriverException as ex:
+        desktop_logger.exception(f"Desktop '{ConfigUtils().get_config().desktop.default_os}' driver was not started.")
+        desktop_logger.exception(f"Try to close all 'winappdriver' sessions before.")
+        desktop_logger.exception(ex.msg)
+
+    return desktop_driver
+
+def get_windows_driver_for_control(control_xpath_locator: str):# -> WebElement:
+    global desktop_driver
+
+    desktop_driver.quit()
+    desktop_driver = None
+
+    options = WindowsOptions()
+    options.app = "root"
+    options.platform_name = "Windows"
+    options.automation_name = "Windows"
+
     desktop_driver = appium.webdriver.Remote(
         command_executor=f"{ConfigUtils().get_config().desktop.winappdriver_url}"
                          f":"
                          f"{ConfigUtils().get_config().desktop.winappdriver_port}",
         options=options)
 
-    return desktop_driver
+    time.sleep(3)
+
+    control = desktop_driver.find_elements(by=AppiumBy.XPATH, value=control_xpath_locator)
+
+    return control
+
+

@@ -6,6 +6,7 @@ from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.support.select import Select
 
 from core.desktop_element_page import DesktopElementPage
+from core.driver.desktop.windows import windows_driver_manager
 from pages.base_desktop_page import BaseDesktopPage
 
 
@@ -24,9 +25,13 @@ class QuestionDetailsPage(BaseDesktopPage):
         return self.POSSIBLE_ANSWER_LABEL.element().get_attribute("Name")
 
     def get_question_type_combobox_items(self):
+        # Expand combobox
         question_type_combobox = self.QUESTION_TYPE_COMBOBOX.init_force()
         question_type_combobox.click()
         time.sleep(3)
+
+        # Re-create desktop driver again because desired element outside of the application
+        combobox = windows_driver_manager.get_windows_driver_for_control("//ListControl[@ClassName='ComboLBox']")
 
         question_type_combobox_items1 = super().driver.find_elements(by=AppiumBy.CLASS_NAME, value="ComboLBox")
         print("")
