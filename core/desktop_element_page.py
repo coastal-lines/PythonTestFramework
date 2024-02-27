@@ -8,7 +8,8 @@ from core.waiting_manager import WaitingManager
 
 
 class DesktopElementPage:
-    def __init__(self, locator: tuple, driver: appium.webdriver):
+    #def __init__(self, locator: tuple, driver: appium.webdriver):
+    def __init__(self, locator: tuple, driver):
         self.__driver = driver
         self.__locator = locator
         self.__initialized_element: WebElement = None

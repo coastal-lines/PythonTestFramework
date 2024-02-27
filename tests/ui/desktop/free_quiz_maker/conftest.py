@@ -1,3 +1,5 @@
+import time
+
 import pytest
 
 from core.driver.desktop import desktop_driver_factory
@@ -16,6 +18,7 @@ def start_free_quiz_maker():
         process_manager.stop_process(desktop_application_name)
 
     process_manager.start_process_and_wait(ConfigUtils().get_config().desktop.application_exe_path, desktop_application_name)
+    #time.sleep(15)
 
 @pytest.fixture()
 def desktop_driver(start_free_quiz_maker, request):
@@ -24,5 +27,9 @@ def desktop_driver(start_free_quiz_maker, request):
     driver = desktop_driver_factory.init_desktop_driver(request)
     desktop_logger.info(f"Current test is: {request.node.name}.")
     yield driver
-    driver.quit()
+    try:
+        driver.quit()
+    except Exception:
+        desktop_logger.info("Driver was not stopped correctly.")
+
     process_manager.stop_process(desktop_application_name)

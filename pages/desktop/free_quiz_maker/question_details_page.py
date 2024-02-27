@@ -28,13 +28,12 @@ class QuestionDetailsPage(BaseDesktopPage):
         # Expand combobox
         question_type_combobox = self.QUESTION_TYPE_COMBOBOX.init_force()
         question_type_combobox.click()
+
         time.sleep(3)
 
         # Re-create desktop driver again because desired element outside of the application
-        combobox = windows_driver_manager.get_windows_driver_for_control("//ListControl[@ClassName='ComboLBox']")
-
-        question_type_combobox_items1 = super().driver.find_elements(by=AppiumBy.CLASS_NAME, value="ComboLBox")
-        print("")
-        question_type_combobox_items2 = question_type_combobox_items1.find_elements(by=AppiumBy.TAG_NAME, value="ListItem")
-        print("")
+        driver_for_combobox = windows_driver_manager.get_windows_driver_for_control("//List[@Name='Question:']")
+        combobox_items = driver_for_combobox.find_elements(by=AppiumBy.XPATH, value="//ListItem")
+        list_text_items = [item.text for item in combobox_items]
+        return list_text_items
 

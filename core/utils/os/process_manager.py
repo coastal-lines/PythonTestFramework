@@ -45,5 +45,5 @@ def start_process_and_wait(command: str, process_name:str, wait_time=20):
                 print(f"Application '{process_name}' was not started after {timeout} seconds.")
                 break
 
-        time.sleep(1)
+        time.sleep(3)
 

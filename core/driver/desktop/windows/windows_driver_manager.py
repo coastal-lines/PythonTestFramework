@@ -11,7 +11,7 @@ from selenium.common import WebDriverException
 from core.utils.config_manager import ConfigUtils
 from core.utils.logging_manager import desktop_logger
 
-desktop_driver: appium.webdriver = None
+desktop_driver = None
 
 def __get_application_handle_hex_by_name(app_name):
     handle = None
@@ -29,20 +29,21 @@ def __get_application_handle_hex_by_name(app_name):
 
     return hex(handle)
 
-def get_windows_driver(**kwargs) -> appium.webdriver:
+def get_windows_driver(**kwargs):
     global desktop_driver
 
     application_path = kwargs.get("application_path")
     application_name = kwargs.get("application_name")
 
     options = WindowsOptions()
+    options.platform_name = "Windows"
+    #options.new_command_timeout = 15
+    #options.wait_for_app_launch = 15
 
     if application_path:
         options.app = application_path
     if application_name:
         options.app_top_level_window = __get_application_handle_hex_by_name(application_name)
-
-    options.platform_name = "Windows"
 
     try:
         desktop_driver = appium.webdriver.Remote(
@@ -64,7 +65,7 @@ def get_windows_driver_for_control(control_xpath_locator: str):# -> WebElement:
     desktop_driver = None
 
     options = WindowsOptions()
-    options.app = "root"
+    options.app = "Root"
     options.platform_name = "Windows"
     options.automation_name = "Windows"
 
@@ -76,7 +77,7 @@ def get_windows_driver_for_control(control_xpath_locator: str):# -> WebElement:
 
     time.sleep(3)
 
-    control = desktop_driver.find_elements(by=AppiumBy.XPATH, value=control_xpath_locator)
+    control = desktop_driver.find_element(by=AppiumBy.XPATH, value=control_xpath_locator)
 
     return control
 
