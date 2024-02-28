@@ -79,6 +79,6 @@ def get_windows_driver_for_control(control_xpath_locator: str):# -> WebElement:
 
     control = desktop_driver.find_element(by=AppiumBy.XPATH, value=control_xpath_locator)
 
-    return control
+    return desktop_driver, control
 
 

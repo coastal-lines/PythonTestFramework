@@ -34,7 +34,8 @@ class DesktopElementPage:
         return self.__initialized_element
 
     def init_list(self) -> List[WebElement]:
-        if (self.__initialized_element is None):
+        if (self.__initialized_elements is None):
+            WaitingManager.force_wait_element(self.__driver, self.__locator)
             WaitingManager.wait_element_displayed(self.__driver, self.__locator)
             self.__initialized_elements = self.__driver.find_elements(*self.__locator)
         else:
@@ -44,3 +45,8 @@ class DesktopElementPage:
         if (self.__initialized_element is None):
             self.init_force()
         return self.__initialized_element
+
+    def elements(self) -> List[WebElement]:
+        if (self.__initialized_elements is None):
+            self.init_list()
+        return self.__initialized_elements
