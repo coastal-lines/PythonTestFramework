@@ -5,11 +5,12 @@ import appium
 from appium import webdriver
 from appium.options.windows import WindowsOptions
 from appium.webdriver import WebElement
-from appium.webdriver.common.appiumby import AppiumBy
 from selenium.common import WebDriverException
+from appium.webdriver.common.appiumby import AppiumBy
 
 from core.utils.config_manager import ConfigUtils
 from core.utils.logging_manager import desktop_logger
+from core.waiting_manager import WaitingManager
 
 desktop_driver = None
 
@@ -58,7 +59,7 @@ def get_windows_driver(**kwargs):
 
     return desktop_driver
 
-def get_windows_driver_for_control(control_xpath_locator: str):# -> WebElement:
+def get_windows_driver_for_root() -> appium.webdriver:
     global desktop_driver
 
     desktop_driver.quit()
@@ -77,8 +78,13 @@ def get_windows_driver_for_control(control_xpath_locator: str):# -> WebElement:
 
     time.sleep(3)
 
-    control = desktop_driver.find_element(by=AppiumBy.XPATH, value=control_xpath_locator)
+    #control = desktop_driver.find_element(by=AppiumBy.XPATH, value=control_xpath_locator)
 
-    return desktop_driver, control
+    return desktop_driver
 
+def get_application_window_as_webelement(desktop_driver, application_window_name) -> WebElement:
+    locator = (AppiumBy.XPATH, f"//Window[@Name='{application_window_name}']")
+    WaitingManager.force_wait_element(desktop_driver, locator)
+    application_window_as_webelement = desktop_driver.find_element(*locator)
 
+    return application_window_as_webelement

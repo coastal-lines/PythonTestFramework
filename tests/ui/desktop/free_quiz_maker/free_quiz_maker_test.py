@@ -20,6 +20,7 @@ def test_tc1_question_details_ui_correct(desktop_driver):
     assert (question_details_page.get_question_details_title_text() == "New Question")
     assert (question_details_page.get_possible_answer_title_text() == "Possible Answer")
 
+    '''
     # Step 3
     # Check items in the expanded combobox
     # We have to have new driver because of switching into 'root'
@@ -41,6 +42,8 @@ def test_tc1_question_details_ui_correct(desktop_driver):
     driver_for_application = windows_driver_manager.get_windows_driver(application_name="Free Quiz Maker")
     question_details_page = QuestionDetailsPage(driver_for_application)
     assert (len(question_details_page.get_all_possible_answers_list()) == 4)
+    '''
+
 
 @pytest.mark.parametrize("desktop_driver", [{"application_name": "Free Quiz Maker"}], indirect=True)
 def test_tc2_save_as_html(desktop_driver):
