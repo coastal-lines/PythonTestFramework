@@ -1,11 +1,22 @@
 from dataclasses import dataclass
+from typing import List
 
 import appium
 from appium import webdriver
 from appium.webdriver import WebElement
 
 
-@dataclass
 class DesktopDriverWrapper():
-    driver: appium.webdriver
-    container: WebElement
+
+    def __init__(self, driver: appium.webdriver):
+        self.__driver = driver
+        self.__application_container: List[WebElement] = []
+
+    @property
+    def driver(self):
+        return self.__driver
+    
+    def application_container(self):
+        return self.__application_container
+
+
