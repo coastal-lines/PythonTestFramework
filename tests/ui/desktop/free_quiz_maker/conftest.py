@@ -51,7 +51,14 @@ def desktop_root_driver(start_free_quiz_maker, request):
 def desktop_driver_wrapper(start_free_quiz_maker, request):
     global desktop_application_name
 
-    driver = desktop_driver_factory.init_desktop_driver(request)
+    driver_wrapper = desktop_driver_factory.init_desktop_driver(request)
     desktop_logger.info(f"Current test is: {request.node.name}.")
 
-    DesktopDriverWrapper
+    yield driver_wrapper
+
+    try:
+        driver_wrapper.driver.quit()
+    except Exception:
+        desktop_logger.info("Driver was not stopped correctly.")
+
+    process_manager.stop_process(desktop_application_name)

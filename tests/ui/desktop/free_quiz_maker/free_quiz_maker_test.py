@@ -49,3 +49,7 @@ def test_tc1_question_details_ui_correct(desktop_driver):
 def test_tc2_save_as_html(desktop_driver):
     label1 = desktop_driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'label1')
     print(label1.get_attribute("Name"))
+
+@pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": "Free Quiz Maker"}], indirect=True)
+def test_wrapper(desktop_driver_wrapper):
+    pass

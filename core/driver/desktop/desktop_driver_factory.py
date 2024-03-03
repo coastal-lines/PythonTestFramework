@@ -17,14 +17,16 @@ def init_desktop_driver(request):
     match ConfigUtils().get_config().desktop.default_os:
         case "Windows":
             if request.param.get("application_path"):
-                desktop_driver = windows_driver_manager.get_windows_driver(application_path=request.param.get("application_path"))
+                return windows_driver_manager.get_windows_driver(application_path=request.param.get("application_path"))
             elif request.param.get("application_name"):
-                desktop_driver = windows_driver_manager.get_windows_driver(application_name=request.param.get("application_name"))
+                return windows_driver_manager.get_windows_driver(application_name=request.param.get("application_name"))
+            elif request.param.get("application_window_name"):
+                return windows_driver_manager.get_windows_driver_wrapper(application_window_name=request.param.get("application_window_name"))
 
             #wait few seconds for starting 'winappdriver'
-            time.sleep(3)
+            #time.sleep(3)
 
-            return desktop_driver
+            #return desktop_driver
         case _:
             desktop_logger.exception(f"Desktop '{ConfigUtils().get_config().desktop.default_os}' driver was not started.")
             raise Exception(f"Desktop driver for {ConfigUtils().get_config().desktop.default_os} OS not supported. \n Please try to use 'Windows' for 'default_os' parameter.")

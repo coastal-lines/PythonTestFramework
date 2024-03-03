@@ -63,8 +63,9 @@ def get_windows_driver(**kwargs):
 def get_windows_driver_for_root() -> appium.webdriver:
     global desktop_driver
 
-    desktop_driver.quit()
-    desktop_driver = None
+    if (desktop_driver is not None):
+        desktop_driver.quit()
+        desktop_driver = None
 
     options = WindowsOptions()
     options.app = "Root"
@@ -81,15 +82,20 @@ def get_windows_driver_for_root() -> appium.webdriver:
 
     return desktop_driver
 
-def get_application_window_as_webelement(desktop_driver: appium.webdriver, application_window_name: str) -> WebElement:
+def get_application_window_as_web_element(desktop_driver: appium.webdriver, application_window_name: str) -> WebElement:
     locator = (AppiumBy.XPATH, f"//Window[@Name='{application_window_name}']")
     WaitingManager.force_wait_element(desktop_driver, locator)
+
     application_window_as_webelement = desktop_driver.find_element(*locator)
 
     return application_window_as_webelement
 
-def get_windows_driver_wrapper(application_window_name: str):
+def get_windows_driver_wrapper(application_window_name: str) -> DesktopDriverWrapper:
     desktop_driver = get_windows_driver_for_root()
-    application_window_as_webelement = get_application_window_as_webelement(desktop_driver, application_window_name)
-    wrapper = DesktopDriverWrapper()
-    wrapper
+
+    application_window_as_web_element = get_application_window_as_web_element(desktop_driver, application_window_name)
+
+    wrapper = DesktopDriverWrapper(desktop_driver)
+    wrapper.add_application_container(application_window_name, application_window_as_web_element)
+
+    return wrapper
