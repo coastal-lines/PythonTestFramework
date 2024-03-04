@@ -3,6 +3,7 @@ import time
 import pytest
 
 from core.driver.desktop import desktop_driver_factory
+from core.driver.desktop.desktop_driver_wrapper import DesktopDriverWrapper
 from core.utils.config_manager import ConfigUtils
 from core.utils.logging_manager import desktop_logger
 from core.utils.os import process_manager
@@ -48,7 +49,7 @@ def desktop_root_driver(start_free_quiz_maker, request):
     process_manager.stop_process(desktop_application_name)
 
 @pytest.fixture()
-def desktop_driver_wrapper(start_free_quiz_maker, request):
+def desktop_driver_wrapper(start_free_quiz_maker, request) -> DesktopDriverWrapper:
     global desktop_application_name
 
     driver_wrapper = desktop_driver_factory.init_desktop_driver(request)
