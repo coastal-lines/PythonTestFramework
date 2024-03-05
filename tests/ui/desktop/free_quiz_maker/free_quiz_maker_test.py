@@ -1,7 +1,6 @@
 import pytest
 from appium.webdriver.common.appiumby import AppiumBy
 
-from core.driver.desktop.windows import windows_driver_manager
 from pages.desktop.free_quiz_maker.question_details_page import QuestionDetailsPage
 from pages.desktop.free_quiz_maker.toolbar_page import ToolbarPage
 
@@ -24,8 +23,6 @@ def test_tc1_question_details_ui_correct(desktop_driver_wrapper):
 
     # Step 3
     # Check items in the expanded combobox
-    # We have to have new driver because of switching into 'root'
-    # So re-create desktop driver again because desired element outside of the application tree
     question_details_page.expand_question_type_combobox()
     desktop_driver_wrapper.find_element_and_add_as_container(combobox_name, "//List[@Name='Question:']")
 
@@ -37,9 +34,6 @@ def test_tc1_question_details_ui_correct(desktop_driver_wrapper):
 
     # Step 4
     # Check number of possible answers
-    # We have to create desktop driver again for the application
-    # So call the fixture once again for taking new desktop driver
-    #driver_for_application = windows_driver_manager.get_windows_driver(application_name="Free Quiz Maker")
     question_details_page = QuestionDetailsPage(desktop_driver_wrapper.driver)
     assert (len(question_details_page.get_all_possible_answers_list()) == 4)
 
