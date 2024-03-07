@@ -1,4 +1,5 @@
 import time
+from typing import Any, overload
 
 from selenium.common import NoSuchElementException
 from selenium.webdriver.remote.webelement import WebElement
@@ -36,6 +37,31 @@ class WaitingManager:
             try:
                 wait = WebDriverWait(driver, wait_time)
                 el = wait.until(EC.element_to_be_clickable(driver.find_element(*locator)))
+                if (el != None):
+                    return el
+            except Exception as ex:
+                print("Waiting element.")
+                time.sleep(3)
+
+        if (el == None):
+            raise NoSuchElementException("Element was not found.")
+
+    @classmethod
+    def force_wait_element_in_container(self, driver: WebDriver, container: WebElement, locator: tuple):
+        wait_time = ConfigUtils.get_config().web.wait_timeout
+        start_time = time.time()
+
+        el = None
+
+        while True:
+            current_time = time.time()
+
+            if current_time - start_time >= ConfigUtils.get_config().web.wait_timeout:
+                break
+
+            try:
+                wait = WebDriverWait(driver, wait_time)
+                el = wait.until(EC.element_to_be_clickable(container.find_element(*locator)))
                 if (el != None):
                     return el
             except Exception as ex:

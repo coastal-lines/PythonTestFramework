@@ -4,7 +4,7 @@
   },
   "web": {
     "default_browser": "CHROME",
-    "wait_timeout": 30
+    "wait_timeout": 60
   },
   "desktop": {
     "default_os": "Windows",

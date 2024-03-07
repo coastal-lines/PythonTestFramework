@@ -8,10 +8,10 @@ from core.waiting_manager import WaitingManager
 
 
 class DesktopElementPage:
-    #def __init__(self, locator: tuple, driver: appium.webdriver):
-    def __init__(self, locator: tuple, driver):
+    def __init__(self, locator: tuple, driver: appium.webdriver, container: WebElement=None):
         self.__driver = driver
         self.__locator = locator
+        self.__container = container
         self.__initialized_element: WebElement = None
         self.__initialized_elements: List[WebElement] = None
 
@@ -50,3 +50,11 @@ class DesktopElementPage:
         if (self.__initialized_elements is None):
             self.init_list()
         return self.__initialized_elements
+
+    def test_container(self):
+        if (self.__initialized_element is None):
+            WaitingManager.force_wait_element_in_container(self.__driver, self.__container, self.__locator)
+            self.__initialized_element = self.__container.find_element(*self.__locator)
+            return self.__initialized_element
+        else:
+            return self.__initialized_element
