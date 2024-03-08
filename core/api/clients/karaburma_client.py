@@ -8,4 +8,3 @@ class KaraburmaClient(BaseClient):
         super().__init__()
         self.base_url = ConfigUtils().get_config().api.karaburma_base_url
         self.request = ApiRequestsWrapper(self.base_url)
-
