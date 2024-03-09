@@ -23,4 +23,3 @@ def get_cropped_screenshot_of_windows_element(element: WebElement) -> Image:
     x, y, width, height = __get_element_rect(element)
     element_screenshot = __do_screenshot_and_get_cropped_image(x, y, width, height)
     return element_screenshot
-

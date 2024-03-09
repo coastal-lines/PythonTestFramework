@@ -1,5 +1,5 @@
 import time
-from typing import Any, overload
+from typing import Tuple
 
 from selenium.common import NoSuchElementException
 from selenium.webdriver.remote.webelement import WebElement
@@ -13,7 +13,7 @@ from core.utils.config_manager import ConfigUtils
 class WaitingManager:
 
     @classmethod
-    def wait_element_displayed(self, driver: WebDriver, locator: tuple):
+    def wait_element_displayed(self, driver: WebDriver, locator: Tuple[str, str]):
         return WebDriverWait(driver, ConfigUtils.get_config().web.wait_timeout).until(EC.presence_of_element_located(locator))
 
     @classmethod
