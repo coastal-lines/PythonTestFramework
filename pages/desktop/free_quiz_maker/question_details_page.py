@@ -6,17 +6,21 @@ from appium.webdriver import WebElement
 from appium.webdriver.common.appiumby import AppiumBy
 
 from core.desktop_element_page import DesktopElementPage
+from core.driver.desktop import desktop_driver_wrapper
 from pages.base_desktop_page import BaseDesktopPage
+from pages.desktop.select_image_dialog import SelectImageDialog
 
 
 class QuestionDetailsPage(BaseDesktopPage):
-    def __init__(self, driver: appium.webdriver):
+    def __init__(self, driver: appium.webdriver, container: WebElement=None):
         super().__init__(driver)
 
+        self.__container = container
         self.__QUESTION_DETAILS_TEXTBOX = DesktopElementPage((AppiumBy.ACCESSIBILITY_ID, "txtQuestion"), driver)
         self.__POSSIBLE_ANSWER_LABEL = DesktopElementPage((AppiumBy.ACCESSIBILITY_ID, "lblPossibleAnswer"), driver)
         self.__QUESTION_TYPE_COMBOBOX = DesktopElementPage((AppiumBy.ACCESSIBILITY_ID, "ddlQuestionType"), driver)
         self.__POSSIBLE_ANSWER_LIST = DesktopElementPage((AppiumBy.XPATH, "//Pane[@AutomationId='pnlAnswers']//Pane[@AutomationId='chkSelect']"), driver)
+        self.__IMAGE_PANE = DesktopElementPage((AppiumBy.ACCESSIBILITY_ID, "pnlImage"), driver)
 
     def get_question_details_title_text(self) -> str:
         return self.__QUESTION_DETAILS_TEXTBOX.element().text
@@ -36,3 +40,11 @@ class QuestionDetailsPage(BaseDesktopPage):
     def get_all_possible_answers_list(self) -> List[WebElement]:
         return self.__POSSIBLE_ANSWER_LIST.elements()
 
+    def upload_question_image(self, file_path: str):
+        self.__IMAGE_PANE.element().click()
+
+        select_image_dialog = SelectImageDialog(super().driver, self.__container)
+        select_image_dialog.load_file(file_path)
+
+        self.__container.screenshot(r"C:\Repos\MyGit\PythonTestFramework\resources\logs\desktop\screenshots\testimage1.png")
+        i = self.__container.screenshot_as_png

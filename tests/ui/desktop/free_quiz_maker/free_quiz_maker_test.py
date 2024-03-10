@@ -1,8 +1,9 @@
 import pytest
-from appium.webdriver.common.appiumby import AppiumBy
 
+from core.utils.files import path_helper
 from pages.desktop.free_quiz_maker.question_details_page import QuestionDetailsPage
 from pages.desktop.free_quiz_maker.toolbar_page import ToolbarPage
+from resources.api.api_image_resources_data_class import ApiImageResourcesData
 
 
 @pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": "Free Quiz Maker"}], indirect=True)
@@ -36,6 +37,20 @@ def test_tc1_question_details_ui_correct(desktop_driver_wrapper):
     # Check number of possible answers
     question_details_page = QuestionDetailsPage(desktop_driver_wrapper.driver)
     assert (len(question_details_page.get_all_possible_answers_list()) == 4)
+
+@pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": "Free Quiz Maker"}], indirect=True)
+def test_tc2_image_comparing(desktop_driver_wrapper):
+    # Step 1
+    # Create new question
+    toolbar_page = ToolbarPage(desktop_driver_wrapper.driver)
+    toolbar_page.create_new_question()
+
+    # Step 2
+    # Upload image
+    question_details_page = QuestionDetailsPage(desktop_driver_wrapper.driver, desktop_driver_wrapper.get_container("Free Quiz Maker"))
+    image_path = path_helper.get_resource_path(ApiImageResourcesData.karaburma_main_image).replace("/", "\\")
+    question_details_page.upload_question_image(image_path)
+
 
 
 """
