@@ -37,17 +37,18 @@ def start_appium_service_as_process(host="127.0.0.1", port="4723"):
     wait_appium_server_available(host, port)
 
 def start_appium_service():
+    #appium -a 127.0.0.1 -p 4723 --use-plugins=images
+
     host = ConfigUtils().get_config().desktop.appium_url
     port = ConfigUtils().get_config().desktop.appium_port
 
-    appium_service = AppiumService()
-    appium_service.start(args=["--address", host, "-p", port])
+    #appium_service = AppiumService()
+    #appium_service.start(args=["--address", host, "-p", port, "--use-plugins", "images"])
+    #wait_appium_server_available(host, port)
 
     try:
         appium_service = AppiumService()
-        appium_service.start(args=["--address", ConfigUtils().get_config().desktop.appium_url,
-                                   "-p", ConfigUtils().get_config().desktop.appium_port]
-                             )
+        appium_service.start(args=["--address", ConfigUtils().get_config().desktop.appium_url, "-p", ConfigUtils().get_config().desktop.appium_port, "--use-plugins", "images"])
         wait_appium_server_available(host, port)
 
         desktop_logger.info(f"Appium server is running. Appium server url is {host, port}.")
@@ -57,3 +58,4 @@ def start_appium_service():
     except Exception as ex:
         print("Appium was not started. \n Please check that Appium installed.")
         print(ex)
+

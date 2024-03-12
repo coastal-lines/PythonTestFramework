@@ -1,9 +1,11 @@
 import pytest
 
-from core.utils.files import path_helper
+from core.utils.files import path_helper, files_helper
+from core.utils.image_processing import screenshot_utils
 from pages.desktop.free_quiz_maker.question_details_page import QuestionDetailsPage
 from pages.desktop.free_quiz_maker.toolbar_page import ToolbarPage
 from resources.api.api_image_resources_data_class import ApiImageResourcesData
+from resources.desktop.desktop_image_resources_data_class import DesktopImageResourcesData
 
 
 @pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": "Free Quiz Maker"}], indirect=True)
@@ -51,6 +53,20 @@ def test_tc2_image_comparing(desktop_driver_wrapper):
     image_path = path_helper.get_resource_path(ApiImageResourcesData.karaburma_main_image).replace("/", "\\")
     question_details_page.upload_question_image(image_path)
 
+    # Step 3
+    # Compare actual screenshot of the application and expected screenshot
+    expected_screenshot = files_helper.load_image_as_bytearray(path_helper.get_resource_path(DesktopImageResourcesData.free_quiz_image_1))
+    actual_screenshot = screenshot_utils.get_element_screenshot_as_bytearray(desktop_driver_wrapper.get_container("Free Quiz Maker"))
+
+    options = {
+        "visualize": True,
+        "detectorName": "ORB",
+        "matchFunc": "BruteForce",
+        "goodMatchesFactor": 40
+    }
+    result = desktop_driver_wrapper.driver.match_images_features(expected_screenshot, actual_screenshot, **options)
+
+    assert (len(result["visualization"]) > 0)
 
 
 """

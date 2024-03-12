@@ -45,6 +45,3 @@ class QuestionDetailsPage(BaseDesktopPage):
 
         select_image_dialog = SelectImageDialog(super().driver, self.__container)
         select_image_dialog.load_file(file_path)
-
-        self.__container.screenshot(r"C:\Repos\MyGit\PythonTestFramework\resources\logs\desktop\screenshots\testimage1.png")
-        i = self.__container.screenshot_as_png

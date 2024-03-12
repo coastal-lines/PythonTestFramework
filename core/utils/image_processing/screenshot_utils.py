@@ -1,8 +1,11 @@
+from io import BytesIO
 from typing import Tuple
 
 import pyautogui
+from PIL import Image
 from PIL.Image import Image
 from appium.webdriver import WebElement
+
 
 def __get_element_rect(element: WebElement) -> Tuple[int, int, int, int]:
     element_rectangle = element.rect
@@ -24,5 +27,8 @@ def get_cropped_screenshot_of_windows_element(element: WebElement) -> Image:
     element_screenshot = __do_screenshot_and_get_cropped_image(x, y, width, height)
     return element_screenshot
 
-#def get_element_screenshot():
-#    im = Image.open(BytesIO(data))
+def get_element_screenshot(element: WebElement) -> Image:
+    return Image.open(BytesIO(element.screenshot_as_png))
+
+def get_element_screenshot_as_bytearray(element: WebElement) -> bytearray:
+    return bytearray(element.screenshot_as_png)
