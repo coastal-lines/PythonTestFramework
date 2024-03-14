@@ -32,3 +32,7 @@ def get_element_screenshot(element: WebElement) -> Image:
 
 def get_element_screenshot_as_bytearray(element: WebElement) -> bytearray:
     return bytearray(element.screenshot_as_png)
+
+def get_element_screenshot_as_base64(element: WebElement) -> str:
+    return element.screenshot_as_base64
+

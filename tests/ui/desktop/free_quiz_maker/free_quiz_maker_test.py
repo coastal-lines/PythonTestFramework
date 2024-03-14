@@ -55,8 +55,8 @@ def test_tc2_image_comparing(desktop_driver_wrapper):
 
     # Step 3
     # Compare actual screenshot of the application and expected screenshot
-    expected_screenshot = files_helper.load_image_as_bytearray(path_helper.get_resource_path(DesktopImageResourcesData.free_quiz_image_1))
-    actual_screenshot = screenshot_utils.get_element_screenshot_as_bytearray(desktop_driver_wrapper.get_container("Free Quiz Maker"))
+    expected_screenshot = files_helper.load_image_as_base64(path_helper.get_resource_path(DesktopImageResourcesData.free_quiz_image_1))
+    actual_screenshot = screenshot_utils.get_element_screenshot_as_base64(desktop_driver_wrapper.get_container("Free Quiz Maker"))
 
     options = {
         "visualize": True,
