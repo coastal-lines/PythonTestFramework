@@ -1,14 +1,16 @@
 import pytest
 
 from core.utils.files import path_helper, files_helper
-from core.utils.image_processing import screenshot_utils
+from core.utils.image_processing import screenshot_utils, screenshot_comparison_utils
 from pages.desktop.free_quiz_maker.question_details_page import QuestionDetailsPage
 from pages.desktop.free_quiz_maker.toolbar_page import ToolbarPage
 from resources.api.api_image_resources_data_class import ApiImageResourcesData
 from resources.desktop.desktop_image_resources_data_class import DesktopImageResourcesData
 
 
-@pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": "Free Quiz Maker"}], indirect=True)
+application_window_name = "Free Quiz Maker"
+
+@pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": application_window_name}], indirect=True)
 def test_tc1_question_details_ui_correct(desktop_driver_wrapper):
     combobox_name = "question_type_combobox"
 
@@ -40,7 +42,7 @@ def test_tc1_question_details_ui_correct(desktop_driver_wrapper):
     question_details_page = QuestionDetailsPage(desktop_driver_wrapper.driver)
     assert (len(question_details_page.get_all_possible_answers_list()) == 4)
 
-@pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": "Free Quiz Maker"}], indirect=True)
+@pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": application_window_name}], indirect=True)
 def test_tc2_image_comparing(desktop_driver_wrapper):
     # Step 1
     # Create new question
@@ -49,23 +51,15 @@ def test_tc2_image_comparing(desktop_driver_wrapper):
 
     # Step 2
     # Upload image
-    question_details_page = QuestionDetailsPage(desktop_driver_wrapper.driver, desktop_driver_wrapper.get_container("Free Quiz Maker"))
+    question_details_page = QuestionDetailsPage(desktop_driver_wrapper.driver, desktop_driver_wrapper.get_container(application_window_name))
     image_path = path_helper.get_resource_path(ApiImageResourcesData.karaburma_main_image).replace("/", "\\")
     question_details_page.upload_question_image(image_path)
 
     # Step 3
     # Compare actual screenshot of the application and expected screenshot
     expected_screenshot = files_helper.load_image_as_base64(path_helper.get_resource_path(DesktopImageResourcesData.free_quiz_image_1))
-    actual_screenshot = screenshot_utils.get_element_screenshot_as_base64(desktop_driver_wrapper.get_container("Free Quiz Maker"))
-
-    options = {
-        "visualize": True,
-        "detectorName": "ORB",
-        "matchFunc": "BruteForce",
-        "goodMatchesFactor": 40
-    }
-    result = desktop_driver_wrapper.driver.match_images_features(expected_screenshot, actual_screenshot, **options)
-
+    actual_screenshot = screenshot_utils.get_element_screenshot_as_base64(desktop_driver_wrapper.get_container(application_window_name))
+    result = screenshot_comparison_utils.compare_screenshots(desktop_driver_wrapper.driver, expected_screenshot, actual_screenshot)
     assert (len(result["visualization"]) > 0)
 
 
