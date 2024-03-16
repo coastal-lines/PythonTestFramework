@@ -22,7 +22,7 @@ class WaitingManager:
             lambda drv: value in element.value_of_css_property(property))
 
     @classmethod
-    def force_wait_element(self, driver: WebDriver, locator: tuple):
+    def force_wait_element(self, driver: WebDriver, locator: Tuple[str, str]):
         wait_time = ConfigUtils.get_config().web.wait_timeout
         start_time = time.time()
 
@@ -36,8 +36,8 @@ class WaitingManager:
 
             try:
                 wait = WebDriverWait(driver, wait_time)
-                el = wait.until(EC.element_to_be_clickable(driver.find_element(*locator)))
-                if (el != None):
+                el = wait.until(EC.presence_of_element_located(locator))
+                if (el is not None):
                     return el
             except Exception as ex:
                 print("Waiting element.")

@@ -1,3 +1,5 @@
+from typing import Tuple
+
 import selenium
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -6,11 +8,11 @@ from core.waiting_manager import WaitingManager
 
 class WebElementObject:
 
-    def __init__(self, locator: tuple):
+    def __init__(self, locator: Tuple[str, str]):
         self._locator = locator
 
     @property
-    def locator(self) -> tuple:
+    def locator(self) -> Tuple[str, str]:
         return self._locator
 
     def init(self, driver: selenium.webdriver, isList = False):
