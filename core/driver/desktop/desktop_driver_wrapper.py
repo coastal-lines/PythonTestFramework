@@ -20,7 +20,8 @@ class DesktopDriverWrapper():
         return self.__driver
 
     def __get_application_window_as_element(self, application_window_name: str) -> WebElement:
-        locator = (AppiumBy.XPATH, f"//Window[@Name='{application_window_name}']")
+        #locator = (AppiumBy.XPATH, f"//Window[@Name='{application_window_name}']")
+        locator = (AppiumBy.NAME, application_window_name)
         WaitingManager.force_wait_element(self.__driver, locator)
 
         application_window_as_element = self.__driver.find_element(*locator)

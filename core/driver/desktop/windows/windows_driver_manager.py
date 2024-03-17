@@ -69,7 +69,9 @@ def get_windows_driver_for_root() -> appium.webdriver:
     options.platform_name = "Windows"
     options.automation_name = "Windows"
 
-    return __get_driver(options)
+    driver = __get_driver(options)
+
+    return driver
 
 def get_windows_driver_wrapper(application_window_name: str) -> DesktopDriverWrapper:
     desktop_driver = get_windows_driver_for_root()
