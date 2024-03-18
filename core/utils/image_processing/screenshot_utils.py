@@ -1,3 +1,5 @@
+import base64
+import io
 from io import BytesIO
 from typing import Tuple
 
@@ -26,6 +28,16 @@ def get_cropped_screenshot_of_windows_element(element: WebElement) -> Image:
     x, y, width, height = __get_element_rect(element)
     element_screenshot = __do_screenshot_and_get_cropped_image(x, y, width, height)
     return element_screenshot
+
+def get_cropped_screenshot_of_windows_element_as_base64(element: WebElement) -> str:
+    x, y, width, height = __get_element_rect(element)
+    element_screenshot = __do_screenshot_and_get_cropped_image(x, y, width, height)
+
+    img_byte_array = io.BytesIO()
+    element_screenshot.save(img_byte_array, format='PNG')
+    element_screenshot_base64 = base64.b64encode(img_byte_array.getvalue()).decode('utf-8')
+
+    return element_screenshot_base64
 
 def get_element_screenshot(element: WebElement) -> Image:
     return Image.open(BytesIO(element.screenshot_as_png))
