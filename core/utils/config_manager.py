@@ -7,11 +7,19 @@ from attr import dataclass
 
 @dataclass
 class Api:
+    karaburma_host: str
+    karaburma_port: str
     karaburma_base_url: str
+    karaburma_work_dir: str
+    karaburma_main_script_path: str
 
     def from_dict(obj: Any) -> "Api":
         _karaburma_base_url = str(obj.get("karaburma_base_url"))
-        return Api(_karaburma_base_url)
+        _karaburma_host = str(obj.get("karaburma_host"))
+        _karaburma_port = str(obj.get("karaburma_port"))
+        _karaburma_work_dir = str(obj.get("karaburma_work_dir"))
+        _karaburma_main_script_path = str(obj.get("karaburma_main_script_path"))
+        return Api(_karaburma_host, _karaburma_port, _karaburma_base_url, _karaburma_work_dir, _karaburma_main_script_path)
 
 @dataclass
 class Desktop:
