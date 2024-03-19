@@ -25,8 +25,10 @@ def load_image_as_base64(image_path: str) -> str:
             return encoded_img_str
     except FileNotFoundError:
         desktop_logger.exception(f"File '{image_path}' not found.")
+        raise FileNotFoundError
     except Exception as e:
         desktop_logger.exception(f"Unable to read '{image_path}' file. \n {e}")
+        raise Exception
 
 def save_bytes_as_png_image(image_bytes: bytes, image_path: str):
     decoded_bytes = base64.b64decode(image_bytes)

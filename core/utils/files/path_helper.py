@@ -12,10 +12,10 @@ def get_resource_path(user_resource: str) -> str:
 def screenshot_path_for_logs(pytest_node, additional_name=""):
     log_files_path = ""
 
-    if ("web_tests" in pytest_node.location[0]):
-        log_files_path = os.path.join(get_project_path(), "resources\\logs\\web_tests\\screenshots")
-    elif ("web_tests" in pytest_node.location[0]):
-        log_files_path = os.path.join(get_project_path(), "resources\\logs\\web_tests\\screenshots")
+    if ("web" in pytest_node.location[0]):
+        log_files_path = os.path.join(get_project_path(), "resources\\logs\\web\\screenshots")
+    elif ("desktop" in pytest_node.location[0]):
+        log_files_path = os.path.join(get_project_path(), "resources\\logs\\desktop\\screenshots")
 
     screenshot_path = f"{log_files_path}\\{pytest_node.name}_{additional_name}.png"
 
