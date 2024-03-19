@@ -5,8 +5,8 @@ from loguru import logger
 
 #Module variables:
 log_files_path = os.path.join(os.path.dirname(__file__), "../../resources/logs")
-web_logs_path = os.path.join(log_files_path, "web_tests/web_tests.json")
-desktop_logs_path = os.path.join(log_files_path, "web_tests/desktop_tests.json")
+web_logs_path = os.path.join(log_files_path, "web/web.json")
+desktop_logs_path = os.path.join(log_files_path, "web/desktop.json")
 
 def __prepare_callstack():
     current_callstack_list = []
@@ -32,21 +32,21 @@ def make_filter(name):
         return record["extra"].get("name") == name
     return filter_record
 
-#Logs for web_tests
-web_logger = logger.bind(type="web_tests", name="web_tests")
+#Logs for web
+web_logger = logger.bind(type="web", name="web")
 logger.add(web_logs_path,
            rotation="1 MB",
            level="DEBUG",
-           filter=make_filter("web_tests"),
+           filter=make_filter("web"),
            serialize=True,
            format="{time:MMMM D, YYYY > HH:mm:ss!UTC} | {level} | {message}")
 
-#Logs for web_tests
-desktop_logger = logger.bind(type="web_tests", name="web_tests")
+#Logs for web
+desktop_logger = logger.bind(type="web", name="web")
 logger.add(desktop_logs_path,
             rotation = "1 MB",
             level = "DEBUG",
-            filter = make_filter("web_tests"),
+            filter = make_filter("web"),
             serialize = True,
             format = "{time:MMMM D, YYYY > HH:mm:ss!UTC} | {level} | {message}")
 

@@ -1,6 +1,10 @@
 {
   "api": {
-    "karaburma_base_url": "http://127.0.0.1:8900/api/v1"
+    "karaburma_host": "127.0.0.1",
+    "karaburma_port": "8900",
+    "karaburma_base_url": "http://127.0.0.1:8900/api/v1",
+    "karaburma_work_dir": "Karaburma",
+    "karaburma_main_script_path": "karaburma/api/karaburma_api.py"
   },
   "web": {
     "default_browser": "CHROME",
