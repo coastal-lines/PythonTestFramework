@@ -53,3 +53,19 @@ def compare_screenshots(driver: appium.webdriver, expected_screenshot: str, actu
     result = driver.match_images_features(expected_screenshot, actual_screenshot, **options)
     return result
 
+def check_that_screenshot_contains_partial_image(driver: appium.webdriver, expected_partial_image: str, actual_screenshot: str) -> Dict[str, Any]:
+    options = {
+        "visualize": True
+    }
+
+    result = driver.find_image_occurrence(actual_screenshot, expected_partial_image, **options)
+    return result
+
+def get_screenshots_similarity(driver: appium.webdriver, expected_screenshot: str, actual_screenshot: str) -> Dict[str, Any]:
+    options = {
+        "visualize": True
+    }
+
+    result = driver.get_images_similarity(actual_screenshot, expected_screenshot, **options)
+    return result
+

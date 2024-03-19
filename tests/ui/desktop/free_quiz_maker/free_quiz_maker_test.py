@@ -10,6 +10,9 @@ from resources.desktop.desktop_image_resources_data_class import DesktopImageRes
 
 application_window_name = "Free Quiz Maker"
 
+def pytest_configure():
+    pytest.comparison_screenshots_result = None
+
 @pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": application_window_name}], indirect=True)
 def test_tc1_question_details_ui_correct(desktop_driver_wrapper):
     combobox_name = "question_type_combobox"
@@ -43,7 +46,7 @@ def test_tc1_question_details_ui_correct(desktop_driver_wrapper):
     assert (len(question_details_page.get_all_possible_answers_list()) == 4)
 
 @pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": application_window_name}], indirect=True)
-def test_tc2_image_comparing(desktop_driver_wrapper):
+def test_tc2_image_comparing_negative_scenario(desktop_driver_wrapper):
     # Step 1
     # Create new question
     toolbar_page = ToolbarPage(desktop_driver_wrapper.driver)
@@ -60,12 +63,69 @@ def test_tc2_image_comparing(desktop_driver_wrapper):
     expected_screenshot = files_helper.load_image_as_base64(path_helper.get_resource_path(DesktopImageResourcesData.free_quiz_image_1))
     actual_screenshot = screenshot_utils.get_element_screenshot_as_base64(desktop_driver_wrapper.get_container(application_window_name))
     result = screenshot_comparison_utils.compare_screenshots(desktop_driver_wrapper.driver, expected_screenshot, actual_screenshot)
+    pytest.comparison_screenshots_result = result["visualization"]
+    assert (len(result["visualization"]) < 0 is True)
+
+@pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": application_window_name}], indirect=True)
+def test_tc3_application_screenshot_contains_partial_image(desktop_driver_wrapper):
+    # Step 1
+    # Make a screenshot of the application
+    actual_screenshot = screenshot_utils.get_cropped_screenshot_of_windows_element_as_base64(
+        desktop_driver_wrapper.get_container(application_window_name)
+    )
+
+    # Step 2
+    # Load expected partial screenshot
+    expected_partial_screenshot = files_helper.load_image_as_base64(
+        path_helper.get_resource_path(DesktopImageResourcesData.free_quiz_add_question_button)
+    )
+
+    # Step 3
+    # Check that 'actual_screenshot' contains 'expected_partial_screenshot'
+    result = screenshot_comparison_utils.check_that_screenshot_contains_partial_image(desktop_driver_wrapper.driver, expected_partial_screenshot, actual_screenshot)
+    pytest.comparison_screenshots_result = result["visualization"]
     assert (len(result["visualization"]) > 0)
 
+@pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": application_window_name}], indirect=True)
+def test_tc4_application_screenshot_correct(desktop_driver_wrapper):
+    # Step 1
+    # Create new question
+    toolbar_page = ToolbarPage(desktop_driver_wrapper.driver)
+    toolbar_page.create_new_question()
 
-"""
-@pytest.mark.parametrize("desktop_driver", [{"application_name": "Free Quiz Maker"}], indirect=True)
-def test_tc_save_as_html(desktop_driver):
-    label1 = desktop_driver.find_element(AppiumBy.ACCESSIBILITY_ID, 'label1')
-    print(label1.get_attribute("Name"))
-"""
+    # Step 2
+    # Make a screenshot of the application
+    actual_screenshot = screenshot_utils.get_cropped_screenshot_of_windows_element_as_base64(
+        desktop_driver_wrapper.get_container(application_window_name)
+    )
+
+    # Step 3
+    # Load expected screenshot
+    expected_screenshot = files_helper.load_image_as_base64(
+        path_helper.get_resource_path(DesktopImageResourcesData.free_quiz_image_2)
+    )
+
+    # Step 4
+    # Compare similarity of actual screenshot and expected
+    result = screenshot_comparison_utils.get_screenshots_similarity(desktop_driver_wrapper.driver, expected_screenshot, actual_screenshot)
+    pytest.comparison_screenshots_result = result["visualization"]
+    assert (result["score"] > 0.0)
+    assert (len(result["visualization"]) > 0)
+
+@pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": application_window_name}], indirect=True)
+def test_tc5_validate_add_question_button_by_image_template(desktop_driver_wrapper):
+    # Step 1
+    # Try to find button element by image pattern
+    toolbar_page = ToolbarPage(desktop_driver_wrapper.driver)
+    new_question_button = toolbar_page.get_new_question_button_as_image_pattern()
+
+    # Step 2
+    # Validate some button properties
+    assert len(new_question_button.get_attribute("visual")) > 0
+    assert (new_question_button.is_displayed(), "Element 'new question' button was not found as image pattern.")
+    assert 30 < new_question_button.size["width"] < 40
+    assert 30 < new_question_button.size["height"] < 40
+    assert new_question_button.location["x"] > 0
+    assert new_question_button.location["y"] > 0
+    assert new_question_button.location_in_view["x"] > 220
+    assert new_question_button.location_in_view["y"] > 81
