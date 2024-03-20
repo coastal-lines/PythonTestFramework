@@ -46,7 +46,7 @@ def test_tc1_question_details_ui_correct(desktop_driver_wrapper):
     assert (len(question_details_page.get_all_possible_answers_list()) == 4)
 
 @pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": application_window_name}], indirect=True)
-def test_tc2_image_comparing_negative_scenario(desktop_driver_wrapper):
+def test_tc2_full_image_comparing_negative_scenario(desktop_driver_wrapper):
     # Step 1
     # Create new question
     toolbar_page = ToolbarPage(desktop_driver_wrapper.driver)
@@ -64,7 +64,7 @@ def test_tc2_image_comparing_negative_scenario(desktop_driver_wrapper):
     actual_screenshot = screenshot_utils.get_element_screenshot_as_base64(desktop_driver_wrapper.get_container(application_window_name))
     result = screenshot_comparison_utils.compare_screenshots(desktop_driver_wrapper.driver, expected_screenshot, actual_screenshot)
     pytest.comparison_screenshots_result = result["visualization"]
-    assert (len(result["visualization"]) < 0 is True)
+    assert (len(result["visualization"]) < 0) is False
 
 @pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": application_window_name}], indirect=True)
 def test_tc3_application_screenshot_contains_partial_image(desktop_driver_wrapper):

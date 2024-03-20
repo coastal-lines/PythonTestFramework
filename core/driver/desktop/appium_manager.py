@@ -2,6 +2,7 @@ import time
 import requests
 from appium.webdriver.appium_service import AppiumService
 
+from core.api.api_requests_wrapper import ApiRequestsWrapper
 from core.utils.config_manager import ConfigUtils
 from core.utils.logging_manager import desktop_logger
 from core.utils.os import process_manager
@@ -9,7 +10,7 @@ from core.utils.os import process_manager
 
 def check_appium_server(host="127.0.0.1", port="4723") -> bool:
     try:
-        response = requests.get(f'http://{host}:{port}/status')
+        response = ApiRequestsWrapper(f'http://{host}:{port}').get(f'/status')
         if response.status_code == 200:
             return True
     except Exception:
@@ -19,8 +20,8 @@ def wait_appium_server_available(host="127.0.0.1", port="4723", timeout=30):
     start_time = time.time()
     while True:
         try:
-            response = requests.get(f'http://{host}:{port}/status')
-            if response.status_code == 200:
+            is_service_available = check_appium_server(host, port)
+            if is_service_available is True:
                 print("Appium service is ready")
                 break
         except requests.ConnectionError:
@@ -37,14 +38,8 @@ def start_appium_service_as_process(host="127.0.0.1", port="4723"):
     wait_appium_server_available(host, port)
 
 def start_appium_service():
-    #appium -a 127.0.0.1 -p 4723 --use-plugins=images
-
     host = ConfigUtils().get_config().desktop.appium_url
     port = ConfigUtils().get_config().desktop.appium_port
-
-    #appium_service = AppiumService()
-    #appium_service.start(args=["--address", host, "-p", port, "--use-plugins", "images"])
-    #wait_appium_server_available(host, port)
 
     try:
         appium_service = AppiumService()

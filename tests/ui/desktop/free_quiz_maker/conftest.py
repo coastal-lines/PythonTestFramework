@@ -2,7 +2,7 @@ import time
 
 import pytest
 
-from core.driver.desktop import desktop_driver_factory
+from core.driver.desktop import desktop_driver_factory, appium_manager
 from core.driver.desktop.desktop_driver_wrapper import DesktopDriverWrapper
 from core.utils.config_manager import ConfigUtils
 from core.utils.logging_manager import desktop_logger
