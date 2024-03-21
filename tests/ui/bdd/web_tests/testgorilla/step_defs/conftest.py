@@ -1,7 +1,7 @@
 from pytest_bdd import scenarios, parsers, given, when, then
 
 from pages.web.test_gorilla.gorilla_exam_page import GorillaExamPage
-from tests.ui.web_tests.testgorilla.conftest import web_driver
+from tests.ui.web.testgorilla.conftest import web_driver
 
 
 @given(parsers.parse("open browser"), target_fixture='open_browser_step')
