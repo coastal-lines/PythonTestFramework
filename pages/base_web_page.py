@@ -8,5 +8,5 @@ class BaseWebPage:
         self.__driver = driver
 
     @property
-    def driver(self):
+    def driver(self) -> selenium.webdriver:
         return self.__driver
