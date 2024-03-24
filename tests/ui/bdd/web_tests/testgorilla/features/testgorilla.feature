@@ -12,10 +12,10 @@ Background:
 Scenario Outline: Validate exam UI elements
   Given navigate into exam page
   And maximize browser window
-  When select answer number <item_number>
+  When select item number <item_number>
   Then answered item has <answered_item_colour> colour
   And question text is <question_text>
 
   Examples: Table
   |item_number|answered_item_colour   |question_text                                                     |
-  |100        |("212", "16", "170")   |"What type of dependency should you set between these two tasks?" |
+  |-1000         |("212", "16", "170")  |What type of dependency should you set between these two tasks? |
