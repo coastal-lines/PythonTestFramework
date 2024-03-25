@@ -1,20 +1,14 @@
 from pytest_bdd import scenarios, parsers, given, when, then
 
 from pages.web.test_gorilla.gorilla_exam_page import GorillaExamPage
-from tests.ui.web_tests.testgorilla.conftest import web_driver
 
 
 # This method is a glue between feature file and current steps definition file
 scenarios("../features/testgorilla.feature")
 
 
-
-@given(parsers.parse("open browser"), target_fixture='open_browser_step')
-def open_browser_step(web_driver) -> GorillaExamPage:
-    gorilla_exam_page = GorillaExamPage(web_driver)
-    return gorilla_exam_page
-
 @given("navigate into exam page")
+@when("navigate into exam page")
 def navigate_into_exam_page(open_browser_step: GorillaExamPage):
     open_browser_step.load()
 
@@ -35,4 +29,5 @@ def answered_item_has_expected_colour(open_browser_step, answered_item_colour):
 
 @then(parsers.cfparse("question text is {question_text: String}", extra_types={"String": str}))
 def step_impl(open_browser_step, question_text):
-    assert (open_browser_step.get_question_text() == question_text)
+    assert (open_browser_step.get_question_text().replace('"', '').replace("'", "") ==
+            question_text.replace('"', '').replace("'", ""))

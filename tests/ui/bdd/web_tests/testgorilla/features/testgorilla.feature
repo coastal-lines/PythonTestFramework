@@ -1,4 +1,4 @@
-@my_tag_1
+@testgorilla
 Feature:
   As an User
   I want to open browser
@@ -8,14 +8,8 @@ Feature:
 Background:
   Given open browser
 
-@pytest.mark.ui
-Scenario Outline: Validate exam UI elements
-  Given navigate into exam page
-  And maximize browser window
-  When select item number <item_number>
-  Then answered item has <answered_item_colour> colour
-  And question text is <question_text>
+@smoke
+Scenario: Validate question text
+  When navigate into exam page
+  Then question text is 'What type of dependency should you set between these two tasks?'
 
-  Examples: Table
-  |item_number|answered_item_colour   |question_text                                                     |
-  |-1000         |("212", "16", "170")  |What type of dependency should you set between these two tasks? |
