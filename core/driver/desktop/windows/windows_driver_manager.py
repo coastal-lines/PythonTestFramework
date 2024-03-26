@@ -1,8 +1,11 @@
+import sys
+
 import win32gui
 import appium
 from appium import webdriver
 from appium.options.windows import WindowsOptions
 from selenium.common import WebDriverException
+from urllib3.exceptions import MaxRetryError
 
 from core.driver.desktop.desktop_driver_wrapper import DesktopDriverWrapper
 from core.utils.config_manager import ConfigUtils
@@ -42,6 +45,11 @@ def __get_driver(options: WindowsOptions) -> appium.webdriver:
         desktop_logger.exception(f"Desktop '{ConfigUtils().get_config().desktop.default_os}' driver was not started.")
         desktop_logger.exception(f"Try to close all 'winappdriver' sessions before.")
         desktop_logger.exception(ex.msg)
+        raise WebDriverException
+    except MaxRetryError:
+        desktop_logger.exception(f"Desktop '{ConfigUtils().get_config().desktop.default_os}' driver was not started.")
+        desktop_logger.exception(f"Please check that Appium Service was started correctly.")
+        raise MaxRetryError
 
 def get_windows_driver(**kwargs):
     application_path = kwargs.get("application_path")
@@ -59,10 +67,6 @@ def get_windows_driver(**kwargs):
 
 def get_windows_driver_for_root() -> appium.webdriver:
     global desktop_driver
-
-    if (desktop_driver is not None):
-        desktop_driver.quit()
-        desktop_driver = None
 
     options = WindowsOptions()
     options.app = "Root"

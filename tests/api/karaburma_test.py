@@ -8,6 +8,7 @@ from cerberus import Validator
 from core.utils.files import json_helper
 from resources.api.json.schema_karaburma_data_class import SchemaKaraburmaResponseDataClass
 
+
 @pytest.mark.api
 def test_karaburma_server_available(karaburma_client):
     response = karaburma_client.request.get()

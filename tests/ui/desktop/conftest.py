@@ -5,11 +5,10 @@ from core.utils.logging_manager import desktop_logger
 from core.utils.os import process_manager
 
 
-#Module variables:
 appium_service = None
 
 @pytest.fixture(scope="session", autouse=True)
-def check_appium_server():
+def appium_service_fixture(request):
     global appium_service
 
     if (appium_manager.check_appium_server() == False):
@@ -17,13 +16,9 @@ def check_appium_server():
 
     yield appium_service
 
-@pytest.fixture(scope="session", autouse=True)
-def tear_down(request):
-    global appium_service
-
-    yield
     if (appium_service is not None):
         appium_service.stop()
     process_manager.stop_process("node")
 
-    desktop_logger.info(f"Appium server stops.")
+    print("Appium server stops.")
+    desktop_logger.info("Appium server stops.")
