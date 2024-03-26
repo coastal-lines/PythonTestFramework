@@ -1,6 +1,7 @@
 import platform
 import subprocess
 import time
+import os
 
 import psutil
 
@@ -46,4 +47,15 @@ def start_process_and_wait(command: str, process_name:str, wait_time=20):
                 break
 
         time.sleep(3)
+
+def start_python_application_with_venv(work_dir: str, main_script_path: str, args: list):
+    os.chdir(work_dir)
+    os.environ['PYTHONPATH'] = os.getcwd()
+
+    python_executable = f'{work_dir}/venv/Scripts/python.exe'
+    script_path = f'{work_dir}\\{main_script_path}'
+
+    process = subprocess.Popen([python_executable, script_path] + args, stdout=None, stderr=None, stdin=None, close_fds=True, shell=True)
+
+    return process
 
