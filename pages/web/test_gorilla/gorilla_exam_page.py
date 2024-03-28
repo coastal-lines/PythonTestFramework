@@ -4,11 +4,10 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from core.web_element_object import WebElementObject
 from core.utils.regexp_utils import RegExpUtils
 from pages.base_web_page import BaseWebPage
+from resources.web.testgorilla.gorilla_data_constants import GorillaDataConstants
 
 
 class GorillaExamPage(BaseWebPage):
-    PAGE_URL = "https://app.testgorilla.com/preview/7aee275a-8df7-469f-98b2-68ea44c994e4?language=en"
-
     def __init__(self, driver: WebDriver):
         super().__init__(driver)
 
@@ -16,8 +15,8 @@ class GorillaExamPage(BaseWebPage):
         self.__ANSWERS_ELEMENT = WebElementObject((By.CSS_SELECTOR, 'app-tgo-choice tgo-quill-view'), driver)
         self.__ANSWERED_ITEM_ELEMENT = WebElementObject((By.XPATH, '//div[@class="tgo-choice tgo-choice--selected"]'), driver)
 
-    def load(self):
-        super().driver.get(self.PAGE_URL)
+    def open_exam_page(self):
+        super().navigate_into_page(GorillaDataConstants.exam_page_url)
 
     def get_question_text(self) -> str:
         return self.__QUESTION_ELEMENT.element().text

@@ -10,3 +10,6 @@ class BaseWebPage:
     @property
     def driver(self) -> selenium.webdriver:
         return self.__driver
+
+    def navigate_into_page(self, url: str):
+        self.__driver.get(url)

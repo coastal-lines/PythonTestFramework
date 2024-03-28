@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 
 from core.web_element_object import WebElementObject
 from pages.base_web_page import BaseWebPage
+from resources.web.testgorilla.gorilla_data_constants import GorillaDataConstants
 
 
 class CoddingTestsFragment(BaseWebPage):
@@ -13,10 +14,11 @@ class CoddingTestsFragment(BaseWebPage):
         self.__ADD_TESTCASE_BUTTON_ELEMENT = WebElementObject((By.XPATH, "//button//span[contains(text(), 'Add Test Case')]"), super().driver)
         self.__EXPECTED_OUTPUT_TEXTAREA_ELEMENT = WebElementObject((By.XPATH, "//mat-label[contains(text(), 'Expected output')]/ancestor-or-self::div[contains(@class, 'mat-form-field-infix')]/textarea"), super().driver)
         self.__INPUT_TEXTAREA_ELEMENT = WebElementObject((By.XPATH, "//mat-label[contains(text(), 'Input')]/ancestor-or-self::div[contains(@class, 'mat-form-field-infix')]/textarea"), super().driver)
-        self.__RESULT_STATUS_LABEL = WebElementObject((By.XPATH, "//div[@class='custom-tests-log-heading']//span[contains(text(), 'Passed')]"), super().driver)
+        self.__PASSED_RESULT_STATUS_LABEL = WebElementObject((By.XPATH, "//div[@class='custom-tests-log-heading']//span[contains(text(), 'Passed')]"), super().driver)
+        self.__ERROR_RESULT_STATUS_LABEL = WebElementObject((By.XPATH, "//div[@class='custom-tests-log-heading']//span[contains(text(), 'Error')]"), super().driver)
 
     def open_codding_exam(self):
-        super().driver.get("https://app.testgorilla.com/preview/62293f4e-c374-4711-970c-ec26f5bd22dd?language=en")
+        super().navigate_into_page(GorillaDataConstants.codding_exam_page_url)
 
     def click_add_test_case(self):
         self.__ADD_TESTCASE_BUTTON_ELEMENT.element().click()
@@ -33,4 +35,7 @@ class CoddingTestsFragment(BaseWebPage):
         self.__EXPECTED_OUTPUT_TEXTAREA_ELEMENT.element().send_keys(text)
 
     def is_test_passed(self) -> bool:
-        return self.__RESULT_STATUS_LABEL.element().is_displayed()
+        return self.__PASSED_RESULT_STATUS_LABEL.element().is_displayed()
+
+    def is_test_failed(self) -> bool:
+        return self.__ERROR_RESULT_STATUS_LABEL.element().is_displayed()
