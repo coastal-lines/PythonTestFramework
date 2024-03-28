@@ -38,7 +38,6 @@ class Desktop:
         _appium_url = str(obj.get("appium_url"))
         _appium_port = str(obj.get("appium_port"))
         _application_exe_path = str(obj.get("application_exe_path"))
-
         return Desktop(_default_os, _winappdriver_url, _winappdriver_port, _appium_url, _appium_port, _application_exe_path)
 
 @dataclass
@@ -54,22 +53,34 @@ class Web:
     def from_dict(obj: Any) -> "Web":
         _default_browser = str(obj.get("default_browser"))
         _wait_timeout = int(obj.get("wait_timeout"))
-
         return Web(_default_browser, _wait_timeout)
+
+@dataclass
+class Browserstack:
+    username: str
+    access_key: str
+    url: str
+
+    def from_dict(obj: Any) -> "Browserstack":
+        _username = str(obj.get("username"))
+        _access_key = str(obj.get("access_key"))
+        _url = str(obj.get("url"))
+        return Browserstack(_username, _access_key, _url)
 
 @dataclass
 class Configuration:
     api: Api
     web: Web
     desktop: Desktop
+    browserstack: Browserstack
 
     @staticmethod
     def from_dict(obj: Any) -> "Configuration":
         _api = Api.from_dict(obj.get("api"))
         _web = Web.from_dict(obj.get("web"))
         _desktop = Desktop.from_dict(obj.get("desktop"))
-
-        return Configuration(_api, _web, _desktop)
+        _browserstack = Browserstack.from_dict(obj.get("browserstack"))
+        return Configuration(_api, _web, _desktop, _browserstack)
 
 class ConfigUtilsThreadSafe:
 

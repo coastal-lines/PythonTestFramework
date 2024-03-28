@@ -11,9 +11,12 @@ class CoddingTestsFragment(BaseWebPage):
 
         self.__RUN_TEST_BUTTON_ELEMENT = WebElementObject((By.XPATH, "//button//span[contains(text(), 'Run tests')]"), super().driver)
         self.__ADD_TESTCASE_BUTTON_ELEMENT = WebElementObject((By.XPATH, "//button//span[contains(text(), 'Add Test Case')]"), super().driver)
-        self.__INPUT_TEXTAREA_ELEMENT = WebElementObject((By.XPATH, "//mat-label[contains(text(), 'Expected output')]/ancestor-or-self::div[contains(@class, 'mat-form-field-infix')]/textarea"), super().driver)
-        self.__EXPECTED_OUTPUT_TEXTAREA_ELEMENT = WebElementObject((By.XPATH, "//mat-label[contains(text(), 'Input')]/ancestor-or-self::div[contains(@class, 'mat-form-field-infix')]/textarea"), super().driver)
+        self.__EXPECTED_OUTPUT_TEXTAREA_ELEMENT = WebElementObject((By.XPATH, "//mat-label[contains(text(), 'Expected output')]/ancestor-or-self::div[contains(@class, 'mat-form-field-infix')]/textarea"), super().driver)
+        self.__INPUT_TEXTAREA_ELEMENT = WebElementObject((By.XPATH, "//mat-label[contains(text(), 'Input')]/ancestor-or-self::div[contains(@class, 'mat-form-field-infix')]/textarea"), super().driver)
         self.__RESULT_STATUS_LABEL = WebElementObject((By.XPATH, "//div[@class='custom-tests-log-heading']//span[contains(text(), 'Passed')]"), super().driver)
+
+    def open_codding_exam(self):
+        super().driver.get("https://app.testgorilla.com/preview/62293f4e-c374-4711-970c-ec26f5bd22dd?language=en")
 
     def click_add_test_case(self):
         self.__ADD_TESTCASE_BUTTON_ELEMENT.element().click()
