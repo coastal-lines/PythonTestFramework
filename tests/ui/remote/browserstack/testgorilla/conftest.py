@@ -24,13 +24,29 @@ def get_vivo_v21_portrait_chrome_options() -> webdriver.Options:
 
     return options
 
+def get_samsung_s22_portrait_chrome_options() -> webdriver.Options:
+    options = webdriver.Options()
+    options.set_capability('deviceName', 'Samsung Galaxy S22')
+    options.set_capability('osVersion', '12.0')
+    options.set_capability('browserName', 'chrome')
+    options.set_capability('deviceOrientation', 'portrait')
+    options.set_capability('bstack:options', {
+        "projectName": "BrowserStack Project",
+        "buildName": "bstack-webtests-samsung",
+        "sessionName": "Codding Exam tests",
+        "userName": ConfigUtils().get_config().browserstack.username,
+        "accessKey": ConfigUtils().get_config().browserstack.access_key
+    })
+
+    return options
+
 @pytest.fixture
 def browserstack_web_driver(request) -> webdriver:
     web_logger.info(f"Current test is: {request.node.name}.")
     remote_browser_driver = web_driver_factory.init_remote_web_driver(
         "BROWSERSTACK",
         ConfigUtils().get_config().browserstack.url,
-        get_vivo_v21_portrait_chrome_options()
+        get_samsung_s22_portrait_chrome_options()
     )
     yield remote_browser_driver
     remote_browser_driver.quit()

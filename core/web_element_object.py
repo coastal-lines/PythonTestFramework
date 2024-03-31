@@ -57,3 +57,10 @@ class WebElementObject:
         WaitingManager.wait_css_value_in_css_property(self.__driver, element, property, value)
 
         return element.value_of_css_property(property)
+
+    def scroll_to_element_and_get_coordinates(self) -> tuple[int, int]:
+        if (self.__initialized_element is None):
+            self.__init_force()
+
+        x, y = self.__initialized_element.location_once_scrolled_into_view
+        return x, y

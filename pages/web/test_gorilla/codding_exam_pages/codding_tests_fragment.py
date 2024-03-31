@@ -1,6 +1,10 @@
+import time
+
+from selenium.webdriver import ActionChains
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
 
+from core.driver.utils import javascript_helper
 from core.web_element_object import WebElementObject
 from pages.base_web_page import BaseWebPage
 from resources.web.testgorilla.gorilla_data_constants import GorillaDataConstants
@@ -38,4 +42,6 @@ class CoddingTestsFragment(BaseWebPage):
         return self.__PASSED_RESULT_STATUS_LABEL.element().is_displayed()
 
     def is_test_failed(self) -> bool:
+        el = self.__ERROR_RESULT_STATUS_LABEL.element()
+        self.__ERROR_RESULT_STATUS_LABEL.scroll_to_element_and_get_coordinates()
         return self.__ERROR_RESULT_STATUS_LABEL.element().is_displayed()
