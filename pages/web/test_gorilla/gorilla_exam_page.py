@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from core.web_element_object import WebElementObject
+from core.elements.web.web_element_object import WebElementObject
 from core.utils.regexp_utils import RegExpUtils
 from pages.base_web_page import BaseWebPage
 from resources.web.testgorilla.gorilla_data_constants import GorillaDataConstants

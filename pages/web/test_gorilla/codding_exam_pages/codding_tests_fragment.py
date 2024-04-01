@@ -1,11 +1,10 @@
-import time
+from typing import List
 
-from selenium.webdriver import ActionChains
 from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webelement import WebElement
 
-from core.driver.utils import javascript_helper
-from core.web_element_object import WebElementObject
+from core.elements.web.web_element_object import WebElementObject
 from pages.base_web_page import BaseWebPage
 from resources.web.testgorilla.gorilla_data_constants import GorillaDataConstants
 
@@ -20,6 +19,7 @@ class CoddingTestsFragment(BaseWebPage):
         self.__INPUT_TEXTAREA_ELEMENT = WebElementObject((By.XPATH, "//mat-label[contains(text(), 'Input')]/ancestor-or-self::div[contains(@class, 'mat-form-field-infix')]/textarea"), super().driver)
         self.__PASSED_RESULT_STATUS_LABEL = WebElementObject((By.XPATH, "//div[@class='custom-tests-log-heading']//span[contains(text(), 'Passed')]"), super().driver)
         self.__ERROR_RESULT_STATUS_LABEL = WebElementObject((By.XPATH, "//div[@class='custom-tests-log-heading']//span[contains(text(), 'Error')]"), super().driver)
+        self.__LIST_TESTS_ITEMS = WebElementObject((By.XPATH, "//div[@id='test-cases']//div[contains(@class, 'tab-label-wrapper')]"), super().driver)
 
     def open_codding_exam(self):
         super().navigate_into_page(GorillaDataConstants.codding_exam_page_url)
@@ -45,3 +45,13 @@ class CoddingTestsFragment(BaseWebPage):
         el = self.__ERROR_RESULT_STATUS_LABEL.element()
         self.__ERROR_RESULT_STATUS_LABEL.scroll_to_element_and_get_coordinates()
         return self.__ERROR_RESULT_STATUS_LABEL.element().is_displayed()
+
+    def get_tests_items(self) -> List[WebElement]:
+        return self.__LIST_TESTS_ITEMS.elements()
+
+    def get_status_list_of_tests_items(self) -> tuple:
+        status_list = ()
+        for item in self.get_tests_items():
+            status_list += (item.find_element(By.CSS_SELECTOR, "test-cases-status span").text,)
+
+        return status_list

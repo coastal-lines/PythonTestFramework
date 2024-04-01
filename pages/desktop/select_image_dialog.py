@@ -2,7 +2,7 @@ import appium
 from appium import webdriver
 from appium.webdriver.common.appiumby import AppiumBy
 
-from core.desktop_element_page import DesktopElementPage
+from core.elements.desktop.desktop_element_page import DesktopElementPage
 from pages.base_desktop_page import BaseDesktopPage
 
 

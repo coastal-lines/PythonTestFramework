@@ -5,7 +5,7 @@ from appium import webdriver
 from appium.webdriver import WebElement
 from appium.webdriver.common.appiumby import AppiumBy
 
-from core.desktop_element_page import DesktopElementPage
+from core.elements.desktop.desktop_element_page import DesktopElementPage
 from pages.base_desktop_page import BaseDesktopPage
 from pages.desktop.free_quiz_maker.question_details_page import QuestionDetailsPage
 from resources.desktop.desktop_image_resources_data_class import DesktopImageResourcesData

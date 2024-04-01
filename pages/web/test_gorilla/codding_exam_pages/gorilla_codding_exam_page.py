@@ -1,7 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from core.web_element_object import WebElementObject
+from core.elements.web.web_element_object import WebElementObject
 from pages.base_web_page import BaseWebPage
 from pages.web.test_gorilla.codding_exam_pages.codding_tests_fragment import CoddingTestsFragment
 
@@ -40,8 +40,4 @@ class GorillaCoddingExamPage(BaseWebPage):
         self.__codding_tests_fragment.click_add_test_case()
         self.__codding_tests_fragment.insert_text_into_input(input_text)
         self.__codding_tests_fragment.insert_text_into_expected_output(output_text)
-        self.__codding_tests_fragment.click_run_tests_button()
-        self.__codding_tests_fragment.click_run_tests_button()
-        self.__codding_tests_fragment.click_run_tests_button()
-        self.__codding_tests_fragment.click_run_tests_button()
         self.__codding_tests_fragment.click_run_tests_button()
