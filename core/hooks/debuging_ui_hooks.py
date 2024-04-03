@@ -1,5 +1,5 @@
 from core.utils.files import path_helper, files_helper
-from core.utils.image_processing import screenshot_utils
+from core.utils.screenshot_utils import screenshot_utils
 from core.utils.logging_manager import web_logger, desktop_logger
 
 

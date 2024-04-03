@@ -1,8 +1,9 @@
+import allure
 import pytest
 
 from pages.web.test_gorilla.gorilla_exam_page import GorillaExamPage
 
-
+@allure.description("TC1")
 @pytest.mark.ui
 @pytest.mark.xdist_group(name="gorilla")
 @pytest.mark.parametrize('answer_number', [-1])
@@ -25,6 +26,7 @@ def test_exam_title(web_driver, answer_number):
     #step 4 - check answered item colour
     assert (gorilla_exam_page.get_answer_rgb_colour() == EXPECTED_ANSWER_COLOUR)
 
+@allure.description("TC2")
 @pytest.mark.ui
 @pytest.mark.xdist_group(name="gorilla")
 @pytest.mark.parametrize('answer_number', [-1])

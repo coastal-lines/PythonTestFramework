@@ -1,4 +1,4 @@
-#@testgorilla
+@allure.description("BDD tests")
 Feature:
   As an User
   I want to open browser
@@ -8,7 +8,7 @@ Feature:
 Background:
   Given open browser
 
-#@smoke
+@allure.description("TC10")
 Scenario Outline: Validate exam UI elements
   Given navigate into exam page
   And maximize browser window
@@ -20,7 +20,7 @@ Scenario Outline: Validate exam UI elements
   |item_number|answered_item_colour   |question_text                                                     |
   |-1         |("212", "16", "170")   |What type of dependency should you set between these two tasks?   |
 
-#@smoke
+@allure.description("TC10")
 Scenario: Validate question text
   When navigate into exam page
   Then question text is 'What type of dependency should you set between these two tasks?'

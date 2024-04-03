@@ -1,7 +1,8 @@
+import allure
 import pytest
 
 from core.utils.files import path_helper, files_helper
-from core.utils.image_processing import screenshot_utils, screenshot_comparison_utils
+from core.utils.screenshot_utils import screenshot_utils, screenshot_comparison_utils
 from pages.desktop.free_quiz_maker.question_details_page import QuestionDetailsPage
 from pages.desktop.free_quiz_maker.toolbar_page import ToolbarPage
 from resources.api.api_image_resources_data_class import ApiImageResourcesData
@@ -13,6 +14,7 @@ application_window_name = "Free Quiz Maker"
 def pytest_configure():
     pytest.comparison_screenshots_result = None
 
+@allure.description("TC5")
 @pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": application_window_name}], indirect=True)
 def test_tc1_question_details_ui_correct(desktop_driver_wrapper):
     combobox_name = "question_type_combobox"
@@ -45,6 +47,7 @@ def test_tc1_question_details_ui_correct(desktop_driver_wrapper):
     question_details_page = QuestionDetailsPage(desktop_driver_wrapper.driver)
     assert (len(question_details_page.get_all_possible_answers_list()) == 4)
 
+@allure.description("TC6")
 @pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": application_window_name}], indirect=True)
 def test_tc2_full_image_comparing_negative_scenario(desktop_driver_wrapper):
     # Step 1
@@ -66,6 +69,7 @@ def test_tc2_full_image_comparing_negative_scenario(desktop_driver_wrapper):
     pytest.comparison_screenshots_result = result["visualization"]
     assert (len(result["visualization"]) < 0) is False
 
+@allure.description("TC7")
 @pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": application_window_name}], indirect=True)
 def test_tc3_application_screenshot_contains_partial_image(desktop_driver_wrapper):
     # Step 1
@@ -86,6 +90,7 @@ def test_tc3_application_screenshot_contains_partial_image(desktop_driver_wrappe
     pytest.comparison_screenshots_result = result["visualization"]
     assert (len(result["visualization"]) > 0)
 
+@allure.description("TC8")
 @pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": application_window_name}], indirect=True)
 def test_tc4_application_screenshot_correct(desktop_driver_wrapper):
     # Step 1
@@ -112,6 +117,7 @@ def test_tc4_application_screenshot_correct(desktop_driver_wrapper):
     assert (result["score"] > 0.0)
     assert (len(result["visualization"]) > 0)
 
+@allure.description("TC9")
 @pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": application_window_name}], indirect=True)
 def test_tc5_validate_add_question_button_by_image_template(desktop_driver_wrapper):
     # Step 1

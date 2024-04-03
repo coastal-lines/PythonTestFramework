@@ -12,24 +12,16 @@ class WebElementObject(BaseWebElementObject):
         super().__init__(locator, driver, container)
 
     def element(self) -> WebElement:
-        if (self._initialized_element is None):
-            self._init_force()
-        return self._initialized_element
+        return super().initialized_element
 
     def elements(self) -> List[WebElement]:
-        if (self._initialized_elements is None):
-            self._init_list()
-        return self._initialized_elements
+        return super().initialized_elements
 
     def value_of_css_property(self, property: str, value: str):
-        element = self._init()
+        element = super().initialized_element
         WaitingManager.wait_css_value_in_css_property(self._driver, element, property, value)
-
         return element.value_of_css_property(property)
 
     def scroll_to_element_and_get_coordinates(self) -> tuple[int, int]:
-        if (self._initialized_element is None):
-            self._init_force()
-
-        x, y = self._initialized_element.location_once_scrolled_into_view
+        x, y = super().initialized_element.location_once_scrolled_into_view
         return x, y
