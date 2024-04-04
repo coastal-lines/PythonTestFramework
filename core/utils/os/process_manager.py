@@ -28,14 +28,18 @@ def stop_process(process_name):
         if proc.name() == process_name:
             proc.terminate()
 
-def start_process(command: str):
+def start_process(command: str, start_in_new_process=True):
     """
     'shell=True' - support shell features like '&', '|', redirect streaming, etc.
     """
-    subprocess.run(command, shell=True)
+    if start_in_new_process:
+        subprocess.Popen(command, shell=True)
+    else:
+        subprocess.run(command, shell=True)
+
 
 def start_process_and_wait(command: str, process_name:str, wait_time=20):
-    start_process(command)
+    start_process(command, True)
 
     start_time = time.time()
     while True:

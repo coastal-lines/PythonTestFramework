@@ -29,6 +29,7 @@ class Desktop:
     appium_url: str
     appium_port: str
     application_exe_path: str
+    karaburma_demoapp_path: str
 
     @staticmethod
     def from_dict(obj: Any) -> "Desktop":
@@ -38,7 +39,8 @@ class Desktop:
         _appium_url = str(obj.get("appium_url"))
         _appium_port = str(obj.get("appium_port"))
         _application_exe_path = str(obj.get("application_exe_path"))
-        return Desktop(_default_os, _winappdriver_url, _winappdriver_port, _appium_url, _appium_port, _application_exe_path)
+        _karaburma_demoapp_path = str(obj.get("karaburma_demoapp_path"))
+        return Desktop(_default_os, _winappdriver_url, _winappdriver_port, _appium_url, _appium_port, _application_exe_path, _karaburma_demoapp_path)
 
 @dataclass
 class Web:
