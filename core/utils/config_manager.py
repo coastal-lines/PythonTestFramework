@@ -70,11 +70,20 @@ class Browserstack:
         return Browserstack(_username, _access_key, _url)
 
 @dataclass
+class Karaburma:
+    config_path: str
+
+    def from_dict(obj: Any) -> "Karaburma":
+        _config_path = str(obj.get("config_path"))
+        return Karaburma(_config_path)
+
+@dataclass
 class Configuration:
     api: Api
     web: Web
     desktop: Desktop
     browserstack: Browserstack
+    karaburma: Karaburma
 
     @staticmethod
     def from_dict(obj: Any) -> "Configuration":
@@ -82,7 +91,8 @@ class Configuration:
         _web = Web.from_dict(obj.get("web"))
         _desktop = Desktop.from_dict(obj.get("desktop"))
         _browserstack = Browserstack.from_dict(obj.get("browserstack"))
-        return Configuration(_api, _web, _desktop, _browserstack)
+        _karaburma = Karaburma.from_dict(obj.get("karaburma"))
+        return Configuration(_api, _web, _desktop, _browserstack, _karaburma)
 
 class ConfigUtilsThreadSafe:
 
