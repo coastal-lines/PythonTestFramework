@@ -16,11 +16,15 @@
     "winappdriver_port": "4723",
     "appium_url": "127.0.0.1",
     "appium_port": "4723",
-    "application_exe_path": "c:\\Temp\\Free Quiz Maker\\run.bat"
+    "application_exe_path": "c:\\Temp\\Free Quiz Maker\\run.bat",
+    "karaburma_demoapp_path": "KaraburmaDemoApp.exe"
   },
   "browserstack": {
     "username": "",
     "access_key": "",
     "url": "http://hub.browserstack.com/wd/hub"
+  },
+  "karaburma": {
+    "config_path": "config.json"
   }
 }

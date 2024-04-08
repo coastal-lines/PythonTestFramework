@@ -48,6 +48,7 @@ def desktop_root_driver(start_free_quiz_maker, request):
 
     process_manager.stop_process(desktop_application_name)
 
+'''
 @pytest.fixture()
 def desktop_driver_wrapper(start_free_quiz_maker, request) -> DesktopDriverWrapper:
     global desktop_application_name
@@ -63,3 +64,5 @@ def desktop_driver_wrapper(start_free_quiz_maker, request) -> DesktopDriverWrapp
         desktop_logger.info("Driver was not stopped correctly.")
 
     process_manager.stop_process(desktop_application_name)
+'''
+

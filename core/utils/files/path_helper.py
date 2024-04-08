@@ -9,7 +9,7 @@ def get_project_path() -> str:
 def get_resource_path(user_resource: str) -> str:
     return os.path.join(get_project_path(), user_resource)
 
-def screenshot_path_for_logs(pytest_node, additional_name=""):
+def screenshot_path_for_logs(pytest_node, additional_name="") -> str:
     log_files_path = ""
 
     if ("web" in pytest_node.location[0]):

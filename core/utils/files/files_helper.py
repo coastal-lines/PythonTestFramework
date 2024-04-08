@@ -31,18 +31,37 @@ def load_image_as_base64(image_path: str) -> str:
         raise Exception
 
 def save_bytes_as_png_image(image_bytes: bytes, image_path: str):
-    decoded_bytes = base64.b64decode(image_bytes)
-    bytes_io = io.BytesIO(decoded_bytes)
-    img = Image.open(bytes_io)
-    img.save(image_path, format="PNG")
+    #decoded_bytes = base64.b64decode(image_bytes)
+    #bytes_io = io.BytesIO(decoded_bytes)
+    #img = Image.open(bytes_io)
+    #img.save(image_path, format="PNG")
+
+    decoded_bytes = None
 
     try:
         decoded_bytes = base64.b64decode(image_bytes)
     except base64.binascii.Error as ex:
         desktop_logger.exception(f"Invalid base64-encoded image bytes for '{image_path}'. \n {ex}")
+
+    if decoded_bytes is not None:
+        try:
+            with io.BytesIO(decoded_bytes) as bytes_io:
+                img = Image.open(bytes_io)
+                img.save(image_path, format="PNG")
+        except IOError as ex:
+            desktop_logger.exception(f"Unable to save '{image_path}' file. \n {ex}")
+
+def save_base64_as_png_image(image_base64: str, image_path: str):
+    binary_data = None
+
     try:
-        with io.BytesIO(decoded_bytes) as bytes_io:
-            img = Image.open(bytes_io)
-            img.save(image_path, format="PNG")
-    except IOError as ex:
-        desktop_logger.exception(f"Unable to save '{image_path}' file. \n {ex}")
+        binary_data = base64.b64decode(image_base64)
+    except Exception as ex:
+        desktop_logger.exception(f"Invalid converting base64 into bytes for '{image_path}'. \n {ex}")
+
+    if binary_data is not None:
+        try:
+            with open(image_path, "wb") as f:
+                f.write(binary_data)
+        except IOError as ex:
+            desktop_logger.exception(f"Unable to save '{image_path}' file. \n {ex}")
