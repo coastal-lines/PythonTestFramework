@@ -2,6 +2,7 @@ import allure
 import pytest
 from appium.webdriver.common.appiumby import AppiumBy
 from assertpy import assert_that, soft_assertions
+import karaburma.api.models.response_model
 from karaburma.api.models.response_model import RootKaraburmaResponse
 from karaburma.main import Karaburma
 
@@ -12,9 +13,16 @@ from core.utils.config_manager import ConfigUtils
 from core.utils.logging_manager import desktop_logger
 from core.utils.os import process_manager
 from core.waiting_manager import WaitingManager
+from driver.utils import windows_driver_actions
 
 application_window_name = "KaraburmaDemoApp"
 appium_service = None
+
+
+def get_element_centroid(element: karaburma.api.models.response_model.Element) -> tuple[int, int]:
+    x = element.x + (element.w // 2)
+    y = element.y + (element.h // 2)
+    return x, y
 
 def deserialize_karaburma_response_into_object(response: dict) -> RootKaraburmaResponse:
     return RootKaraburmaResponse(response["w"],
@@ -67,7 +75,7 @@ def test_validate_ui_elements(desktop_driver_wrapper, karaburma):
         assert_that(karaburma_result.table_elements).is_not_empty()
         assert_that(karaburma_result.basic_elements).is_not_empty()
 
-        assert_that(any(element.text == "TextBox" for element in karaburma_result.basic_elements)).is_true()
+        assert_that(any(element.text == "Results" for element in karaburma_result.basic_elements)).is_true()
         assert_that(any(element.text == "Reset" for element in karaburma_result.basic_elements)).is_true()
 
         assert_that(list(filter(lambda element: element.label == "button", karaburma_result.basic_elements))).described_as('number buttons').is_length(7)
@@ -89,28 +97,5 @@ def test_select_checkboxes_by_appium_and_karaburma(desktop_driver_wrapper, karab
     response = karaburma.find_all_elements_and_read_text()
     karaburma_result = deserialize_karaburma_response_into_object(response)
     media_exams_checkbox = next((element for element in karaburma_result.basic_elements if element.label == "checkbox" and element.text == "Media exams"), None)
-    web_driver_actions.move_to_element_and_click(desktop_driver_wrapper.driver, media_exams_checkbox.x, media_exams_checkbox.y)
-
-    print("")
-
-
-'''
-from collections import Counter
-
-str1 = "Media exams"
-str2 = "mediaexams"
-
-# Convert both strings to lowercase
-str1 = str1.lower()
-str2 = str2.lower()
-
-# Count the frequency of each character in both strings
-counter1 = Counter(str1)
-counter2 = Counter(str2)
-
-# Check if the counters are equal
-if counter1 == counter2:
-    print("The strings are equal as vectors.")
-else:
-    print("The strings are not equal as vectors.")
-'''
+    x, y = get_element_centroid(media_exams_checkbox)
+    windows_driver_actions.click_by_coordinates(x, y)

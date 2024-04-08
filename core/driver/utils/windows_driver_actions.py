@@ -1,3 +1,4 @@
+import pyautogui
 import win32api
 import win32con
 
@@ -12,3 +13,6 @@ def apply_scroll(direction: str):
             win32api.mouse_event(win32con.MOUSEEVENTF_HWHEEL, 0, 0, -120)
         case "right":
             win32api.mouse_event(win32con.MOUSEEVENTF_HWHEEL, 0, 0, 120)
+
+def click_by_coordinates(x: int, y: int):
+    pyautogui.click(x, y)
