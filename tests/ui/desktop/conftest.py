@@ -26,7 +26,6 @@ def appium_service_fixture(request):
     print("Appium server stops.")
     desktop_logger.info("Appium server stops.")
 
-'''
 @pytest.fixture()
 def start_desktop_application(request):
     application_window_name = request.node.callspec.params["desktop_driver_wrapper"]["application_window_name"]
@@ -38,10 +37,9 @@ def start_desktop_application(request):
     process_manager.start_process_and_wait(application_path, application_window_name)
     yield
     process_manager.stop_process(application_window_name)
-'''
 
 @pytest.fixture()
-def desktop_driver_wrapper(request) -> DesktopDriverWrapper:
+def desktop_driver_wrapper(start_desktop_application, request) -> DesktopDriverWrapper:
     driver_wrapper = desktop_driver_factory.init_desktop_driver(request)
     desktop_logger.info(f"Current test is: {request.node.name}.")
 

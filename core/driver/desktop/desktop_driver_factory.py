@@ -16,9 +16,9 @@ def init_desktop_driver(request):
 
     match ConfigUtils().get_config().desktop.default_os:
         case "Windows":
-            if request.param.get("application_path"):
-                return windows_driver_manager.get_windows_driver(application_path=request.param.get("application_path"))
-            elif request.param.get("application_name"):
+            #if request.param.get("application_path"):
+            #    return windows_driver_manager.get_windows_driver(application_path=request.param.get("application_path"))
+            if request.param.get("application_name"):
                 return windows_driver_manager.get_windows_driver(application_name=request.param.get("application_name"))
             elif request.param.get("application_window_name"):
                 return windows_driver_manager.get_windows_driver_wrapper(application_window_name=request.param.get("application_window_name"))
