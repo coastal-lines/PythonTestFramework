@@ -22,14 +22,29 @@ class Api:
         return Api(_karaburma_host, _karaburma_port, _karaburma_base_url, _karaburma_work_dir, _karaburma_main_script_path)
 
 @dataclass
+class Application:
+    application_path: str
+    application_process_name: str
+    application_window_name: str
+
+    @staticmethod
+    def from_dict(obj: Any) -> "Application":
+        return Application(
+            application_path=str(obj.get("application_path")),
+            application_process_name=str(obj.get("application_process_name")),
+            application_window_name=str(obj.get("application_window_name"))
+        )
+
+@dataclass
 class Desktop:
     default_os: str
     winappdriver_url: str
     winappdriver_port: str
     appium_url: str
     appium_port: str
-    application_exe_path: str
-    karaburma_demoapp_path: str
+    #application_exe_path: str
+    #karaburma_demoapp_path: str
+    applications: Application
 
     @staticmethod
     def from_dict(obj: Any) -> "Desktop":
@@ -38,9 +53,12 @@ class Desktop:
         _winappdriver_port = str(obj.get("winappdriver_port"))
         _appium_url = str(obj.get("appium_url"))
         _appium_port = str(obj.get("appium_port"))
-        _application_exe_path = str(obj.get("application_exe_path"))
-        _karaburma_demoapp_path = str(obj.get("karaburma_demoapp_path"))
-        return Desktop(_default_os, _winappdriver_url, _winappdriver_port, _appium_url, _appium_port, _application_exe_path, _karaburma_demoapp_path)
+        #_application_exe_path = str(obj.get("application_exe_path"))
+        #_karaburma_demoapp_path = str(obj.get("karaburma_demoapp_path"))
+        _applications = {
+                app_name: Application.from_dict(app_data) for app_name, app_data in obj.get("applications", {}).items()
+            }
+        return Desktop(_default_os, _winappdriver_url, _winappdriver_port, _appium_url, _appium_port, _applications)
 
 @dataclass
 class Web:

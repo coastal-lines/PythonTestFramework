@@ -7,15 +7,20 @@ from pages.desktop.free_quiz_maker.question_details_page import QuestionDetailsP
 from pages.desktop.free_quiz_maker.toolbar_page import ToolbarPage
 from resources.api.api_image_resources_data_class import ApiImageResourcesData
 from resources.desktop.desktop_image_resources_data_class import DesktopImageResourcesData
+from core.utils.config_manager import ConfigUtils
 
-
-application_window_name = "Free Quiz Maker"
 
 def pytest_configure():
     pytest.comparison_screenshots_result = None
 
 @allure.description("TC5")
-@pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": application_window_name}], indirect=True)
+@pytest.mark.parametrize("desktop_driver_wrapper",
+                         [{
+                            "application_window_name": ConfigUtils.get_config().desktop.applications["free_quiz_maker"].application_window_name,
+                            "application_path": ConfigUtils.get_config().desktop.applications["free_quiz_maker"].application_path,
+                            "application_process_name": ConfigUtils.get_config().desktop.applications["free_quiz_maker"].application_process_name
+                         }],
+                         indirect=True)
 def test_tc1_question_details_ui_correct(desktop_driver_wrapper):
     combobox_name = "question_type_combobox"
 
@@ -48,7 +53,13 @@ def test_tc1_question_details_ui_correct(desktop_driver_wrapper):
     assert (len(question_details_page.get_all_possible_answers_list()) == 4)
 
 @allure.description("TC6")
-@pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": application_window_name}], indirect=True)
+@pytest.mark.parametrize("desktop_driver_wrapper",
+                         [{
+                            "application_window_name": ConfigUtils.get_config().desktop.applications["free_quiz_maker"].application_window_name,
+                            "application_path": ConfigUtils.get_config().desktop.applications["free_quiz_maker"].application_path,
+                            "application_process_name": ConfigUtils.get_config().desktop.applications["free_quiz_maker"].application_process_name
+                         }],
+                         indirect=True)
 def test_tc2_full_image_comparing_negative_scenario(desktop_driver_wrapper):
     # Step 1
     # Create new question
@@ -57,25 +68,31 @@ def test_tc2_full_image_comparing_negative_scenario(desktop_driver_wrapper):
 
     # Step 2
     # Upload image
-    question_details_page = QuestionDetailsPage(desktop_driver_wrapper.driver, desktop_driver_wrapper.get_container(application_window_name))
+    question_details_page = QuestionDetailsPage(desktop_driver_wrapper.driver, desktop_driver_wrapper.get_container(ConfigUtils.get_config().desktop.applications["free_quiz_maker"].application_window_name))
     image_path = path_helper.get_resource_path(ApiImageResourcesData.karaburma_main_image).replace("/", "\\")
     question_details_page.upload_question_image(image_path)
 
     # Step 3
     # Compare actual screenshot of the application and expected screenshot
     expected_screenshot = files_helper.load_image_as_base64(path_helper.get_resource_path(DesktopImageResourcesData.free_quiz_image_1))
-    actual_screenshot = screenshot_utils.get_element_screenshot_as_base64(desktop_driver_wrapper.get_container(application_window_name))
+    actual_screenshot = screenshot_utils.get_element_screenshot_as_base64(desktop_driver_wrapper.get_container(ConfigUtils.get_config().desktop.applications["free_quiz_maker"].application_window_name))
     result = screenshot_comparison_utils.compare_screenshots(desktop_driver_wrapper.driver, expected_screenshot, actual_screenshot)
     pytest.comparison_screenshots_result = result["visualization"]
     assert (len(result["visualization"]) < 0) is False
 
 @allure.description("TC7")
-@pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": application_window_name}], indirect=True)
+@pytest.mark.parametrize("desktop_driver_wrapper",
+                         [{
+                            "application_window_name": ConfigUtils.get_config().desktop.applications["free_quiz_maker"].application_window_name,
+                            "application_path": ConfigUtils.get_config().desktop.applications["free_quiz_maker"].application_path,
+                            "application_process_name": ConfigUtils.get_config().desktop.applications["free_quiz_maker"].application_process_name
+                         }],
+                         indirect=True)
 def test_tc3_application_screenshot_contains_partial_image(desktop_driver_wrapper):
     # Step 1
     # Make a screenshot of the application
     actual_screenshot = screenshot_utils.get_cropped_screenshot_of_windows_element_as_base64(
-        desktop_driver_wrapper.get_container(application_window_name)
+        desktop_driver_wrapper.get_container(ConfigUtils.get_config().desktop.applications["free_quiz_maker"].application_window_name)
     )
 
     # Step 2
@@ -91,7 +108,13 @@ def test_tc3_application_screenshot_contains_partial_image(desktop_driver_wrappe
     assert (len(result["visualization"]) > 0)
 
 @allure.description("TC8")
-@pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": application_window_name}], indirect=True)
+@pytest.mark.parametrize("desktop_driver_wrapper",
+                         [{
+                            "application_window_name": ConfigUtils.get_config().desktop.applications["free_quiz_maker"].application_window_name,
+                            "application_path": ConfigUtils.get_config().desktop.applications["free_quiz_maker"].application_path,
+                            "application_process_name": ConfigUtils.get_config().desktop.applications["free_quiz_maker"].application_process_name
+                         }],
+                         indirect=True)
 def test_tc4_application_screenshot_correct(desktop_driver_wrapper):
     # Step 1
     # Create new question
@@ -101,7 +124,7 @@ def test_tc4_application_screenshot_correct(desktop_driver_wrapper):
     # Step 2
     # Make a screenshot of the application
     actual_screenshot = screenshot_utils.get_cropped_screenshot_of_windows_element_as_base64(
-        desktop_driver_wrapper.get_container(application_window_name)
+        desktop_driver_wrapper.get_container(ConfigUtils.get_config().desktop.applications["free_quiz_maker"].application_window_name)
     )
 
     # Step 3
@@ -118,7 +141,13 @@ def test_tc4_application_screenshot_correct(desktop_driver_wrapper):
     assert (len(result["visualization"]) > 0)
 
 @allure.description("TC9")
-@pytest.mark.parametrize("desktop_driver_wrapper", [{"application_window_name": application_window_name}], indirect=True)
+@pytest.mark.parametrize("desktop_driver_wrapper",
+                         [{
+                            "application_window_name": ConfigUtils.get_config().desktop.applications["free_quiz_maker"].application_window_name,
+                            "application_path": ConfigUtils.get_config().desktop.applications["free_quiz_maker"].application_path,
+                            "application_process_name": ConfigUtils.get_config().desktop.applications["free_quiz_maker"].application_process_name
+                         }],
+                         indirect=True)
 def test_tc5_validate_add_question_button_by_image_template(desktop_driver_wrapper):
     # Step 1
     # Try to find button element by image pattern

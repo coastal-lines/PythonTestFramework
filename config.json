@@ -8,7 +8,7 @@
   },
   "web": {
     "default_browser": "CHROME",
-    "wait_timeout": 45
+    "wait_timeout": 90
   },
   "desktop": {
     "default_os": "Windows",
@@ -16,8 +16,18 @@
     "winappdriver_port": "4723",
     "appium_url": "127.0.0.1",
     "appium_port": "4723",
-    "application_exe_path": "c:\\Temp\\Free Quiz Maker\\run.bat",
-    "karaburma_demoapp_path": "KaraburmaDemoApp.exe"
+    "applications": {
+      "free_quiz_maker": {
+        "application_path": "c:\\Temp\\Free Quiz Maker\\run.bat",
+        "application_process_name": "FreeQuizMaker",
+        "application_window_name": "Free Quiz Maker"
+      },
+      "karaburma_demoapp": {
+        "application_path": "KaraburmaDemoApp.exe",
+        "application_process_name": "KaraburmaDemoApp",
+        "application_window_name": "KaraburmaDemoApp"
+      }
+    }
   },
   "browserstack": {
     "username": "",

@@ -28,15 +28,15 @@ def appium_service_fixture(request):
 
 @pytest.fixture()
 def start_desktop_application(request):
-    application_window_name = request.node.callspec.params["desktop_driver_wrapper"]["application_window_name"]
+    application_process_name = request.node.callspec.params["desktop_driver_wrapper"]["application_process_name"]
     application_path = request.node.callspec.params["desktop_driver_wrapper"]["application_path"]
 
-    if (process_manager.check_process_existed(application_window_name)):
-        process_manager.stop_process(application_window_name)
+    if (process_manager.check_process_existed(application_process_name)):
+        process_manager.stop_process(application_process_name)
 
-    process_manager.start_process_and_wait(application_path, application_window_name)
+    process_manager.start_process_and_wait(application_path, application_process_name)
     yield
-    process_manager.stop_process(application_window_name)
+    process_manager.stop_process(application_process_name)
 
 @pytest.fixture()
 def desktop_driver_wrapper(start_desktop_application, request) -> DesktopDriverWrapper:

@@ -5,6 +5,8 @@ import os
 
 import psutil
 
+from utils.logging_manager import desktop_logger
+
 
 def check_platform_for_process(func):
     def wrapper(process_name):
@@ -37,7 +39,6 @@ def start_process(command: str, start_in_new_process=True):
     else:
         subprocess.run(command, shell=True)
 
-
 def start_process_and_wait(command: str, process_name:str, wait_time=20):
     start_process(command, True)
 
@@ -47,8 +48,8 @@ def start_process_and_wait(command: str, process_name:str, wait_time=20):
             break
         else:
             if time.time() - start_time >= wait_time:
-                print(f"Application '{process_name}' was not started after {timeout} seconds.")
-                break
+                desktop_logger.exception(f"Application '{process_name}' was not started after {wait_time} seconds.")
+                raise TimeoutError
 
         time.sleep(3)
 
@@ -62,4 +63,3 @@ def start_python_application_with_venv(work_dir: str, main_script_path: str, arg
     process = subprocess.Popen([python_executable, script_path] + args, stdout=None, stderr=None, stdin=None, close_fds=True, shell=True)
 
     return process
-

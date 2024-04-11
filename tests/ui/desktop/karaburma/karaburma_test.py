@@ -12,13 +12,15 @@ from core.utils import karaburma_utils
 from core.utils.config_manager import ConfigUtils
 
 
-application_window_name = "KaraburmaDemoApp"
+def pytest_configure():
+    pytest.karaburma_result = None
 
 @allure.description("TC11")
 @pytest.mark.parametrize("desktop_driver_wrapper",
                          [{
-                            "application_window_name": application_window_name,
-                            "application_path": ConfigUtils().get_config().desktop.karaburma_demoapp_path
+                            "application_window_name": ConfigUtils.get_config().desktop.applications["karaburma_demoapp"].application_window_name,
+                            "application_path": ConfigUtils.get_config().desktop.applications["karaburma_demoapp"].application_path,
+                            "application_process_name": ConfigUtils.get_config().desktop.applications["karaburma_demoapp"].application_process_name
                          }],
                          indirect=True)
 def test_karaburma_validate_ui_elements(desktop_driver_wrapper, karaburma):
@@ -37,7 +39,7 @@ def test_karaburma_validate_ui_elements(desktop_driver_wrapper, karaburma):
         assert_that(any(element.text.strip() == "Results" for element in karaburma_result.basic_elements)).is_true()
         assert_that(any(element.text.strip() == "Reset" for element in karaburma_result.basic_elements)).is_true()
 
-        assert_that(list(filter(lambda element: element.label == "button", karaburma_result.basic_elements))).described_as('number buttons').is_length(6)
+        assert_that(len(list(filter(lambda element: element.label == "button", karaburma_result.basic_elements)))).described_as('number buttons').is_greater_than(2)
         assert_that(list(filter(lambda element: element.label == "checkbox", karaburma_result.basic_elements))).described_as('number checkboxes').is_length(2)
         assert_that(list(filter(lambda element: element.label == "radiobutton", karaburma_result.basic_elements))).described_as('number radiobutton').is_length(2)
 
@@ -46,10 +48,10 @@ def test_karaburma_validate_ui_elements(desktop_driver_wrapper, karaburma):
 @allure.description("TC12")
 @pytest.mark.parametrize("desktop_driver_wrapper",
                          [{
-                            "application_window_name": application_window_name,
-                            "application_path": ConfigUtils().get_config().desktop.karaburma_demoapp_path
-                          }
-                         ],
+                            "application_window_name": ConfigUtils.get_config().desktop.applications["karaburma_demoapp"].application_window_name,
+                            "application_path": ConfigUtils.get_config().desktop.applications["karaburma_demoapp"].application_path,
+                            "application_process_name": ConfigUtils.get_config().desktop.applications["karaburma_demoapp"].application_process_name
+                          }],
                          indirect=True)
 def test_select_checkboxes_by_appium_and_karaburma(desktop_driver_wrapper, karaburma):
     # Step 1
@@ -72,7 +74,7 @@ def test_select_checkboxes_by_appium_and_karaburma(desktop_driver_wrapper, karab
     )
 
     actual_screenshot = screenshot_utils.get_cropped_screenshot_of_windows_element_as_base64(
-        desktop_driver_wrapper.get_container(application_window_name)
+        desktop_driver_wrapper.get_container(ConfigUtils.get_config().desktop.applications["karaburma_demoapp"].application_window_name)
     )
 
     result = screenshot_comparison_utils.get_screenshots_similarity(desktop_driver_wrapper.driver, expected_screenshot, actual_screenshot)

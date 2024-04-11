@@ -36,11 +36,11 @@ class WaitingManager:
         while True:
             current_time = time.time()
 
-            if current_time - start_time >= ConfigUtils.get_config().web.wait_timeout:
+            if current_time - start_time >= wait_time:
                 break
 
             try:
-                wait = WebDriverWait(driver, wait_time)
+                wait = WebDriverWait(driver, 3)
                 el = wait.until(EC.presence_of_element_located(locator))
                 if (el is not None):
                     return el
@@ -61,11 +61,11 @@ class WaitingManager:
         while True:
             current_time = time.time()
 
-            if current_time - start_time >= ConfigUtils.get_config().web.wait_timeout:
+            if current_time - start_time >= wait_time:
                 break
 
             try:
-                wait = WebDriverWait(driver, wait_time)
+                wait = WebDriverWait(driver, 3)
                 el = wait.until(EC.presence_of_element_located(locator))
                 if (el is not None):
                     return el
