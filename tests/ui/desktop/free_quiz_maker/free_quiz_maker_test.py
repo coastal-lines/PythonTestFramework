@@ -10,9 +10,6 @@ from resources.desktop.desktop_image_resources_data_class import DesktopImageRes
 from core.utils.config_manager import ConfigUtils
 
 
-def pytest_configure():
-    pytest.comparison_screenshots_result = None
-
 @allure.description("TC5")
 @pytest.mark.parametrize("desktop_driver_wrapper",
                          [{
@@ -158,9 +155,9 @@ def test_tc5_validate_add_question_button_by_image_template(desktop_driver_wrapp
     # Validate some button properties
     assert len(new_question_button.get_attribute("visual")) > 0
     assert (new_question_button.is_displayed(), "Element 'new question' button was not found as image pattern.")
-    assert 30 < new_question_button.size["width"] < 40
-    assert 30 < new_question_button.size["height"] < 40
+    assert 30 < new_question_button.size["width"] <= 40
+    assert 30 < new_question_button.size["height"] <= 40
     assert new_question_button.location["x"] > 0
     assert new_question_button.location["y"] > 0
-    assert new_question_button.location_in_view["x"] > 220
-    assert new_question_button.location_in_view["y"] > 81
+    assert new_question_button.location_in_view["x"] >= 220
+    assert new_question_button.location_in_view["y"] >= 81

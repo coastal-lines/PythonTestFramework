@@ -11,6 +11,15 @@ from core.utils.os import process_manager
 
 desktop_application_name = "FreeQuizMaker"
 
+
+def pytest_configure():
+    """
+        Method is hook.
+        Uses for storing values globally.
+    """
+
+    pytest.comparison_screenshots_result = None
+
 @pytest.fixture()
 def start_free_quiz_maker():
     global desktop_application_name

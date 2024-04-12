@@ -28,7 +28,10 @@ def check_process_existed(process_name):
 def stop_process(process_name):
     for proc in psutil.process_iter():
         if proc.name() == process_name:
-            proc.terminate()
+            try:
+                proc.terminate()
+            except Exception:
+                desktop_logger.exception(f"Application '{process_name}' was not closed correctly.")
 
 def start_process(command: str, start_in_new_process=True):
     """
