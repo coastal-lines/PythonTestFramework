@@ -1,6 +1,6 @@
 import requests
 
-from core.api.api_response_wrapper import ApiResponseWrapper
+from wrappers.api.api_response_wrapper import ApiResponseWrapper
 
 
 class ApiRequestsWrapper:

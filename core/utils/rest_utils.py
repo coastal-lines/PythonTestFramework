@@ -1,7 +1,7 @@
 import time
 import requests
 
-from core.api.api_requests_wrapper import ApiRequestsWrapper
+from core.wrappers.api.api_requests_wrapper import ApiRequestsWrapper
 
 
 def wait_until_service_available(host="127.0.0.1", port="4723", end_point="status", timeout=30):
