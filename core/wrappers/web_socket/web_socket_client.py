@@ -1,4 +1,9 @@
+from typing import Union, Any
+from typing_extensions import Dict
 import websocket as ws
+from websocket import WebSocketAddressException
+
+from core.models.web_socket.web_socket_handshake_model import WebSocketHandshakeModel
 
 
 class AsyncWebSocketClient:
@@ -11,16 +16,26 @@ class AsyncWebSocketClient:
         self.websocket = ws.WebSocket()
 
     async def connect(self):
-        self.websocket.connect(self.uri)
+        try:
+            self.websocket.connect(self.uri)
+        except WebSocketAddressException:
+            print(f"Wrong URI. Please check Websocket Uri: {self.uri}")
 
-    async def send_message(self, message):
+    async def send_message(self, message: str):
         self.websocket.send(message)
 
-    async def receive_message(self):
+    async def receive_message(self) -> Union[str, bytes]:
         return self.websocket.recv()
 
-    async def get_connection_status(self):
+    async def get_connection_status(self) -> int:
         return self.websocket.getstatus()
+
+    async def get_connection_handshake_headers(self) -> Dict[str, Any]:
+        return self.websocket.handshake_response.headers
+
+    async def get_connection_handshake(self) -> WebSocketHandshakeModel:
+        handshake_response = await self.get_connection_handshake_headers()
+        return WebSocketHandshakeModel(handshake_response)
 
     async def close(self):
         self.websocket.close()

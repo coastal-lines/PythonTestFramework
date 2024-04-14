@@ -1,5 +1,5 @@
-from wrappers.api.api_requests_wrapper import ApiRequestsWrapper
-from wrappers.api.clients.base_client import BaseClient
+from core.wrappers.api.api_requests_wrapper import ApiRequestsWrapper
+from core.wrappers.api.clients.base_client import BaseClient
 from core.utils.config_manager import ConfigUtils
 
 

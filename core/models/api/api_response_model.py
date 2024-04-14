@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class ApiResponseWrapper:
+class ApiResponseModel:
     status_code: int
     text: str
     headers: dict

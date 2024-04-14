@@ -14,3 +14,4 @@ async def wss_client(request) -> AsyncWebSocketClient:
     yield websocket_client
 
     await websocket_client.close()
+
