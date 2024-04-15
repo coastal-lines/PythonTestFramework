@@ -1,6 +1,6 @@
 import pytest
 
-from core.wrappers.web_socket.web_socket_client import AsyncWebSocketClient
+from core.wrappers.web_socket.async_web_socket_client import AsyncWebSocketClient
 
 
 @pytest.fixture()
@@ -14,4 +14,3 @@ async def wss_client(request) -> AsyncWebSocketClient:
     yield websocket_client
 
     await websocket_client.close()
-

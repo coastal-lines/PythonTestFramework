@@ -21,6 +21,6 @@ class Data:
 
 @dataclass_json
 @dataclass
-class TokenResponseData:
+class PublicTokenResponse:
     code: str
     data: Data

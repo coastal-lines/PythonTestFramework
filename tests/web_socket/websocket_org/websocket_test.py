@@ -1,5 +1,8 @@
 import pytest
 
+from utils import generators_helper
+from wrappers.web_socket.async_web_socket_client import AsyncWebSocketClient
+
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("wss_client", [{"uri": "wss://echo.websocket.org"}], indirect=True)
@@ -38,7 +41,4 @@ async def test_validate_response_headers(wss_client):
         assert handshake_response.sec_websocket_accept is not None
 
 
-async def test_ping_pong():
-    api = ApiRequestsWrapper("https://api.kucoin.com/")
-    resp_ = api.post("api/v1/bullet-public", None, None)
-    response_data = ResponseData.from_json(resp_.text)
+
