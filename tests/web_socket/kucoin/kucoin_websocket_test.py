@@ -2,9 +2,6 @@ import pytest
 
 from core.utils import generators_helper
 from core.models.api.kucoin.response_connected_model import MainResponseModel
-from core.wrappers.api.api_requests_wrapper import ApiRequestsWrapper
-from core.wrappers.web_socket.async_web_socket_client import AsyncWebSocketClient
-from core.models.api.kucoin.token_response_model import PublicTokenResponse
 
 
 @pytest.mark.parametrize("wss_client", [{"url":"https://api.kucoin.com/", "end_point":"api/v1/bullet-public"}], indirect=True)

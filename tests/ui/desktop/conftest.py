@@ -3,9 +3,9 @@ import pytest
 from core.driver.desktop import appium_manager
 from core.utils.logging_manager import desktop_logger
 from core.utils.os import process_manager
-from core.utils.config_manager import ConfigUtils
 from core.driver.desktop import desktop_driver_factory
 from core.driver.desktop.desktop_driver_wrapper import DesktopDriverWrapper
+
 
 appium_service = None
 
@@ -15,7 +15,6 @@ def appium_service_fixture(request):
 
     if (appium_manager.check_appium_server() == False):
         appium_service = appium_manager.start_appium_service()
-        print("")
 
     yield appium_service
 
@@ -23,7 +22,6 @@ def appium_service_fixture(request):
         appium_service.stop()
     process_manager.stop_process("node")
 
-    print("Appium server stops.")
     desktop_logger.info("Appium server stops.")
 
 @pytest.fixture()

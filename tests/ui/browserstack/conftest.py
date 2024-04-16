@@ -1,5 +1,4 @@
 import pytest
-import pytest
 from selenium.webdriver.chrome import webdriver
 
 from core.driver.web import web_driver_factory

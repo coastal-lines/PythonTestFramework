@@ -1,8 +1,5 @@
 import pytest
 
-from utils import generators_helper
-from wrappers.web_socket.async_web_socket_client import AsyncWebSocketClient
-
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("wss_client", [{"uri": "wss://echo.websocket.org"}], indirect=True)

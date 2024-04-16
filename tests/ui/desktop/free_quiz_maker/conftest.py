@@ -2,8 +2,7 @@ import time
 
 import pytest
 
-from core.driver.desktop import desktop_driver_factory, appium_manager
-from core.driver.desktop.desktop_driver_wrapper import DesktopDriverWrapper
+from core.driver.desktop import desktop_driver_factory
 from core.utils.config_manager import ConfigUtils
 from core.utils.logging_manager import desktop_logger
 from core.utils.os import process_manager
@@ -57,21 +56,4 @@ def desktop_root_driver(start_free_quiz_maker, request):
 
     process_manager.stop_process(desktop_application_name)
 
-'''
-@pytest.fixture()
-def desktop_driver_wrapper(start_free_quiz_maker, request) -> DesktopDriverWrapper:
-    global desktop_application_name
-
-    driver_wrapper = desktop_driver_factory.init_desktop_driver(request)
-    desktop_logger.info(f"Current test is: {request.node.name}.")
-
-    yield driver_wrapper
-
-    try:
-        driver_wrapper.driver.quit()
-    except Exception:
-        desktop_logger.info("Driver was not stopped correctly.")
-
-    process_manager.stop_process(desktop_application_name)
-'''
 

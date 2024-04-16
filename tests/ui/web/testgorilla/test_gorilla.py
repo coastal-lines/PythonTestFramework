@@ -3,6 +3,7 @@ import pytest
 
 from pages.web.test_gorilla.gorilla_exam_page import GorillaExamPage
 
+
 @allure.description("TC1")
 @pytest.mark.ui
 @pytest.mark.xdist_group(name="gorilla")

@@ -1,5 +1,4 @@
 import pytest
-from pytest_bdd import scenarios, parsers, given, when, then
 
 from core.utils.logging_manager import web_logger
 

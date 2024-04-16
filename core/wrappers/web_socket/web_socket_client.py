@@ -4,7 +4,6 @@ import websocket as ws
 from websocket import WebSocketAddressException
 
 from core.models.web_socket.web_socket_handshake_model import WebSocketHandshakeModel
-from models.api.kucoin.response_connected_model import MainResponseModel
 
 
 class WebSocketClient:

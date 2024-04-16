@@ -4,7 +4,6 @@ import websocket as ws
 from websocket import WebSocketAddressException
 
 from core.models.web_socket.web_socket_handshake_model import WebSocketHandshakeModel
-from models.api.kucoin.response_connected_model import MainResponseModel
 
 
 class AsyncWebSocketClient:
@@ -27,25 +26,6 @@ class AsyncWebSocketClient:
 
     async def receive_message(self) -> Union[str, bytes]:
         return self.websocket.recv()
-
-    '''
-    async def receive_list_messages(self):
-        messages = []
-
-        while True:
-            message = await self.receive_message()
-            print(message)
-            if not message or message == "":
-                break
-
-            try:
-                response_obj = MainResponseModel.from_json(message)
-                messages.append(response_obj)
-            except KeyError:
-                print("Response is not the default.")
-
-        return messages
-    '''
 
     async def get_connection_status(self) -> int:
         return self.websocket.getstatus()

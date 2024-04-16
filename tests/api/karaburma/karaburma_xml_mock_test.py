@@ -1,7 +1,7 @@
 import json
+import requests
 
 import pytest
-import requests
 from assertpy import soft_assertions, assert_that
 
 from core.utils.files import path_helper
