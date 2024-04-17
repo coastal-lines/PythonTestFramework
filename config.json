@@ -29,6 +29,15 @@
       }
     }
   },
+  "mobile": {
+    "default_platform": "Android",
+    "default_mode": "Emulator",
+    "appium_url": "http://127.0.0.1",
+    "appium_port": "4723",
+    "emulator_port_number": "emulator-5554",
+    "emulator_device_name": "pixel_2_-_api_28",
+    "emulator_process_name": "qemu-system-x86_64"
+  },
   "browserstack": {
     "username": "",
     "access_key": "",

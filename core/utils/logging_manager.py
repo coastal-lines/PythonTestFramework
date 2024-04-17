@@ -6,7 +6,8 @@ from loguru import logger
 #Module variables:
 log_files_path = os.path.join(os.path.dirname(__file__), "../../resources/logs")
 web_logs_path = os.path.join(log_files_path, "web/web.json")
-desktop_logs_path = os.path.join(log_files_path, "web/desktop.json")
+desktop_logs_path = os.path.join(log_files_path, "desktop/desktop.json")
+mobile_logs_path = os.path.join(log_files_path, "mobile/mobile.json")
 
 def __prepare_callstack():
     current_callstack_list = []
@@ -32,21 +33,29 @@ def make_filter(name):
         return record["extra"].get("name") == name
     return filter_record
 
-#Logs for web
+# Logs for web
 web_logger = logger.bind(type="web", name="web")
 logger.add(web_logs_path,
-           rotation="1 MB",
+           rotation="10 MB",
            level="DEBUG",
            filter=make_filter("web"),
            serialize=True,
            format="{time:MMMM D, YYYY > HH:mm:ss!UTC} | {level} | {message}")
 
-#Logs for web
-desktop_logger = logger.bind(type="web", name="web")
+# Logs for desktop
+desktop_logger = logger.bind(type="desktop", name="desktop")
 logger.add(desktop_logs_path,
-            rotation = "1 MB",
+            rotation = "10 MB",
             level = "DEBUG",
-            filter = make_filter("web"),
+            filter = make_filter("desktop"),
             serialize = True,
             format = "{time:MMMM D, YYYY > HH:mm:ss!UTC} | {level} | {message}")
 
+# Logs for mobile
+mobile_logger = logger.bind(type="mobile", name="mobile")
+logger.add(desktop_logs_path,
+            rotation = "10 MB",
+            level = "DEBUG",
+            filter = make_filter("mobile"),
+            serialize = True,
+            format = "{time:MMMM D, YYYY > HH:mm:ss!UTC} | {level} | {message}")

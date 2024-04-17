@@ -3,13 +3,13 @@ import pytest
 from appium.webdriver.common.appiumby import AppiumBy
 from assertpy import assert_that, soft_assertions
 
-from core.waiting_manager import WaitingManager
+from core.driver.utils.waiting_manager import WaitingManager
 from core.driver.utils import windows_driver_actions
-from resources.desktop.desktop_image_resources_data_class import DesktopImageResourcesData
 from core.utils.files import files_helper, path_helper
 from core.utils.screenshot_utils import screenshot_utils, screenshot_comparison_utils
 from core.utils import karaburma_utils
 from core.utils.config_manager import ConfigUtils
+from resources.desktop.desktop_image_resources_data_class import DesktopImageResourcesData
 
 
 def pytest_configure():

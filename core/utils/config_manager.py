@@ -42,8 +42,6 @@ class Desktop:
     winappdriver_port: str
     appium_url: str
     appium_port: str
-    #application_exe_path: str
-    #karaburma_demoapp_path: str
     applications: Application
 
     @staticmethod
@@ -53,8 +51,6 @@ class Desktop:
         _winappdriver_port = str(obj.get("winappdriver_port"))
         _appium_url = str(obj.get("appium_url"))
         _appium_port = str(obj.get("appium_port"))
-        #_application_exe_path = str(obj.get("application_exe_path"))
-        #_karaburma_demoapp_path = str(obj.get("karaburma_demoapp_path"))
         _applications = {
                 app_name: Application.from_dict(app_data) for app_name, app_data in obj.get("applications", {}).items()
             }
@@ -74,6 +70,27 @@ class Web:
         _default_browser = str(obj.get("default_browser"))
         _wait_timeout = int(obj.get("wait_timeout"))
         return Web(_default_browser, _wait_timeout)
+
+@dataclass
+class Mobile:
+    default_platform: str
+    default_mode: str
+    appium_url: str
+    appium_port: str
+    emulator_port_number: str
+    emulator_device_name: str
+    emulator_process_name: str
+
+    @staticmethod
+    def from_dict(obj: Any) -> "Mobile":
+        _default_platform = str(obj.get("default_platform"))
+        _default_mode = str(obj.get("default_mode"))
+        _appium_url = str(obj.get("appium_url"))
+        _appium_port = str(obj.get("appium_port"))
+        _emulator_port_number = str(obj.get("emulator_port_number"))
+        _emulator_device_name = str(obj.get("emulator_device_name"))
+        _emulator_process_name = str(obj.get("emulator_process_name"))
+        return Mobile(_default_platform, _default_mode, _appium_url, _appium_port, _emulator_port_number, _emulator_device_name, _emulator_process_name)
 
 @dataclass
 class Browserstack:
@@ -100,6 +117,7 @@ class Configuration:
     api: Api
     web: Web
     desktop: Desktop
+    mobile: Mobile
     browserstack: Browserstack
     karaburma: Karaburma
 
@@ -108,9 +126,10 @@ class Configuration:
         _api = Api.from_dict(obj.get("api"))
         _web = Web.from_dict(obj.get("web"))
         _desktop = Desktop.from_dict(obj.get("desktop"))
+        _mobile = Mobile.from_dict(obj.get("mobile"))
         _browserstack = Browserstack.from_dict(obj.get("browserstack"))
         _karaburma = Karaburma.from_dict(obj.get("karaburma"))
-        return Configuration(_api, _web, _desktop, _browserstack, _karaburma)
+        return Configuration(_api, _web, _desktop, _mobile, _browserstack, _karaburma)
 
 class ConfigUtilsThreadSafe:
 

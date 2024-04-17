@@ -4,9 +4,8 @@ from appium import webdriver
 from appium.webdriver import WebElement
 from appium.webdriver.common.appiumby import AppiumBy
 
-from core.driver.desktop.windows import windows_driver_manager
 from core.utils.logging_manager import desktop_logger
-from core.waiting_manager import WaitingManager
+from core.driver.utils.waiting_manager import WaitingManager
 
 
 class DesktopDriverWrapper():

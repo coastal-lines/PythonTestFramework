@@ -1,6 +1,6 @@
 import pytest
 
-from core.driver.desktop import appium_manager
+from core.driver import appium_manager
 from core.utils.logging_manager import desktop_logger
 from core.utils.os import process_manager
 from core.driver.desktop import desktop_driver_factory

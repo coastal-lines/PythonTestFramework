@@ -4,7 +4,7 @@ import selenium
 from selenium.webdriver.remote.webelement import WebElement
 
 from core.elements.web.base_web_element_object import BaseWebElementObject
-from core.waiting_manager import WaitingManager
+from core.driver.utils.waiting_manager import WaitingManager
 
 
 class WebElementObject(BaseWebElementObject):

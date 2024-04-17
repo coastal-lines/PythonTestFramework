@@ -6,10 +6,10 @@ from appium.webdriver import WebElement
 from appium.webdriver.common.appiumby import AppiumBy
 
 from core.utils.files import files_helper, path_helper
-from core.waiting_manager import WaitingManager
+from driver.utils.waiting_manager import WaitingManager
 
 
-class DesktopElementPage:
+class DesktopElementObject:
     def __init__(self, locator: Tuple[str, str], driver: appium.webdriver, container: WebElement=None):
         self.__driver = driver
         self.__locator = locator

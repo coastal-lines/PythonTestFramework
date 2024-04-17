@@ -2,6 +2,7 @@ import platform
 import subprocess
 import time
 import os
+from typing import Union
 
 import psutil
 
@@ -33,18 +34,20 @@ def stop_process(process_name):
             except Exception:
                 desktop_logger.exception(f"Application '{process_name}' was not closed correctly.")
 
-def start_process(command: str, start_in_new_process=True):
+def start_process(command: str, start_in_new_process=True, is_captured_output=False) -> Union[str, bytes]:
+    result = ""
+
     """
     'shell=True' - support shell features like '&', '|', redirect streaming, etc.
     """
     if start_in_new_process:
         subprocess.Popen(command, shell=True)
     else:
-        subprocess.run(command, shell=True)
+        result = subprocess.run(command, shell=True, capture_output=is_captured_output)
 
-def start_process_and_wait(command: str, process_name:str, wait_time=20):
-    start_process(command, True)
+    return result
 
+def wait_process(process_name:str, wait_time=20):
     start_time = time.time()
     while True:
         if (check_process_existed(process_name)):
@@ -55,6 +58,10 @@ def start_process_and_wait(command: str, process_name:str, wait_time=20):
                 raise TimeoutError
 
         time.sleep(3)
+
+def start_process_and_wait(command: str, process_name:str, wait_time=20):
+    start_process(command, True)
+    wait_process(process_name, wait_time)
 
 def start_python_application_with_venv(work_dir: str, main_script_path: str, args: list):
     os.chdir(work_dir)

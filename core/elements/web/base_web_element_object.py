@@ -3,7 +3,7 @@ from typing import Tuple, List
 import selenium
 from selenium.webdriver.remote.webelement import WebElement
 
-from core.waiting_manager import WaitingManager
+from core.driver.utils.waiting_manager import WaitingManager
 
 
 class BaseWebElementObject:
