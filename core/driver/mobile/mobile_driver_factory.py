@@ -13,7 +13,7 @@ def init_mobile_driver(request):
 
     mobile_driver: appium.webdriver = None
 
-    match ConfigUtils().get_config().desktop.default_os:
+    match ConfigUtils().get_config().mobile.default_platform:
         case "Android":
             if request.param.get("default_mode"):
                 return android_driver_manager.get_android_emulator_driver(application_name=request.param.get("application_name"))

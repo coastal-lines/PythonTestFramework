@@ -5,16 +5,18 @@ from core.utils.logging_manager import desktop_logger
 from core.utils.os import process_manager
 from core.driver.desktop import desktop_driver_factory
 from core.driver.desktop.desktop_driver_wrapper import DesktopDriverWrapper
-
+from core.utils.config_manager import ConfigUtils
 
 appium_service = None
+uri = ConfigUtils().get_config().desktop.appium_url
+port = ConfigUtils().get_config().desktop.appium_port
 
 @pytest.fixture(scope="session", autouse=True)
 def appium_service_fixture(request):
-    global appium_service
+    global appium_service, uri, port
 
     if (appium_manager.check_appium_server() == False):
-        appium_service = appium_manager.start_appium_service()
+        appium_service = appium_manager.start_appium_service(uri, port)
 
     yield appium_service
 

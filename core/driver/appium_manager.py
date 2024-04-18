@@ -37,16 +37,13 @@ def start_appium_service_as_process(host="127.0.0.1", port="4723"):
     process_manager.start_process(f"appium --address {host} --port {port}")
     wait_appium_server_available(host, port)
 
-def start_appium_service():
-    host = ConfigUtils().get_config().desktop.appium_url
-    port = ConfigUtils().get_config().desktop.appium_port
-
+def start_appium_service(uri: str, port: str):
     try:
         appium_service = AppiumService()
-        appium_service.start(args=["--address", ConfigUtils().get_config().desktop.appium_url, "-p", ConfigUtils().get_config().desktop.appium_port, "--use-plugins", "images"])
-        wait_appium_server_available(host, port)
+        appium_service.start(args=["--address", uri, "-p", port, "--use-plugins", "images"])
+        wait_appium_server_available(uri, port)
 
-        desktop_logger.info(f"Appium server is running. Appium server url is {host, port}.")
+        desktop_logger.info(f"Appium server is running. Appium server url is {uri, port}.")
 
         return appium_service
 

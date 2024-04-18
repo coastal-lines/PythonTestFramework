@@ -80,6 +80,7 @@ class Mobile:
     emulator_port_number: str
     emulator_device_name: str
     emulator_process_name: str
+    emulator_loading_timeout: str
 
     @staticmethod
     def from_dict(obj: Any) -> "Mobile":
@@ -90,7 +91,8 @@ class Mobile:
         _emulator_port_number = str(obj.get("emulator_port_number"))
         _emulator_device_name = str(obj.get("emulator_device_name"))
         _emulator_process_name = str(obj.get("emulator_process_name"))
-        return Mobile(_default_platform, _default_mode, _appium_url, _appium_port, _emulator_port_number, _emulator_device_name, _emulator_process_name)
+        _emulator_loading_timeout = str(obj.get("emulator_loading_timeout"))
+        return Mobile(_default_platform, _default_mode, _appium_url, _appium_port, _emulator_port_number, _emulator_device_name, _emulator_process_name, _emulator_loading_timeout)
 
 @dataclass
 class Browserstack:
