@@ -10,5 +10,4 @@ def get_android_emulator_driver(emulator_device_name: str, default_platform: str
     options.platform_name = default_platform
     options.automation_name = "UIAutomator2"
 
-    #return webdriver.Remote(f'{appium_url}:{int(appium_port)}', options=options)
-    return webdriver.Remote("127.0.0.1:4723", options=options)
+    return webdriver.Remote(f'{appium_url}:{int(appium_port)}', options=options)

@@ -37,7 +37,9 @@ def start_appium_service_as_process(host="127.0.0.1", port="4723"):
     process_manager.start_process(f"appium --address {host} --port {port}")
     wait_appium_server_available(host, port)
 
-def start_appium_service(uri: str, port: str):
+def start_appium_service(uri: str, port: str) -> AppiumService:
+    uri = uri.replace("http://", "")
+
     try:
         appium_service = AppiumService()
         appium_service.start(args=["--address", uri, "-p", port, "--use-plugins", "images"])

@@ -8,11 +8,22 @@ wait_time = int(ConfigUtils.get_config().mobile.emulator_loading_timeout)
 
 
 def start_emulator(command: str):
-    subprocess.Popen(command,
-                    shell=True,
-                    stdin=subprocess.PIPE,
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.PIPE)
+    subprocess.Popen(
+        command,
+        shell=True,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE
+    )
+
+def stop_emulator():
+    subprocess.Popen(
+        "adb emu kill",
+        shell=True,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE
+    )
 
 def waiting_android_emulator_is_started(emulator_port_number:str):
     global wait_time
@@ -22,7 +33,6 @@ def waiting_android_emulator_is_started(emulator_port_number:str):
         output = process_manager.start_process("adb devices", start_in_new_process=False, is_captured_output=True)
         str_output = str(output.stdout)
         if ("List of devices attached" in str_output
-                #and "emulator-5554" in str_output
                 and emulator_port_number in str_output
                 and "offline" not in str_output):
             break
