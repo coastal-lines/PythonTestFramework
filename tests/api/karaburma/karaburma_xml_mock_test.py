@@ -5,6 +5,7 @@ import pytest
 from assertpy import soft_assertions, assert_that
 
 from core.utils.files import path_helper
+from core.utils.files import json_helper
 from resources.api.api_image_resources_data_class import ApiImageResourcesData
 from resources.api.api_xml_resources_data_class import ApiXmlResourceData
 
@@ -18,7 +19,7 @@ def test_image_file_height_is_correct(mocker, karaburma_client):
     # Create mock-server for requests
     mocker.patch.object(requests, 'post', return_value=MockResponse())
 
-    payload = json.dumps({
+    payload = json_helper.convert_object_into_text({
         "image_file_path": f"{path_helper.get_resource_path(ApiImageResourcesData.karaburma_main_image)}"
     })
 

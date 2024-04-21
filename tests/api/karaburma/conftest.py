@@ -21,9 +21,11 @@ KARABURMA_SERVICE_PARAMETERS = [
 
 @pytest.fixture(scope="session", autouse=True)
 def start_karaburma_as_api_service():
-    process_manager.start_python_application_with_venv(work_dir=ConfigUtils().get_config().api.karaburma_work_dir,
-                                                             main_script_path=ConfigUtils().get_config().api.karaburma_main_script_path,
-                                                             args=KARABURMA_SERVICE_PARAMETERS)
+    process_manager.start_python_application_with_venv(
+        work_dir=ConfigUtils().get_config().api.karaburma_work_dir,
+        main_script_path=ConfigUtils().get_config().api.karaburma_main_script_path,
+        args=KARABURMA_SERVICE_PARAMETERS
+    )
     rest_utils.wait_until_service_available(host="127.0.0.1", port=8900, end_point="api/v1", timeout=30)
     yield
     try:

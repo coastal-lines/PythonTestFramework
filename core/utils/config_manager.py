@@ -115,6 +115,14 @@ class Karaburma:
         return Karaburma(_config_path)
 
 @dataclass
+class AzureDevOps:
+    access_token_for_tests: str
+
+    def from_dict(obj: Any) -> "AzureDevOps":
+        _access_token_for_tests = str(obj.get("access_token_for_tests"))
+        return AzureDevOps(_access_token_for_tests)
+
+@dataclass
 class Configuration:
     api: Api
     web: Web
@@ -122,6 +130,7 @@ class Configuration:
     mobile: Mobile
     browserstack: Browserstack
     karaburma: Karaburma
+    azure_dev_ops: AzureDevOps
 
     @staticmethod
     def from_dict(obj: Any) -> "Configuration":
@@ -131,7 +140,8 @@ class Configuration:
         _mobile = Mobile.from_dict(obj.get("mobile"))
         _browserstack = Browserstack.from_dict(obj.get("browserstack"))
         _karaburma = Karaburma.from_dict(obj.get("karaburma"))
-        return Configuration(_api, _web, _desktop, _mobile, _browserstack, _karaburma)
+        _azure_dev_ops = AzureDevOps.from_dict(obj.get("azure_devops"))
+        return Configuration(_api, _web, _desktop, _mobile, _browserstack, _karaburma, _azure_dev_ops)
 
 class ConfigUtilsThreadSafe:
 

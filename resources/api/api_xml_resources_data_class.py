@@ -26,4 +26,5 @@ class ApiXmlResourceData:
     It means that descriptors can control and modify logic for attributes accessing.
     """
     karaburma_xml_response: LazyLoadKaraburmaMockXml = LazyLoadKaraburmaMockXml(
-        path_helper.get_resource_path("resources/api/xml/karaburma_response_xml.xml"))
+        path_helper.get_resource_path("resources/api/xml/karaburma_response_xml.xml")
+    )
