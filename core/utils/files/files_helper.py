@@ -31,11 +31,6 @@ def load_image_as_base64(image_path: str) -> str:
         raise Exception
 
 def save_bytes_as_png_image(image_bytes: bytes, image_path: str):
-    #decoded_bytes = base64.b64decode(image_bytes)
-    #bytes_io = io.BytesIO(decoded_bytes)
-    #img = Image.open(bytes_io)
-    #img.save(image_path, format="PNG")
-
     decoded_bytes = None
 
     try:

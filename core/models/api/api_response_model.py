@@ -1,12 +1,12 @@
 from dataclasses import dataclass
+from dataclasses_json import dataclass_json
 
-from requests.cookies import RequestsCookieJar
 
-
+@dataclass_json
 @dataclass
 class ApiResponseModel:
     status_code: int
     text: str
-    headers: object
-    cookies: list
+    headers: dict
+    cookies: dict
     as_dict: dict

@@ -116,11 +116,19 @@ class Karaburma:
 
 @dataclass
 class AzureDevOps:
-    access_token_for_tests: str
+    organization: str
+    project: str
+    default_user_for_assign: str
+    token_for_full_access: str
+    token_for_agents_pool_only: str
 
     def from_dict(obj: Any) -> "AzureDevOps":
-        _access_token_for_tests = str(obj.get("access_token_for_tests"))
-        return AzureDevOps(_access_token_for_tests)
+        _organization = str(obj.get("organization"))
+        _project = str(obj.get("project"))
+        _default_user_for_assign = str(obj.get("default_user_for_assign"))
+        _token_for_full_access = str(obj.get("token_for_full_access"))
+        _token_for_agents_pool_only = str(obj.get("token_for_agents_pool_only"))
+        return AzureDevOps(_organization, _project, _default_user_for_assign, _token_for_full_access, _token_for_agents_pool_only)
 
 @dataclass
 class Configuration:
