@@ -48,6 +48,10 @@
     "config_path": "config.json"
   },
   "azure_devops": {
-    "access_token_for_tests": ""
+    "organization": "",
+    "project": "",
+    "default_user_for_assign": "",
+    "token_for_full_access": "",
+    "token_for_agents_pool_only": ""
   }
 }

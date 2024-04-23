@@ -15,7 +15,7 @@ class ApiRequestsWrapper:
         response = requests.post(url=self.base_url + url, auth=auth, data=payload, headers=headers, files=files)
         return self.__prepare_response(response)
 
-    def patch(self, url="/", payload=None, headers=None, auth=None) -> ApiResponseModel:
+    def patch(self, url, payload=None, headers=None, auth=None) -> ApiResponseModel:
         response = requests.patch(url=self.base_url + url, auth=auth, data=payload, headers=headers)
         return self.__prepare_response(response)
 
