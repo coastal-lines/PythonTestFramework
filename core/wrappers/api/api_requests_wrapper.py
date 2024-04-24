@@ -1,6 +1,7 @@
 import requests
 
 from core.models.api.api_response_model import ApiResponseModel
+from core.models.api.azure_devops.response_factory import AzureResponseFactory
 
 
 class ApiRequestsWrapper:
@@ -15,14 +16,18 @@ class ApiRequestsWrapper:
         response = requests.post(url=self.base_url + url, auth=auth, data=payload, headers=headers, files=files)
         return self.__prepare_response(response)
 
-    def patch(self, url, payload=None, headers=None, auth=None) -> ApiResponseModel:
+    def patch(self, url, payload=None, headers=None, auth=None, response_model=None) -> ApiResponseModel:
         response = requests.patch(url=self.base_url + url, auth=auth, data=payload, headers=headers)
-        return self.__prepare_response(response)
+        return self.__prepare_response(response, response_model=response_model)
 
-    def __prepare_response(self, response: requests.Response) -> ApiResponseModel:
+    def __prepare_response(self, response: requests.Response, response_model=None) -> ApiResponseModel:
         try:
-            orig_repsonse = response.json()
+            as_dict = response.json()
         except Exception:
-            orig_repsonse = {}
+            as_dict = {}
 
-        return ApiResponseModel(response.status_code, response.text, dict(response.headers), dict(response.cookies.items()), orig_repsonse)
+        model = None
+        if response_model is not None:
+            model = AzureResponseFactory.create_response_object(response_model, as_dict)
+
+        return ApiResponseModel(response.status_code, response.text, dict(response.headers), dict(response.cookies.items()), as_dict, model)

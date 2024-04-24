@@ -10,3 +10,4 @@ class ApiResponseModel:
     headers: dict
     cookies: dict
     as_dict: dict
+    response_model: object = None

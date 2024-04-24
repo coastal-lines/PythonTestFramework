@@ -1,18 +1,16 @@
+from api.azure_devops.azure_dto import AzureDTO
 from core.utils.config_manager import ConfigUtils
 from core.wrappers.api.api_requests_wrapper import ApiRequestsWrapper
 from core.utils.files import path_helper
-from models.api.azure_devops.response_patch_workitem import ResponsePatchWorkitem
+from core.utils.files import json_helper
 from models.api.azure_devops.response_post_attachment import ResponsePostAttachment
 from models.api.azure_devops.response_patch_attachment import ResponsePatchWorkitemAttachment
 from models.api.azure_devops.response_post_workitem import ResponsePostWorkitem
 from resources.desktop.desktop_image_resources_data_class import DesktopImageResourcesData
-from core.utils.files import json_helper
 
 
-b_auth = ("any_user", ConfigUtils().get_config().azure_dev_ops.token_for_full_access)
-
-def upload_attachment_to_project(organization: str):
-    api_client = ApiRequestsWrapper(f"https://dev.azure.com/{organization}/")
+def upload_attachment_to_project():
+    api_client = ApiRequestsWrapper(f"https://dev.azure.com/{AzureDTO().organization}/")
 
     files = {
         "file": open(path_helper.get_resource_path(DesktopImageResourcesData.free_quiz_image_1), 'rb')
@@ -23,15 +21,16 @@ def upload_attachment_to_project(organization: str):
     }
 
     response = api_client.post("_apis/wit/attachments?fileName=free_quiz_image_1.png&uploadType=Simple&api-version=7.0",
-                               auth=b_auth,
+                               auth=AzureDTO().basic_authorization,
                                headers=headers,
                                files=files)
 
-    response_post_attachment = ResponsePostAttachment.from_json(json_helper.convert_object_into_text(response.as_dict))
+    #response_post_attachment = ResponsePostAttachment.from_json(json_helper.convert_object_into_text(response.as_dict))
+    response_post_attachment = ResponsePostAttachment.from_json(response.as_dict)
     return response_post_attachment
 
-def add_attachment_to_workitem(organization: str, project: str, attachment_url: str, workitem_id: str):
-    api_client = ApiRequestsWrapper(f"https://dev.azure.com/{organization}/")
+def add_attachment_to_workitem(attachment_url: str, workitem_id: str):
+    api_client = ApiRequestsWrapper(f"https://dev.azure.com/{AzureDTO().organization}/")
 
     payload = json_helper.convert_object_into_text([
         {
@@ -48,16 +47,16 @@ def add_attachment_to_workitem(organization: str, project: str, attachment_url: 
         "Content-Type": "application/json-patch+json"
     }
 
-    response = api_client.patch(url=f"/{project}/_apis/wit/workitems/{workitem_id}?api-version=7.0",
-                                auth=b_auth,
+    response = api_client.patch(url=f"/{AzureDTO().project}/_apis/wit/workitems/{workitem_id}?api-version=7.0",
+                                auth=AzureDTO().basic_authorization,
                                 payload=payload,
                                 headers=headers)
 
     response = ResponsePatchWorkitemAttachment.from_dict(response.as_dict)
     return response
 
-def add_comment_to_workitem(organization: str, project: str, workitem_id: str, comment_text="comment_text"):
-    api_client = ApiRequestsWrapper(f"https://dev.azure.com/{organization}")
+def add_comment_to_workitem(workitem_id: str, comment_text="comment_text"):
+    api_client = ApiRequestsWrapper(f"https://dev.azure.com/{AzureDTO().organization}")
 
     payload = json_helper.convert_object_into_text([
         {
@@ -71,16 +70,16 @@ def add_comment_to_workitem(organization: str, project: str, workitem_id: str, c
         "Content-Type": "application/json-patch+json"
     }
 
-    response = api_client.patch(url=f"/{project}/_apis/wit/workitems/{workitem_id}?api-version=7.0",
-                                auth=b_auth,
+    response = api_client.patch(url=f"/{AzureDTO().project}/_apis/wit/workitems/{workitem_id}?api-version=7.0",
+                                auth=AzureDTO().basic_authorization,
                                 payload=payload,
                                 headers=headers)
 
     main_response = ResponsePostWorkitem.from_dict(response.as_dict)
     return main_response
 
-def create_new_task_with_attach_and_comment(organization: str, project: str, add_comment=False, add_attach=False):
-    api_client = ApiRequestsWrapper(f"https://dev.azure.com/{organization}/")
+def create_new_task_with_attach_and_comment(add_comment=False, add_attach=False):
+    api_client = ApiRequestsWrapper(f"https://dev.azure.com/{AzureDTO().organization}/")
 
     payload = json_helper.convert_object_into_text([
         {
@@ -119,19 +118,19 @@ def create_new_task_with_attach_and_comment(organization: str, project: str, add
         "Content-Type": "application/json-patch+json"
     }
 
-    response = api_client.post(url=f"/{project}/_apis/wit/workitems/$Task?api-version=7.0",
-                                auth=b_auth,
-                                payload=payload,
-                               headers=headers)
+    response = api_client.post(url=f"/{AzureDTO().project}/_apis/wit/workitems/$Task?api-version=7.0",
+                            auth=AzureDTO().basic_authorization,
+                            payload=payload,
+                            headers=headers)
 
     response_post_workitem = ResponsePostWorkitem.from_dict(response.as_dict)
 
     if add_comment:
-        add_comment_to_workitem(organization, project, response_post_workitem.id)
+        add_comment_to_workitem(response_post_workitem.id)
 
     if add_attach:
-        upload_response = upload_attachment_to_project(organization)
-        add_attachment_to_workitem(organization, project, upload_response.url, response_post_workitem.id)
-        response_post_workitem = api_client.get(url=f"/{project}/_apis/wit/workitems/{response_post_workitem.id}?api-version=7.0", auth=b_auth)
+        upload_response = upload_attachment_to_project()
+        add_attachment_to_workitem(upload_response.url, response_post_workitem.id)
+        response_post_workitem = api_client.get(url=f"/{AzureDTO().project}/_apis/wit/workitems/{response_post_workitem.id}?api-version=7.0", auth=AzureDTO().basic_authorization)
 
     return response_post_workitem
