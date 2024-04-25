@@ -23,11 +23,11 @@ def upload_attachment_to_project():
     response = api_client.post("_apis/wit/attachments?fileName=free_quiz_image_1.png&uploadType=Simple&api-version=7.0",
                                auth=AzureDTO().basic_authorization,
                                headers=headers,
-                               files=files)
+                               files=files,
+                               response_model=ResponsePostAttachment)
 
-    #response_post_attachment = ResponsePostAttachment.from_json(json_helper.convert_object_into_text(response.as_dict))
-    response_post_attachment = ResponsePostAttachment.from_json(response.as_dict)
-    return response_post_attachment
+    #response_post_attachment = ResponsePostAttachment.from_dict(response.as_dict)
+    return response
 
 def add_attachment_to_workitem(attachment_url: str, workitem_id: str):
     api_client = ApiRequestsWrapper(f"https://dev.azure.com/{AzureDTO().organization}/")

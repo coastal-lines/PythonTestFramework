@@ -12,13 +12,21 @@ class ApiRequestsWrapper:
         response = requests.get(url=self.base_url + url, data=payload, headers=headers, auth=auth)
         return self.__prepare_response(response)
 
-    def post(self, url, auth=None, payload=None, headers=None, files=None) -> ApiResponseModel:
+    def post(self, url, auth=None, payload=None, headers=None, files=None, response_model=None) -> ApiResponseModel:
         response = requests.post(url=self.base_url + url, auth=auth, data=payload, headers=headers, files=files)
-        return self.__prepare_response(response)
+        return self.__prepare_response(response, response_model=response_model)
 
     def patch(self, url, payload=None, headers=None, auth=None, response_model=None) -> ApiResponseModel:
         response = requests.patch(url=self.base_url + url, auth=auth, data=payload, headers=headers)
         return self.__prepare_response(response, response_model=response_model)
+
+    def put(self, url, headers=None, auth=None, response_model=None):
+        response = requests.put(url=self.base_url + url, auth=auth, headers=headers)
+        return self.__prepare_response(response, response_model=response_model)
+
+    def delete(self, url, auth=None):
+        response = requests.delete(url=self.base_url + url, auth=auth)
+        return self.__prepare_response(response)
 
     def __prepare_response(self, response: requests.Response, response_model=None) -> ApiResponseModel:
         try:
