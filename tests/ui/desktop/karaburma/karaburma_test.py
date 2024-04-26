@@ -81,3 +81,27 @@ def test_select_checkboxes_by_appium_and_karaburma(desktop_driver_wrapper, karab
     pytest.comparison_screenshots_result = result["visualization"]
     assert (result["score"] > 0.0)
     assert (len(result["visualization"]) > 0)
+
+@allure.description("TC13")
+@pytest.mark.parametrize("desktop_driver_wrapper",
+                         [{
+                            "application_window_name": ConfigUtils.get_config().desktop.applications["karaburma_demoapp"].application_window_name,
+                            "application_path": ConfigUtils.get_config().desktop.applications["karaburma_demoapp"].application_path,
+                            "application_process_name": ConfigUtils.get_config().desktop.applications["karaburma_demoapp"].application_process_name
+                          }],
+                         indirect=True)
+def test_validate_expanded_table(desktop_driver_wrapper, karaburma):
+    # Step 1
+    # Expand table and collect information
+    response = karaburma.find_table_and_expand(table_index=0, read_text_from_cells=True)
+
+    # Step 2
+    # Validate expanded table
+    karaburma_result = karaburma_utils.deserialize_karaburma_response_into_object(response)
+    karaburma_result.debug_screenshot = karaburma_result.table_elements[0].full_table.get("orig_img_base64")
+    pytest.karaburma_result = karaburma_result
+
+    expanded_table = karaburma_result.table_elements[0].full_table
+    assert expanded_table is not None
+    assert len(expanded_table.get("cells")) == 90
+    assert "hello" in expanded_table.get("cells")[-1].get("text")
