@@ -6,7 +6,7 @@ from appium.webdriver import WebElement
 from appium.webdriver.common.appiumby import AppiumBy
 
 from core.utils.files import files_helper, path_helper
-from driver.utils.waiting_manager import WaitingManager
+from core.driver.utils.waiting_manager import (WaitingManager)
 
 
 class MobileElementObject:

@@ -3,8 +3,8 @@ import json
 import pytest
 from requests import Response
 
-from wrappers.api.api_requests_wrapper import ApiRequestsWrapper
-from wrappers.api.clients.karaburma_client import KaraburmaClient
+from core.wrappers.api.api_requests_wrapper import ApiRequestsWrapper
+from core.wrappers.api.clients.karaburma_client import KaraburmaClient
 from core.utils import rest_utils
 from core.utils.config_manager import ConfigUtils
 from core.utils.files import path_helper

@@ -3,7 +3,6 @@ import requests
 from appium.webdriver.appium_service import AppiumService
 
 from core.wrappers.api.api_requests_wrapper import ApiRequestsWrapper
-from core.utils.config_manager import ConfigUtils
 from core.utils.logging_manager import desktop_logger
 from core.utils.os import process_manager
 

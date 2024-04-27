@@ -1,13 +1,13 @@
 import allure
 import pytest
 
+from core.utils.config_manager import ConfigUtils
 from core.utils.files import path_helper, files_helper
 from core.utils.screenshot_utils import screenshot_utils, screenshot_comparison_utils
 from pages.desktop.free_quiz_maker.question_details_page import QuestionDetailsPage
 from pages.desktop.free_quiz_maker.toolbar_page import ToolbarPage
 from resources.api.api_image_resources_data_class import ApiImageResourcesData
 from resources.desktop.desktop_image_resources_data_class import DesktopImageResourcesData
-from core.utils.config_manager import ConfigUtils
 
 
 @allure.description("TC5")

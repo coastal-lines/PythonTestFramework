@@ -1,7 +1,6 @@
 import pytest
 import appium.webdriver.webdriver
 from appium.webdriver.appium_service import AppiumService
-from appium.webdriver.common.appiumby import AppiumBy
 
 from core.utils.config_manager import ConfigUtils
 from core.driver import appium_manager

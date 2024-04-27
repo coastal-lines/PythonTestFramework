@@ -1,5 +1,3 @@
-import time
-
 import pytest
 
 from core.driver.desktop import desktop_driver_factory

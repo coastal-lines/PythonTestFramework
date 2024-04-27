@@ -2,11 +2,10 @@ import platform
 import subprocess
 import time
 import os
+import psutil
 from typing import Union
 
-import psutil
-
-from utils.logging_manager import desktop_logger
+from core.utils.logging_manager import desktop_logger
 
 
 def check_platform_for_process(func):

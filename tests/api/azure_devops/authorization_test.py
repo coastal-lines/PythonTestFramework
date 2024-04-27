@@ -1,5 +1,5 @@
 import pytest
-from api.azure_devops.azure_dto import AzureDTO
+from tests.api.azure_devops.azure_dto import AzureDTO
 from core.utils.config_manager import ConfigUtils
 
 

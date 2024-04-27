@@ -3,7 +3,7 @@
     "karaburma_host": "127.0.0.1",
     "karaburma_port": "8900",
     "karaburma_base_url": "http://127.0.0.1:8900/api/v1",
-    "karaburma_work_dir": "Karaburma",
+    "karaburma_work_dir": "Git\\Karaburma",
     "karaburma_main_script_path": "karaburma/api/karaburma_api.py"
   },
   "web": {
@@ -23,7 +23,7 @@
         "application_window_name": "Free Quiz Maker"
       },
       "karaburma_demoapp": {
-        "application_path": "KaraburmaDemoApp.exe",
+        "application_path": "net6.0-windows\\KaraburmaDemoApp.exe",
         "application_process_name": "KaraburmaDemoApp",
         "application_window_name": "KaraburmaDemoApp"
       }
@@ -45,7 +45,7 @@
     "url": "http://hub.browserstack.com/wd/hub"
   },
   "karaburma": {
-    "config_path": "config.json"
+    "config_path": "karaburma\\config.json"
   },
   "azure_devops": {
     "organization": "",
