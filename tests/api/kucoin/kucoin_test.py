@@ -13,4 +13,3 @@ def test_validate_public_token_response(kucoin_service):
     assert kucoin_service.data.instanceServers[0].protocol == "websocket"
     assert kucoin_service.data.instanceServers[0].pingInterval == 18000
     assert kucoin_service.data.instanceServers[0].pingTimeout == 10000
-
