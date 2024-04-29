@@ -2,17 +2,17 @@
 
 #
 
-#### Framework schema
+#### Simple framework diagram
 ![image](https://github.com/coastal-lines/PythonTestFramework/blob/master/doc/images/project_diagram.png?raw=true)
 
 #
 
 #### Test types
-| HTTP/WS   | Web | Desktop | Mobile | Visual Tests
-|-----------| ------ | ------ | ------ | ------ |
-| API       | BDD | Windows | Android | Appium
-| WebSocket | BrowserStack |||Karaburma|
-|           |Selenium |
+| HTTP/WS   | Web | Desktop | Mobile  | Visual Tests 
+|-----------| ------ |---------|---------|--------------|
+| API       | BDD | Windows | Android | Appium       
+| WebSocket | BrowserStack |         |         | Karaburma    
+|           |Selenium |         |         |              |
 
 #
 
@@ -36,7 +36,7 @@ Android tests use Android Emulator.
 
 #
 
-#### Installation (cmd)
+#### Framework installation (cmd)
 - Please check your python version 
 ```sh
 python --version
@@ -74,8 +74,17 @@ python setup.py install
 
 #
 
-#### Installation additional software
-- 
+#### Additional software installation 
+- [FreeQuizMaker](https://www.mediafreeware.com/free-quiz-maker.html)
+  - Please use ".bat" file for the link of the application instead of ".exe".
+  <br />
+  It helps to solve UAC issue. ".bat" file should be run as a task.
+- [Aptitude](https://play.google.com/store/apps/details?id=nithra.math.aptitude&hl=en&gl=US)
+  - You should have already installed Android Emulator and any virtual device. 
+  <br />
+  Instance of AVD should has pre-installed application
+- [KaraburmaDemoApp](https://github.com/coastal-lines/Karaburma/tree/master/tests/test_app)
+  - Please download the application into any folder and update PythonTestFramework config file
 
 #
 
