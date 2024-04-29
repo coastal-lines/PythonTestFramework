@@ -24,15 +24,15 @@
 #### Used applications and services
 For some of API tests you have to have an Azure DevOps account.
 <br />
-Also your machine should has FreeQuizMaker for some Desktop tests.
+Also your machine should has [FreeQuizMaker](https://www.mediafreeware.com/free-quiz-maker.html) for some Desktop tests.
 <br />
 For BrowserStack tests you should use your own access key and login.
 <br />
 Android tests use Android Emulator.
 
-| API  | Web |Desktop | Mobile
-| ------ | ------ | ------ | ------ |
-| Azure DevOps | BrowserStack | Free Quiz Maker | Aptitude 
+| API                  | Web           | Desktop             | Mobile
+|----------------------|---------------|---------------------| ------ |
+| Azure DevOps account | BrowserStack account | [FreeQuizMaker](https://www.mediafreeware.com/free-quiz-maker.html) app | Aptitude app 
 
 #
 
@@ -71,6 +71,11 @@ venv\Scripts\activate
 cd .. & cd Karaburma
 python setup.py install
 ```
+
+#
+
+#### Installation additional software
+- 
 
 #
 
