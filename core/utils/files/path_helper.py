@@ -13,9 +13,9 @@ def screenshot_path_for_logs(pytest_node, additional_name="") -> str:
     log_files_path = ""
 
     if ("web" in pytest_node.location[0]):
-        log_files_path = os.path.join(get_project_path(), "resources\\logs\\web\\screenshots")
+        log_files_path = os.path.join(get_project_path(), "logs\\web\\screenshots")
     elif ("desktop" in pytest_node.location[0]):
-        log_files_path = os.path.join(get_project_path(), "resources\\logs\\desktop\\screenshots")
+        log_files_path = os.path.join(get_project_path(), "logs\\desktop\\screenshots")
 
     screenshot_path = f"{log_files_path}\\{pytest_node.name}_{additional_name}.png"
 

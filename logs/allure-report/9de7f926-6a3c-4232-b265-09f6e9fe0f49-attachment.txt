@@ -1,4 +1,0 @@
-2024-04-30 17:54:37.461 | INFO     | core.driver.appium_manager:start_appium_service:47 - Appium server is running. Appium server url is ('127.0.0.1', '4723').
-2024-04-30 17:54:43.042 | INFO     | tests.ui.desktop.conftest:desktop_driver_wrapper:44 - Current test is: test_validate_expanded_table[desktop_driver_wrapper0].
-2024-04-30 17:57:02.076 | INFO     | tests.ui.desktop.conftest:desktop_driver_wrapper:51 - Driver was not stopped correctly.
-2024-04-30 17:57:02.728 | INFO     | tests.ui.desktop.conftest:appium_service_fixture:27 - Appium server stops.

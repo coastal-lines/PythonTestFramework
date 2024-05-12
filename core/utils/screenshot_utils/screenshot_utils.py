@@ -11,9 +11,12 @@ from appium.webdriver import WebElement
 
 
 def __get_element_rect(element: WebElement) -> Tuple[int, int, int, int]:
-    element_rectangle = element.rect
-    x, y, width, height = element_rectangle['x'], element_rectangle['y'], element_rectangle['width'], element_rectangle['height']
-    return x, y, width, height
+    try:
+        element_rectangle = element.rect
+        x, y, width, height = element_rectangle['x'], element_rectangle['y'], element_rectangle['width'], element_rectangle['height']
+        return x, y, width, height
+    except:
+        print(f"Element {element} doesn't have any rectangle properties.")
 
 def __do_screenshot_and_get_cropped_image(x: int, y: int, width: int, height: int) -> Image:
     screenshot = pyautogui.screenshot()

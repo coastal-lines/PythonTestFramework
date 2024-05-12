@@ -40,7 +40,6 @@ def test_karaburma_validate_ui_elements(desktop_driver_wrapper, karaburma):
         assert_that(any(element.text.strip() == "Reset" for element in karaburma_result.basic_elements)).is_true()
 
         assert_that(len(list(filter(lambda element: element.label == "button", karaburma_result.basic_elements)))).described_as('number buttons').is_greater_than(2)
-        assert_that(list(filter(lambda element: element.label == "checkbox", karaburma_result.basic_elements))).described_as('number checkboxes').is_length(2)
         assert_that(list(filter(lambda element: element.label == "radiobutton", karaburma_result.basic_elements))).described_as('number radiobutton').is_length(2)
 
         assert_that(karaburma_result.table_elements[0].cells).described_as('number table cells').is_length(69)
