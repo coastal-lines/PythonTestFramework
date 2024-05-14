@@ -3,15 +3,14 @@ import pytest
 
 from pages.web.test_gorilla.gorilla_exam_page import GorillaExamPage
 
+EXPECTED_QUESTION_TEXT = 'What type of dependency should you set between these two tasks?'
+EXPECTED_ANSWER_COLOUR = ('212', '16', '170')
 
 @allure.description("TC1")
 @pytest.mark.ui
 @pytest.mark.xdist_group(name="gorilla")
 @pytest.mark.parametrize('answer_number', [-1])
 def test_exam_title(web_driver, answer_number):
-    EXPECTED_QUESTION_TEXT = 'What type of dependency should you set between these two tasks?'
-    EXPECTED_ANSWER_COLOUR = ('212', '16', '170')
-
     gorilla_exam_page = GorillaExamPage(web_driver)
 
     #step 1 - navigate into Exam Gorrila page
@@ -32,9 +31,6 @@ def test_exam_title(web_driver, answer_number):
 @pytest.mark.xdist_group(name="gorilla")
 @pytest.mark.parametrize('answer_number', [-1])
 def test_exam_title2(web_driver, answer_number):
-    EXPECTED_QUESTION_TEXT = 'What type of dependency should you set between these two tasks?'
-    EXPECTED_ANSWER_COLOUR = ('212', '16', '170')
-
     gorilla_exam_page = GorillaExamPage(web_driver)
 
     #step 1 - navigate into Exam Gorrila page
