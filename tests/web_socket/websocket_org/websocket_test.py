@@ -36,6 +36,3 @@ async def test_validate_response_headers(wss_client):
         assert "2024" in handshake_response.server
         assert handshake_response.fly_request_id is not None
         assert handshake_response.sec_websocket_accept is not None
-
-
-

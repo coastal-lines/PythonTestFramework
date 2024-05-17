@@ -4,6 +4,7 @@ assertpy==1.1
 pytest-mock==3.12.0
 pytest-xdist==3.5.0
 pytest-bdd==7.1.2
+pytest-lazy-fixture==0.6.3
 Appium-Python-Client==3.2.1
 pywin32==306
 PyAutoGUI==0.9.54

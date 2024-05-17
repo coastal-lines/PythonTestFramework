@@ -8,6 +8,10 @@ from core.models.web_socket.web_socket_handshake_model import WebSocketHandshake
 
 class AsyncWebSocketClient:
     def __init__(self, uri: str, is_trace_enabled=True):
+        """
+        :is_trace_enabled: enable debug information about connection and receiving data
+        """
+
         self.uri = uri
 
         if is_trace_enabled:
@@ -18,8 +22,8 @@ class AsyncWebSocketClient:
     async def connect(self):
         try:
             self.websocket.connect(self.uri)
-        except WebSocketAddressException:
-            print(f"Wrong URI. Please check Websocket Uri: {self.uri}")
+        except WebSocketAddressException as ex:
+            raise WebSocketAddressException(f"Wrong URI. Please check Websocket Uri: {self.uri}. Error: {ex}")
 
     async def send_message(self, message: str):
         self.websocket.send(message)
@@ -37,5 +41,5 @@ class AsyncWebSocketClient:
         handshake_response = await self.get_connection_handshake_headers()
         return WebSocketHandshakeModel(handshake_response)
 
-    async def close(self):
-        self.websocket.close()
+    async def close(self, status_code=1000):
+        self.websocket.close(status_code)
