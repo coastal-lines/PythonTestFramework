@@ -1,0 +1,57 @@
+{
+  "api": {
+    "karaburma_host": "127.0.0.1",
+    "karaburma_port": "8900",
+    "karaburma_base_url": "http://127.0.0.1:8900/api/v1",
+    "karaburma_work_dir": "c:\\Repos\\MyGit\\Karaburma",
+    "karaburma_main_script_path": "karaburma/api/karaburma_api.py"
+  },
+  "web": {
+    "default_browser": "CHROME",
+    "wait_timeout": 90
+  },
+  "desktop": {
+    "default_os": "Windows",
+    "winappdriver_url": "http://127.0.0.1",
+    "winappdriver_port": "4723",
+    "appium_url": "127.0.0.1",
+    "appium_port": "4723",
+    "applications": {
+      "free_quiz_maker": {
+        "application_path": "c:\\Temp\\Free Quiz Maker\\run.bat",
+        "application_process_name": "FreeQuizMaker",
+        "application_window_name": "Free Quiz Maker"
+      },
+      "karaburma_demoapp": {
+        "application_path": "c:\\Temp\\KaraburmaDemoApp\\KaraburmaDemoApp.exe",
+        "application_process_name": "KaraburmaDemoApp",
+        "application_window_name": "KaraburmaDemoApp"
+      }
+    }
+  },
+  "mobile": {
+    "default_platform": "Android",
+    "default_mode": "Emulator",
+    "appium_url": "http://127.0.0.1",
+    "appium_port": "4723",
+    "emulator_port_number": "emulator-5554",
+    "emulator_device_name": "pixel_2_-_api_28",
+    "emulator_process_name": "qemu-system-x86_64",
+    "emulator_loading_timeout": "60"
+  },
+  "browserstack": {
+    "username": "",
+    "access_key": "",
+    "url": "http://hub.browserstack.com/wd/hub"
+  },
+  "karaburma": {
+    "config_path": "c:\\Repos\\MyGit\\Karaburma\\karaburma\\config.json"
+  },
+  "azure_devops": {
+    "organization": "coastallines",
+    "project": "Assessment Delivery",
+    "default_user_for_assign": "alexgreco591",
+    "token_for_full_access": "yushmwcvexm3kvmnmgz4ps2qwnezlktq6ggs3bm2qkjxqnbbxwoa",
+    "token_for_agents_pool_only": "yv43zeatz5mgnf7zg2dz2si677h3my3enjpwsk7kqz6xn4jfcwoa"
+  }
+}
